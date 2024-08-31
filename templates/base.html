@@ -53,7 +53,7 @@
     <!-- Bootstrap 5 Full-Width Header Template -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">AfroGspot</a>
+        <a class="navbar-brand" href="{% url 'home' %}">AfroGspot</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -66,7 +66,7 @@
           </form>
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
             </li>
 
             <li class="nav-item">
@@ -79,10 +79,10 @@
                 Categories
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Electronics</a></li>
-                <li><a class="dropdown-item" href="#">Fashion</a></li>
-                <li><a class="dropdown-item" href="#">Home & Kitchen</a></li>
-                <li><a class="dropdown-item" href="#">Books</a></li>
+                <li><a class="dropdown-item" href="#">Fishes</a></li>
+                <li><a class="dropdown-item" href="#">Peppers</a></li>
+                <li><a class="dropdown-item" href="#">Seasonings</a></li>
+                <li><a class="dropdown-item" href="#">Veggies</a></li>
                 <li>
                   <a class="dropdown-item" href="#">More Categories</a>
                 </li>
@@ -96,6 +96,7 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
                 <li><a class="dropdown-item" href="#">Login</a></li>
                 <li><a class="dropdown-item" href="#">Register</a></li>
+                <li><a class="dropdown-item" href="#">Product Management</a></li>
               </ul>
             </li>
             <li class="nav-item">
