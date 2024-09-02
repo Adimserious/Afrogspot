@@ -59,9 +59,9 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <form class="d-flex me-auto w-50">
-            <input class="form-control me-2 w-100" type="search" placeholder="Search for products, brands, and more..."
-              aria-label="Search">
+          <form class="d-flex me-auto w-50" method="GET" action="#">
+            <input class="form-control me-2 w-100" name="q" type="search"
+              placeholder="Search for products, brands, and more..." aria-label="Search">
             <button class="btn btn-outline-light" type="submit">Search</button>
           </form>
           <ul class="navbar-nav">
@@ -94,28 +94,79 @@
                 Account
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
-                <li><a class="dropdown-item" href="#">Login</a></li>
-                <li><a class="dropdown-item" href="#">Register</a></li>
-                <li><a class="dropdown-item" href="#">Product Management</a></li>
+                {% if request.user.is_authenticated %}
+                  {% if request.user.is_superuser %}
+                    <li><a class="dropdown-item" href="#">Product Management</a></li>
+                  {% endif %}
+                  <a href="#" class="dropdown-item">My Profile</a>
+                  <a href="#" class="dropdown-item">Logout</a>
+                {% else %}
+                  <li><a class="dropdown-item" href="#">Login</a></li>
+                  <li><a class="dropdown-item" href="#">Register</a></li>
+                {% endif %}
+
               </ul>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
                 <i class="bi bi-cart"></i> Cart
               </a>
+              <p class="my-0">
+                {% if grand_total %}
+                    ${{ grand_total|floatformat:2 }}
+                {% else %}
+                    $0.00
+                {% endif %}
+            </p>
             </li>
           </ul>
         </div>
       </div>
     </nav>
+    
 
+    <div id="delivery-banner" class="row text-center">
+      <div class="col bg-primary text-white">
+        <h4 class="logo-font my-1">Free delivery on orders over 50${{ free_delivery_threshold }}!</h4>
+      </div>
+    </div>
+  
     <!--Bootstrap Icons CDN for cart icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
   </header>
+
+  {% block page_header %}
+  {% endblock %}
 
   <main>
     {% block content%}
     {% endblock content%}
   </main>
+
+  <!--Code institute marketing wiskey footer-->
+  <footer class="container-wrapper">
+    <div class="container quotes-container content-container">
+      <section class="footer">
+        <div class="row">
+          <div class="col-12 page-header mb-4">
+            <h2 class="text-uppercase">Stay in touch:</h2>
+            <hr class="block-divider block-divider--short">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <h3>Social</h3>
+            <p>Keep up to date with all our latest offers</p>
+            <a href="#" target="_blank"><i class="fab fa-facebook-square"></i> Follow us on Facebook!</a>
+          </div>
+          <div class="col-12 col-md-6">
+            <h2>Subscribe!</h2>
+            <p>Get exclusive offers and discount codes by subscribing to our monthly newsletter</p>
+            <!-- Mailchimp signup form here -->
+          </div>
+        </div>
+      </section>
+    </div>
+  </footer>
 
 </body>
