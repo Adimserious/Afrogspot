@@ -49,7 +49,7 @@
 </head>
 
 <body>
-  <header>
+  <header class="header">
     <!-- Bootstrap 5 Full-Width Header Template -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
@@ -70,7 +70,7 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#">Deals</a>
+              <a class="nav-link" href="#">New Arrivals</a>
             </li>
 
             <li class="nav-item dropdown">
@@ -96,7 +96,7 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
                 {% if request.user.is_authenticated %}
                   {% if request.user.is_superuser %}
-                    <li><a class="dropdown-item" href="#">Product Management</a></li>
+                    <li><a class="dropdown-item" href="#">Manage Product</a></li>
                   {% endif %}
                   <a href="#" class="dropdown-item">My Profile</a>
                   <a href="#" class="dropdown-item">Logout</a>
@@ -111,13 +111,6 @@
               <a class="nav-link" href="#">
                 <i class="bi bi-cart"></i> Cart
               </a>
-              <p class="my-0">
-                {% if grand_total %}
-                    ${{ grand_total|floatformat:2 }}
-                {% else %}
-                    $0.00
-                {% endif %}
-            </p>
             </li>
           </ul>
         </div>
@@ -126,10 +119,11 @@
     
 
     <div id="delivery-banner" class="row text-center">
-      <div class="col bg-primary text-white">
-        <h4 class="logo-font my-1">Free delivery on orders over 50${{ free_delivery_threshold }}!</h4>
+      <div class="col text-white delivery-banner-child">
+        <h4 class="my-1"> WE PREPARE A TABLE BEFORE YOU! <strong>Free delivery on orders over 50€!</strong>{{ free_delivery_threshold }}</h4>
       </div>
     </div>
+  
   
     <!--Bootstrap Icons CDN for cart icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
@@ -138,13 +132,13 @@
   {% block page_header %}
   {% endblock %}
 
-  <main>
+  <main class="content">
     {% block content%}
     {% endblock content%}
   </main>
 
   <!--Code institute marketing wiskey footer-->
-  <footer class="container-wrapper">
+  <footer class="container-wrapper footer">
     <div class="container quotes-container content-container">
       <section class="footer">
         <div class="row">

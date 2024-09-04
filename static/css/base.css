@@ -1,5 +1,60 @@
-.backgroung-image {
-    background-image: url('../background-image.jpg') no-repeat center center fixed;
-    
-     
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    color: black;
+}
+
+#delivery-banner {
+    padding: 5px;
+    margin: 10px;
+}
+
+.delivery-banner-child {
+    background-color: green;
+}
+
+.shop-now {
+    background-color: green;
+    color: #f1f1f1;
+    margin: 5px;
+    padding: 5px;
+}
+
+/* Flex-grow for the main content */
+.content {
+    flex: 1; /* Grow to fill available space */
+}
+
+/* Footer styles */
+.footer {
+    background-color: #f1f1f1; 
+    padding: 30px;
+    margin: 30px;
+    text-align: center;
+}
+
+.wrapper {
+    background: url('/static/images/background-image.jpg') no-repeat center center fixed;
+    color: black;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    min-height: 100vh;  /* Minimum height to fill the viewport */
+
+}
+
+strong {
+    color: rgb(19, 15, 15);
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        background-position: 50% 0; /* Adjust for smaller screens */
+    }
+}
+
+@media (min-width: 769px) {
+    .wrapper {
+        background-position: 75% 0; /* Adjust for larger screens */
+    }
 }
