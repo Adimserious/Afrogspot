@@ -35,7 +35,7 @@ html, body {
 }
 
 .wrapper {
-    background: url('/static/images/background-image.jpg') no-repeat center center fixed;
+    background: url('/static/media/background-image.jpg') no-repeat center center fixed;
     color: black;
     display: flex;
     flex-direction: column; /* Stack children vertically */
