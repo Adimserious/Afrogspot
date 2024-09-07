@@ -59,9 +59,10 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <form class="d-flex me-auto w-50" method="GET" action="#">
+          <form class="d-flex me-auto w-50" method="GET" action="{% url 'product_list' %}">
             <input class="form-control me-2 w-100" name="q" type="search"
-              placeholder="Search for products, brands, and more..." aria-label="Search">
+            placeholder="Search for products, brands, and more..." aria-label="Search" value="{{ query }}">
+            
             <button class="btn btn-outline-light" type="submit">Search</button>
           </form>
           <ul class="navbar-nav">
