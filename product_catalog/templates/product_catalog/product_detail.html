@@ -18,7 +18,18 @@
             <p class="lead mb-3">Price: €{{ product.price }}</p>
             <p class="mb-3">{{ product.description }}</p>
             <p class="mb-3">In Stock: {{ product.stock }}</p>
-
+            {% if product.category %}
+            <p class="small mt-1 mb-0">View All:
+                <a class="text-muted" href="{% url 'product_list' %}?category={{ product.category.name }}">
+                    <i class="fas fa-tag mr-1"></i>{{ product.category.friendly_name }}
+                </a>
+            </p>
+            {% endif %}
+            <br>
+            <div class="text-center">
+                <button class="btn btn-success"><span class="small"><a class="text-white text-decoration-none"
+                            href="{% url 'product_list' %}">All Products</a></span></button>
+            </div>
         </div>
     </div>
 
