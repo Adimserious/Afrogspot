@@ -5,19 +5,24 @@ from .models import Product, Category
 
 # Create your views here.
 def product_list(request):
-    """ A view to show list of products that are available"""
+    """ A view to show list of products that are available, search and category"""
 
     products = Product.objects.filter(is_active=True).order_by('name')
     category_name = request.GET.get('category')
-    query = None
+    query = request.GET.get('q')
+    
+    if category_name and category_name.strip() != '':
+        # Check if the category exists (case-insensitive search)
+        category = get_object_or_404(Category, name__iexact=category_name)
+        products = products.filter(category=category)
 
+    
+    # search query
     if request.GET:
         if 'q' in request.GET:
             query = request.GET['q']
-        if category_name:
-            products = products.filter(category__name__iexact=category_name)
-        if not query:
-            messages.error(request, "You didn't enter any search criteria!")
+            if not query:
+                messages.error(request, "You didn't enter any search criteria!")
         
         queries = Q(name__icontains=query) | Q(description__icontains=query)
         products = products.filter(queries)
