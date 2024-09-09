@@ -29,9 +29,9 @@
   {% block corejs %}
   <script src="https://kit.fontawesome.com/e9c73d7092.js" crossorigin="anonymous"></script>
 
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
+  
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
     crossorigin="anonymous"></script>
@@ -79,24 +79,36 @@
                 aria-expanded="false">
                 Categories
               </a>
-              
+
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                
-                <li><a class="dropdown-item" href="{% url 'product_list' %}?category=fishes{{ category.name|urlencode }}&q={{ query }}">Fishes</a></li>
-                <li><a class="dropdown-item" href="{% url 'product_list' %}?category=peppers{{ category.name|urlencode }}&q={{ query }}">Peppers</a></li>
-                <li><a class="dropdown-item" href="{% url 'product_list' %}?category=seasonings{{ category.name|urlencode }}&q={{ query }}">Seasonings</a></li>
-                <li><a class="dropdown-item" href="{% url 'product_list' %}?category=veggies{{ category.name|urlencode }}&q={{ query }}">Veggies</a></li>
-                <li><a class="dropdown-item" href="{% url 'product_list' %}?category=lean meat or seafood{{ category.name|urlencode }}&q={{ query }}">Sea Foods</a>
+
+                <li><a class="dropdown-item"
+                    href="{% url 'product_list' %}?category=fishes{{ category.name|urlencode }}&q={{ query }}">Fishes</a>
                 </li>
-                <li><a class="dropdown-item" href="{% url 'product_list' %}?category=nuts and seeds{{ category.name|urlencode }}&q={{ query }}">Nuts & Seeds</a>
+                <li><a class="dropdown-item"
+                    href="{% url 'product_list' %}?category=peppers{{ category.name|urlencode }}&q={{ query }}">Peppers</a>
                 </li>
-                
+                <li><a class="dropdown-item"
+                    href="{% url 'product_list' %}?category=seasonings{{ category.name|urlencode }}&q={{ query }}">Seasonings</a>
+                </li>
+                <li><a class="dropdown-item"
+                    href="{% url 'product_list' %}?category=veggies{{ category.name|urlencode }}&q={{ query }}">Veggies</a>
+                </li>
+                <li><a class="dropdown-item"
+                    href="{% url 'product_list' %}?category=lean meat or seafood{{ category.name|urlencode }}&q={{ query }}">Sea
+                    Foods</a>
+                </li>
+                <li><a class="dropdown-item"
+                    href="{% url 'product_list' %}?category=nuts and seeds{{ category.name|urlencode }}&q={{ query }}">Nuts
+                    & Seeds</a>
+                </li>
+
                 <li>
                   <a class="dropdown-item" href="{% url 'product_list' %}">All Products</a>
                 </li>
-                
+
               </ul>
-              
+
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button"
@@ -146,6 +158,32 @@
     {% endblock content%}
   </main>
 
+  <!-- Back to Top Button -->
+  <a href="#" id="back-to-top" class="btn btn-success back-to-top" role="button">
+    <i class="bi bi-arrow-up"></i>
+  </a>
+
+
+  <script>
+    $(document).ready(function() {
+        // Show or hide the button based on scroll position
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 100) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
+    
+        // Smooth scroll to the top when the button is clicked
+        $('#back-to-top').click(function(e) {
+            e.preventDefault();
+            $('html, body').animate({ scrollTop: 0 }, '300');
+        });
+    });
+    </script>
+    
+  
   <!--Code institute marketing wiskey footer-->
   <footer class="container-wrapper footer">
     <div class="container quotes-container content-container">
