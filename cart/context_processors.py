@@ -1,7 +1,7 @@
 from decimal import Decimal
 from django.conf import settings
 
-
+# code and inspiration here are from the boutique ado Walkthrough
 def cart_content(request):
     cart_items = []
     total = 0
