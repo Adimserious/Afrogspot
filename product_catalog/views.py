@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
+from django.utils.translation import gettext as _
 from django.db.models import Q
 from .models import Product, Category
 
@@ -48,7 +49,7 @@ def product_detail(request, product_id):
     
     context = {
         'product': product,
-        
+        'description': _(product.description),  
     }
 
-    return render(request, 'product_catalog/product_detail.html', {'product': product})
+    return render(request, 'product_catalog/product_detail.html', context)

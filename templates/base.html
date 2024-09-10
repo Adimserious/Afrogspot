@@ -130,7 +130,7 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="{% url 'cart_detail' %}">
                 <i class="bi bi-cart"></i> Cart
               </a>
             </li>
@@ -142,7 +142,7 @@
 
     <div id="delivery-banner" class="row text-center">
       <div class="col text-white delivery-banner-child">
-        <h4 class="my-1"> WE PREPARE A TABLE BEFORE YOU! <strong>Free delivery on orders over 50€!</strong>{{ free_delivery_threshold }}</h4>
+        <h4 class="my-1"> WE PREPARE A TABLE BEFORE YOU! <strong>Free delivery on orders over €</strong>{{ free_delivery_threshold }}</h4>
       </div>
     </div>
 

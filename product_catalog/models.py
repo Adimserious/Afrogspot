@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+
 
 # Create your models here.
 
@@ -16,6 +18,12 @@ class Category(models.Model):
         return self.friendly_name
 
 
+class Country(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name 
+
 class Product(models.Model):
     name = models.CharField(max_length=255)
     sku = models.CharField(max_length=254, null=True, blank=True)
@@ -30,6 +38,18 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
+    is_vegan = models.BooleanField(default=False)
+    is_gluten_free = models.BooleanField(default=False)
+    expiration_date = models.DateField(null=True, blank=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.name
+
+    def __str__s(self):
+        return f"{self.name} - {self.country.name}"
+
+    def is_expired(self):
+        if self.expiration_date:
+            return self.expiration_date < timezone.now().date()
+        return False

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block title %}{{ product.name }}{% endblock %}
 
@@ -25,6 +26,9 @@
                 </a>
             </p>
             {% endif %}
+            <br>
+            <a href="#" class="btn btn-success">Add to Cart</a>
+
             <br>
             <div class="text-center">
                 <button class="btn btn-success"><span class="small"><a class="text-white text-decoration-none"
