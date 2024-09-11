@@ -129,8 +129,18 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'cart_detail' %}">
-                <i class="bi bi-cart"></i> Cart
+              <a class="{% if grand_total %}text-primary font-weight-bold{% else %}text-white{% endif %} nav-link"
+                href="{% url 'cart_detail' %}">
+                <div class="text-center">
+                  <i class="bi bi-cart"></i> Cart
+                  <p class="my-0">
+                    {% if grand_total %}
+                    €{{ grand_total|floatformat:2 }}
+                    {% else %}
+                    €0.00
+                    {% endif %}
+                  </p>
+                </div>
               </a>
             </li>
           </ul>
@@ -141,7 +151,8 @@
 
     <div id="delivery-banner" class="row text-center">
       <div class="col text-white delivery-banner-child">
-        <h4 class="my-1"> WE PREPARE A TABLE BEFORE YOU! <strong>Free delivery on orders over €</strong>{{ free_delivery_threshold }}</h4>
+        <h4 class="my-1"> WE PREPARE A TABLE BEFORE YOU! <strong>Free delivery on orders over €</strong>{{
+          free_delivery_threshold }}</h4>
       </div>
     </div>
 
@@ -164,25 +175,25 @@
 
 
   <script>
-    $(document).ready(function() {
-        // Show or hide the button based on scroll position
-        $(window).scroll(function() {
-            if ($(this).scrollTop() > 100) {
-                $('#back-to-top').fadeIn();
-            } else {
-                $('#back-to-top').fadeOut();
-            }
-        });
-    
-        // Smooth scroll to the top when the button is clicked
-        $('#back-to-top').click(function(e) {
-            e.preventDefault();
-            $('html, body').animate({ scrollTop: 0 }, '300');
-        });
+    $(document).ready(function () {
+      // Show or hide the button based on scroll position
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+          $('#back-to-top').fadeIn();
+        } else {
+          $('#back-to-top').fadeOut();
+        }
+      });
+
+      // Smooth scroll to the top when the button is clicked
+      $('#back-to-top').click(function (e) {
+        e.preventDefault();
+        $('html, body').animate({ scrollTop: 0 }, '300');
+      });
     });
-    </script>
-    
-  
+  </script>
+
+
   <!--Code institute marketing wiskey footer-->
   <footer class="container-wrapper footer">
     <div class="container quotes-container content-container">

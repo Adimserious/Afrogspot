@@ -8,7 +8,7 @@ def cart_detail(request):
 
 def add_to_cart(request, item_id):
     
-    quantity = (request.POST.get('quantity'))
+    quantity = int(request.POST.get('quantity', 1))
     redirect_url = request.POST.get('redirect_url')
     cart = request.session.get('cart', {})
 
@@ -18,5 +18,4 @@ def add_to_cart(request, item_id):
         cart[item_id] = quantity
 
     request.session['cart'] = cart
-    print(request.session['cart'])
     return redirect(redirect_url)

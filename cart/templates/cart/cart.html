@@ -17,14 +17,14 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in cart.items.all %}
+            {% for item in cart_items %}
             <tr>
-                <td>{{ item.product.name }}</td>
+                <td>{{ cart_items }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.product.price }}</td>
                 <td>{{ item.total_price }}</td>
                 <td>
-                    <a href="{% url 'remove_from_cart' item.product.id %}">Remove</a>
+                    <a href="#">Remove</a>
                 </td>
             </tr>
             {% endfor %}
