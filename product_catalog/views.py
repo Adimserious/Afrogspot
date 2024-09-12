@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.utils.translation import gettext as _
 from django.db.models import Q
-from .models import Product, Category
+from .models import Product, Category, ProductVariant
 
 # Create your views here.
 def product_list(request):
@@ -45,11 +45,14 @@ def product_detail(request, product_id):
     """ A view to show individual products"""
 
     product = get_object_or_404(Product, id=product_id)
+    variants = product.variants.all()  # Get all available size variants if they exist
+
 
     
     context = {
         'product': product,
-        'description': _(product.description),  
+        'description': _(product.description),
+        'variants': variants,  
     }
 
     return render(request, 'product_catalog/product_detail.html', context)

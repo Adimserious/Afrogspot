@@ -17,12 +17,14 @@ class Category(models.Model):
     def get_friendly_name(self):
         return self.friendly_name
 
+
 # custom model
 class Country(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
-        return self.name 
+        return self.name
+
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
@@ -53,3 +55,24 @@ class Product(models.Model):
         if self.expiration_date:
             return self.expiration_date < timezone.now().date()
         return False
+    
+    # custom method
+    def get_price(self):
+        """
+        Returns the base price of the product or the price of the first variant if variants exist.
+        """
+        # Check if the product has variants
+        if self.variants.exists():
+            return self.variants.first().price  # displaying the first variant price
+        return self.price  # Default product price
+
+
+# custom model
+class ProductVariant(models.Model):
+    product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
+    size = models.DecimalField(max_digits=5, decimal_places=2)  # Size in kg
+    price = models.DecimalField(max_digits=10, decimal_places=2)  # Price based on size
+    stock = models.IntegerField() # The stock level for this specific size
+
+    def __str__(self):
+        return f"{self.size} kg - {self.product.name}"
