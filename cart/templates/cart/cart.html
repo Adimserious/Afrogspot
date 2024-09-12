@@ -21,12 +21,19 @@
             <tbody>
                 {% for item in cart_items %}
                 <tr>
-                    <td><img class="img-fluid rounded" src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width: 100px;"></td>
-                    <td>{{ item.product.name }}</td>
+                    <td><img class="img-fluid rounded" src="{{ item.product.image.url }}" alt="{{ item.product.name }}"
+                            style="width: 100px;"></td>
+                    <!-- Product Name and Variant -->
+                    <td>
+                        {{ item.product.name }}
+                        {% if item.variant %}
+                        <br><small><strong>Size:</strong> {{ item.variant.size }} kg</small>
+                        {% endif %}
+                    </td>
                     <td>
                         <input type="number" value="{{ item.quantity }}" class="form-control w-50 mx-auto" min="1">
                     </td>
-                    <td>€{{ item.product.price|floatformat:2 }}</td>
+                    <td>€{{ item.price|floatformat:2 }}</td>
                     <td>€{{ item.total_price|floatformat:2 }}</td>
                     <td>
                         <a href="#" class="btn btn-danger btn-sm">
@@ -49,7 +56,8 @@
 
                 {% if free_delivery_delta > 0 %}
                 <div class="alert alert-warning mt-2" role="alert">
-                    You could get free delivery by spending just <strong>€{{ free_delivery_delta }}</strong> more!
+                    You could get free delivery by spending just <strong>€{{ free_delivery_delta|floatformat:2
+                        }}</strong> more!
                 </div>
                 {% endif %}
 

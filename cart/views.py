@@ -12,11 +12,11 @@ def add_to_cart(request, item_id):
     # Get the product by ID
     product = get_object_or_404(Product, id=item_id)
 
-    # Handle the case if there are variants
+    # Handles the case if there are variants
     variant_id = request.POST.get('variant')
     quantity = int(request.POST.get('quantity', 1))  # Default quantity to 1 
 
-    # Check if variant is selected and exists
+    # Checks if variant is selected and exists
     if variant_id:
         variant = get_object_or_404(ProductVariant, id=variant_id)
         price = variant.price
@@ -24,20 +24,18 @@ def add_to_cart(request, item_id):
         variant = None
         price = product.price
 
-    # Get the current cart session
+    # Gets the current cart session
     cart = request.session.get('cart', {})
 
     # If variant exists, use variant ID, otherwise use product ID
     key = variant_id if variant else str(item_id)
 
-    # Check if the product/variant is already in the cart
+    # Checks if the product/variant is already in the cart
     if key in cart:
-        # Ensure cart[key] is a dictionary before trying to access its 'quantity' key
         if isinstance(cart[key], dict):
             # Increment the quantity if the product/variant is already in the cart
             cart[key]['quantity'] += quantity
         else:
-            # If it's not a dictionary, reinitialize it properly
             cart[key] = {
                 'product_id': product.id,
                 'variant_id': variant.id if variant else None,
@@ -53,7 +51,7 @@ def add_to_cart(request, item_id):
             'price': str(price)
         }
 
-    # Save the updated cart back to the session
+    # Saves the updated cart back to the session
     request.session['cart'] = cart
 
     # Redirect to the specified URL
