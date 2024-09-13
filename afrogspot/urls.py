@@ -25,4 +25,5 @@ urlpatterns = [
     path('product_catalog/', include('product_catalog.urls')),
     path('product_catalog/<int:product_id>/', include('product_catalog.urls')),
     path('cart/', include('cart.urls')),
+    path('checkout/', include('checkout.urls')),
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

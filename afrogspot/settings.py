@@ -82,6 +82,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'afrogspot.urls'
 
+#CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -100,6 +102,9 @@ TEMPLATES = [
                 'cart.context_processors.cart_content',
                 'django.contrib.messages.context_processors.messages', 
             ],
+            'builtins': [
+                'crispy_forms.templatetags.crispy_forms_tags',
+                'crispy_forms.templatetags.crispy_forms_field',]
         },
     },
 ]

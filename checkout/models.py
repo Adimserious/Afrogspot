@@ -4,6 +4,9 @@ from product_catalog.models import Product, ProductVariant
 from decimal import Decimal
 import uuid
 from django.db.models import Sum
+from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 # Function to generate a short order number
@@ -25,7 +28,7 @@ class Order(models.Model):
     order_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     delivery_cost = models.DecimalField(max_digits=6, decimal_places=2, default=7.00)
     grand_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    stripe_payment_intent = models.CharField(max_length=200, null=True, blank=True)
+    stripe_payment_intent = models.CharField(max_length=200, null=True, blank=True) # Stores Stripe payment intent ID
     order_number = models.CharField(max_length=8, default=generate_short_order_number, null=False, editable=False, unique=True)
     payment_status = models.CharField(max_length=10, choices=[
         ('pending', 'Pending'),
@@ -51,6 +54,35 @@ class Order(models.Model):
         self.order_total = self.grand_total + self.delivery_cost
         self.save()
 
+    
     def __str__(self):
         return f'Order #{self.order_number} by {self.full_name}'
+
+    # signals
+    @receiver(post_save, sender='checkout.Order')
+    def update_order_items(sender, instance, **kwargs):
+        """Updates the total price for each OrderItem when the Order is saved."""
+        for item in instance.orderitem_set.all():
+            item.total_price = item.quantity * item.price
+            item.save()
+
+
+# stores information about each product that the customer has purchased in that specific order
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    variant = models.ForeignKey(ProductVariant, on_delete=models.SET_NULL, null=True, blank=True)
+    quantity = models.IntegerField(default=1)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
+
+    def save(self, *args, **kwargs):
+        """
+        Calculate the total price for the order item (price * quantity).
+        """
+        self.total_price = self.price * self.quantity
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f'{self.quantity} x {self.product.name} (Order #{self.order.id})'
 
