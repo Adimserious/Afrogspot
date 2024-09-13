@@ -69,10 +69,10 @@
                 {% endif %}
 
                 <div class="d-flex justify-content-between align-items-center mt-4">
-                    <a href="{% url 'product_list' %}" class="btn btn-success">
+                    <a class="btn btn-success" href="{% url 'product_list' %}">
                         <i class="fas fa-chevron-left"></i> Keep Shopping
                     </a>
-                    <a href="" class="btn btn-primary">
+                    <a href="" class="btn btn-success">
                         Secure Checkout <i class="fas fa-lock"></i>
                     </a>
                 </div>
@@ -83,16 +83,17 @@
     {% else %}
     <div class="text-center">
         <p class="lead">Your cart is empty.</p>
-        <a href="{% url 'product_list' %}" class="btn btn-outline-secondary btn-lg">
+        <a href="{% url 'product_list' %}" class="btn btn-outline-success btn-lg">
             <i class="fas fa-chevron-left"></i> Keep Shopping
         </a>
     </div>
     {% endif %}
 </div>
-{% endblock %}
 
 <script>
     function confirmDeletion() {
         return confirm("Are you sure you want to remove this item from your cart?");
     }
 </script>
+{% endblock %}
+

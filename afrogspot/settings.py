@@ -13,7 +13,15 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
+from django.contrib.messages import constants as messages
 
+MESSAGE_TAGS = {
+    messages.DEBUG: 'secondary',  # Bootstrap 'secondary' class for debug messages
+    messages.INFO: 'info',        # Bootstrap 'info' class for informational messages
+    messages.SUCCESS: 'success',  # Bootstrap 'success' class for success messages
+    messages.WARNING: 'warning',  # Bootstrap 'warning' class for warnings
+    messages.ERROR: 'danger',     # Bootstrap 'danger' class for error messages
+}
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -90,6 +98,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'cart.context_processors.cart_content',
+                'django.contrib.messages.context_processors.messages', 
             ],
         },
     },

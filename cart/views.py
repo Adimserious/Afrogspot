@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404, redirect
+from django.contrib import messages
 from product_catalog.models import Product, ProductVariant
 
 
@@ -92,6 +93,7 @@ def add_to_cart(request, item_id):
             'quantity': quantity,
             'price': str(price)
         }
+        messages.success(request, 'Item added to your cart!')
 
     # Saves the updated cart back to the session
     request.session['cart'] = cart
@@ -116,6 +118,7 @@ def update_cart_quantity(request, item_id):
             if quantity > 0:
                 # Update the quantity
                 cart[str(item_id)]['quantity'] = quantity
+                messages.success(request, 'Item quantity updated in your cart!')
             else:
                 # Remove the item if the quantity is 0
                 del cart[str(item_id)]
@@ -138,6 +141,7 @@ def remove_from_cart(request, item_id):
     # Ensures the item exists in the cart before trying to remove it
     if str(item_id) in cart:
         del cart[str(item_id)]
+        messages.success(request, 'Item successful removed from cart!')
 
     # Saves the updated cart back to the session
     request.session['cart'] = cart

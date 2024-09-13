@@ -153,7 +153,8 @@
 
       <div class="col delivery-banner-child">
 
-        <h4 class="my-1 text-primary"> WE PREPARE A TABLE BEFORE YOU! <strong class="text-white">Free delivery on orders over €</strong>{{ free_delivery_threshold }}!</h4>
+        <h4 class="my-1 text-primary"> WE PREPARE A TABLE BEFORE YOU! <strong class="text-white">Free delivery on orders
+            over €</strong>{{ free_delivery_threshold }}!</h4>
 
       </div>
 
@@ -176,6 +177,23 @@
     <i class="bi bi-arrow-up"></i>
   </a>
 
+  <!-- Toast container -->
+  <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3" data-autohide="false">
+    {% if messages %}
+        {% for message in messages %}
+        <div class="toast align-items-center text-white bg-{{ message.tags }} border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <div class="d-flex">
+                <div class="toast-body">
+                    {{ message }}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+
 
   <script>
     $(document).ready(function () {
@@ -195,6 +213,16 @@
       });
     });
   </script>
+
+  <!-- Custom Script to trigger toast -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+        var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl).show();
+        });
+    });
+</script>
 
 
   <!--Code institute marketing wiskey footer-->
@@ -224,3 +252,5 @@
   </footer>
 
 </body>
+
+</html>
