@@ -10,7 +10,12 @@ def cart_content(request):
     product_count = 0
     cart = request.session.get('cart', {})
 
+    # Free delivery threshold and standard delivery fee
+    FREE_DELIVERY_THRESHOLD = Decimal(50.00)  # Free delivery for totals above 50 euros
+    STANDARD_DELIVERY_FEE = Decimal(7.00)     # Fixed delivery fee of 7 euros
+
     for key, item_data in cart.items():
+        # Ensures item_data is a dictionary
         if isinstance(item_data, dict):
             product = get_object_or_404(Product, pk=item_data['product_id'])
             variant = None
@@ -32,32 +37,28 @@ def cart_content(request):
                 'total_price': price * item_data['quantity']
             })
 
-    if total < settings.FREE_DELIVERY_THRESHOLD:
-        delivery = total * Decimal(settings.STANDARD_DELIVERY)
-        free_delivery_delta = settings.FREE_DELIVERY_THRESHOLD - total
-
-    else:
-        delivery = 0
-        free_delivery_delta = 0
+    # Apply delivery charges based on the total and only if cart is not empty
+    if total > 0:
+        if total < FREE_DELIVERY_THRESHOLD:
+            delivery = STANDARD_DELIVERY_FEE  # Set delivery fee to €7
+            free_delivery_delta = FREE_DELIVERY_THRESHOLD - total
+        else:
+            delivery = Decimal(0)  # Free delivery
+            free_delivery_delta = Decimal(0)
         grand_total = delivery + total
+    else:
+        delivery = Decimal(0)  # No delivery charge for an empty cart
+        free_delivery_delta = Decimal(0)
+        grand_total = Decimal(0)
 
-        cart_items.append({
-            'product': product,
-            'variant': variant,
-            'quantity': item_data['quantity'],
-            'price': price,
-            'total_price': price * item_data['quantity']
-        })
-    
-    
     context = {
         'cart_items': cart_items,
         'total': total,
         'product_count': product_count,
         'delivery': delivery,
         'free_delivery_delta': free_delivery_delta,
-        'free_delivery_threshold': settings.FREE_DELIVERY_THRESHOLD,
+        'free_delivery_threshold': FREE_DELIVERY_THRESHOLD,
         'grand_total': grand_total,
     }
-    
+
     return context

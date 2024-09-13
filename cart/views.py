@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, redirect
 from product_catalog.models import Product, ProductVariant
-from django.http import JsonResponse
-import json
+
 
 
 def cart_detail(request):
@@ -48,8 +47,6 @@ def cart_detail(request):
     }
 
     return render(request, 'cart/cart.html', context)
-
-
 
 
 
@@ -130,4 +127,20 @@ def update_cart_quantity(request, item_id):
         return redirect('cart_detail')
 
     # If the request is not POST, redirect to the cart page
+    return redirect('cart_detail')
+
+
+
+def remove_from_cart(request, item_id):
+    """Removes an item from the cart."""
+    cart = request.session.get('cart', {})
+
+    # Ensures the item exists in the cart before trying to remove it
+    if str(item_id) in cart:
+        del cart[str(item_id)]
+
+    # Saves the updated cart back to the session
+    request.session['cart'] = cart
+
+    # Redirects to the cart detail page
     return redirect('cart_detail')

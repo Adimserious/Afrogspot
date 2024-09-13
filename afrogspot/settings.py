@@ -180,8 +180,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-FREE_DELIVERY_THRESHOLD = 50
-STANDARD_DELIVERY = 7
+FREE_DELIVERY_THRESHOLD = 50.00  # Free delivery for orders over 50 euros
+STANDARD_DELIVERY = 7.00         # Standard delivery charge of 7 euros
 
 LANGUAGE_CODE = 'en-us'
 
