@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import CheckoutForm
-from .models import Order, OrderItem
+from .models import Order, OrderItem, OrderItem
 from decimal import Decimal
+
 
 def checkout(request):
     # Get the cart from session, default to an empty dictionary
@@ -17,14 +18,14 @@ def checkout(request):
     if request.method == 'POST':
         form = CheckoutForm(request.POST)
         if form.is_valid():
-            # Create the order
+            # Creates the order
             order = form.save(commit=False)
             order.user = request.user if request.user.is_authenticated else None
             order.order_total = calculate_order_total(request)  # Custom function to calculate total
             order.grand_total = order.order_total + order.delivery_cost
             order.save()
 
-            # Create order items
+            # Creates order items
             cart = request.session.get('cart', {})
             for key, item_data in cart.items():
                 if isinstance(item_data, dict):
@@ -56,10 +57,8 @@ def checkout(request):
     else:
         form = CheckoutForm()
 
-       
-
-
     return render(request, 'checkout/checkout.html', {'form': form})
+
 
 def calculate_order_total(request):
     cart = request.session.get('cart', {})

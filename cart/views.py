@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from product_catalog.models import Product, ProductVariant
 
@@ -32,10 +32,11 @@ def cart_detail(request):
             'total_price': float(item_data['quantity']) * float(item_data['price']),
         }
 
-        # Checks if a variant exists
+        # Check if a variant exists
         if item_data.get('variant_id'):
-            item['variant'] = get_object_or_404(ProductVariant, id=item_data['variant_id'])
-        
+            variant = get_object_or_404(ProductVariant, id=item_data['variant_id'])
+            item['variant'] = variant  # Add variant info to item
+
         # Appends the item to the cart_items list
         cart_items.append(item)
 
@@ -63,28 +64,22 @@ def add_to_cart(request, item_id):
     if variant_id:
         variant = get_object_or_404(ProductVariant, id=variant_id)
         price = variant.price
+        # Use both product and variant ID to create a unique key
+        key = f"{item_id}-{variant_id}"
     else:
         variant = None
         price = product.price
+        # Use just the product ID for the key if no variant exists
+        key = str(item_id)
 
     # Gets the current cart session
     cart = request.session.get('cart', {})
 
-    # If variant exists, use variant ID, otherwise use product ID
-    key = variant_id if variant else str(item_id)
-
     # Checks if the product/variant is already in the cart
     if key in cart:
-        if isinstance(cart[key], dict):
-            # Increment the quantity if the product/variant is already in the cart
-            cart[key]['quantity'] += quantity
-        else:
-            cart[key] = {
-                'product_id': product.id,
-                'variant_id': variant.id if variant else None,
-                'quantity': quantity,
-                'price': str(price)
-            }
+        # Increment the quantity if the product/variant is already in the cart
+        cart[key]['quantity'] += quantity
+        messages.success(request, f'Updated quantity for {product.name} in your cart!')
     else:
         # Adds the product/variant to the cart as a dictionary
         cart[key] = {
@@ -93,7 +88,7 @@ def add_to_cart(request, item_id):
             'quantity': quantity,
             'price': str(price)
         }
-        messages.success(request, 'Item added to your cart!')
+        messages.success(request, f'{product.name} added to your cart!')
 
     # Saves the updated cart back to the session
     request.session['cart'] = cart
@@ -114,14 +109,14 @@ def update_cart_quantity(request, item_id):
         cart = request.session.get('cart', {})
 
         # Ensure that the item exists in the cart
-        if str(item_id) in cart:
+        if item_id in cart:
             if quantity > 0:
                 # Update the quantity
-                cart[str(item_id)]['quantity'] = quantity
+                cart[item_id]['quantity'] = quantity
                 messages.success(request, 'Item quantity updated in your cart!')
             else:
-                # Remove the item if the quantity is 0
-                del cart[str(item_id)]
+                # Remove the item if the quantity is 0, this is not implemented yet!
+                del cart[item_id]
 
         # Save the updated cart back to the session
         request.session['cart'] = cart
@@ -133,18 +128,19 @@ def update_cart_quantity(request, item_id):
     return redirect('cart_detail')
 
 
-
 def remove_from_cart(request, item_id):
     """Removes an item from the cart."""
     cart = request.session.get('cart', {})
 
-    # Ensures the item exists in the cart before trying to remove it
+    # Ensure the item exists in the cart before trying to remove it
     if str(item_id) in cart:
         del cart[str(item_id)]
-        messages.success(request, 'Item successful removed from cart!')
+        messages.success(request, 'Item successfully removed from cart!')
 
-    # Saves the updated cart back to the session
+    # Save the updated cart back to the session
     request.session['cart'] = cart
 
-    # Redirects to the cart detail page
+    # Redirect to the cart detail page
     return redirect('cart_detail')
+
+   

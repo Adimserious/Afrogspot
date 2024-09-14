@@ -132,7 +132,7 @@
               <a class="{% if grand_total %}text-primary font-weight-bold{% else %}text-white{% endif %} nav-link"
                 href="{% url 'cart_detail' %}">
                 <div class="text-center">
-                  <i class="bi bi-cart"></i> Cart
+                  <i class="bi bi-cart"></i> ({{ product_count }})
                   <p class="my-0">
                     {% if grand_total %}
                     €{{ grand_total|floatformat:2 }}

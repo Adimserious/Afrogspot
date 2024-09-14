@@ -1,122 +1,195 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Checkout</h2>
+<div class="container mt-4">
+    <h2 class="mb-4">Checkout</h2>
 
-{% if messages %}
-<div class="alert-container">
-    {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}">
-        {{ message }}
-    </div>
-    {% endfor %}
-</div>
-{% endif %}
-
-<form method="post" action="{% url 'checkout' %}">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="{{ form.full_name.id_for_label }}">Full Name <span class="required">*</span></label>
-        {{ form.full_name }}
-        {% if form.full_name.errors %}
-        <div class="invalid-feedback">
-            {{ form.full_name.errors }}
+    {% if messages %}
+    <div class="alert-container mb-4">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        {% endif %}
-    </div>
-    <div class="form-group">
-        <label for="{{ form.email.id_for_label }}">Email Address <span class="required">*</span></label>
-        {{ form.email }}
-        {% if form.email.errors %}
-        <div class="invalid-feedback">
-            {{ form.email.errors }}
-        </div>
-        {% endif %}
-    </div>
-    <div class="form-group">
-        <label for="{{ form.phone_number.id_for_label }}">Phone Number <span class="required">*</span></label>
-        {{ form.phone_number }}
-        {% if form.phone_number.errors %}
-        <div class="invalid-feedback">
-            {{ form.phone_number.errors }}
-        </div>
-        {% endif %}
-    </div>
-    <div class="form-group">
-        <label for="{{ form.address_line_1.id_for_label }}">Address Line 1 <span class="required">*</span></label>
-        {{ form.address_line_1 }}
-        {% if form.address_line_1.errors %}
-        <div class="invalid-feedback">
-            {{ form.address_line_1.errors }}
-        </div>
-        {% endif %}
-    </div>
-    <div class="form-group">
-        <label for="{{ form.address_line_2.id_for_label }}">Address Line 2</label>
-        {{ form.address_line_2 }}
-        {% if form.address_line_2.errors %}
-        <div class="invalid-feedback">
-            {{ form.address_line_2.errors }}
-        </div>
-        {% endif %}
-    </div>
-    <div class="form-group">
-        <label for="{{ form.city.id_for_label }}">City <span class="required">*</span></label>
-        {{ form.city  }}
-        {% if form.city.errors %}
-        <div class="invalid-feedback">
-            {{ form.city.errors }}
-        </div>
-        {% endif %}
-    </div>
-    <div class="form-group">
-        <label for="{{ form.postal_code.id_for_label }}">Postal Code</label>
-        {{ form.postal_code }}
-        {% if form.postal_code.errors %}
-        <div class="invalid-feedback">
-            {{ form.postal_code.errors }}
-        </div>
-        {% endif %}
-    </div>
-    <div class="form-group">
-        <label for="{{ form.country.id_for_label }}">Country <span class="required">*</span></label>
-        {{ form.country }}
-        {% if form.country.errors %}
-        <div class="invalid-feedback">
-            {{ form.country.errors }}
-        </div>
-        {% endif %}
-    </div>
-    {% if user.is_authenticated %}
-    <div class="form-check">
-        <input type="checkbox" id="id_save_info" name="save_info" class="form-check-input">
-        <label class="form-check-label" for="id_save_info">Save this delivery information to my profile</label>
+        {% endfor %}
     </div>
     {% endif %}
-    <!-- Code Code institute boutique ado -->
-    <fieldset class="px-3">
-        <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>
-        <!-- A Stripe card element will go here -->
-        <div class="mb-3" id="card-element"></div>
 
-        <!-- Used to display form errors -->
-        <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-    </fieldset>
-    <a href="#" class="btn btn-outline-black rounded-0">
-        <span class="icon">
-            <i class="fas fa-chevron-left"></i>
-        </span>
-        <span class="font-weight-bold">Adjust Bag</span>
-    </a>
-    <button type="submit" class="btn btn-primary">Place Order</button>
-    <p class="small text-danger my-0">
-        <span class="icon">
-            <i class="fas fa-exclamation-circle"></i>
-        </span>
-        <span>Your card will be charged <strong>${{ grand_total|floatformat:2 }}</strong></span>
-    </p>
-</form>
+    {% if cart_items %}
+    <!-- Display Cart Items Summary -->
+    <div class="table-responsive">
+        <h4>Your Order Summary ({{ product_count }})</h4>
+        <table class="table table-hover align-middle">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td><img class="img-fluid rounded" src="{{ item.product.image.url }}" alt="{{ item.product.name }}"
+                            style="width: 50px;"></td>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>€{{ item.price|floatformat:2 }}</td>
+                    <td>€{{ item.total_price|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-</form>
+        <!-- Cart Totals Section -->
+        <div class="cart-totals">
+            <p><strong>Subtotal: €{{ total|floatformat:2 }}</strong></p>
+            <p><strong>Delivery: €{{ delivery|floatformat:2 }}</strong></p>
+            <h4><strong>Grand Total: €{{ grand_total|floatformat:2 }}</strong></h4>
+        </div>
+    </div>
+    {% else %}
+    <p>Your cart is empty. Please add items to your cart before proceeding to checkout.</p>
+    {% endif %}
 
+    <p>Plese fill out the form to complete your order</p>
+    <form method="post" action="{% url 'checkout' %}">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <label for="{{ form.full_name.id_for_label }}">Full Name</label>
+                    {{ form.full_name }}
+                    {% if form.full_name.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.full_name.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">Email Address</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.email.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <label for="{{ form.phone_number.id_for_label }}">Phone Number</label>
+                    {{ form.phone_number }}
+                    {% if form.phone_number.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.phone_number.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <label for="{{ form.address_line_1.id_for_label }}">Address Line 1</label>
+                    {{ form.address_line_1 }}
+                    {% if form.address_line_1.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.address_line_1.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <label for="{{ form.address_line_2.id_for_label }}">Address Line 2</label>
+                    {{ form.address_line_2 }}
+                    {% if form.address_line_2.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.address_line_2.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <label for="{{ form.city.id_for_label }}">City</label>
+                    {{ form.city }}
+                    {% if form.city.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.city.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <label for="{{ form.postal_code.id_for_label }}">Postal Code</label>
+                    {{ form.postal_code }}
+                    {% if form.postal_code.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.postal_code.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="form-group">
+                    <label for="{{ form.country.id_for_label }}">Country</label>
+                    {{ form.country }}
+                    {% if form.country.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.country.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if user.is_authenticated %}
+            <div class="col-12 mb-3">
+                <div class="form-check">
+                    <input type="checkbox" id="id_save_info" name="save_info" class="form-check-input">
+                    <label class="form-check-label" for="id_save_info">Save this delivery information to my
+                        profile</label>
+                </div>
+                {% else %}
+                <div class="form-check">
+                    <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or
+                    <a class="text-info" href="{% url 'account_login' %}">login</a> to save this information
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Payment Section code block from the Code institue boutique ado walkthrogh -->
+        <fieldset class="mb-4">
+            <legend class="small text-black px-2">Payment</legend>
+            <div class="mb-3" id="card-element">
+                <!-- A Stripe card element will go here -->
+            </div>
+            <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+            <!-- Used to display form errors -->
+            <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+        </fieldset>
+
+        <div class="d-flex justify-content-between mb-3">
+            <a href="{% url 'cart_detail' %}" class="btn btn-outline-success">
+                <span class="icon me-2">
+                    <i class="fas fa-chevron-left"></i>
+                </span>
+                <span>Adjust Cart</span>
+            </a>
+            <button type="submit" class="btn btn-success">Place Order</button>
+        </div>
+
+        <p class="small text-danger mb-0">
+            <span class="icon me-2">
+                <i class="fas fa-exclamation-circle"></i>
+            </span>
+            <span>Your card will be charged <strong>${{ grand_total|floatformat:2 }}</strong></span>
+        </p>
+    </form>
+</div>
 {% endblock %}
