@@ -58,12 +58,17 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
+          <!-- Search Form -->
           <form class="d-flex me-auto w-50" method="GET" action="{% url 'product_list' %}">
-            <input class="form-control me-2 w-100" type="text" name="q"
+            <!-- Search input retains the previous search term -->
+            <input class="form-control me-2 w-100" type="text" name="q" value="{{ query|default:'' }}"
               placeholder="Search for products, brands, and more..." aria-label="Search">
-
+            <!-- Hidden input to retain the selected category when performing a search -->
+            <input type="hidden" name="category" value="{{ category_name|default:'' }}">
             <button class="btn btn-outline-light" type="submit">Search</button>
           </form>
+
+          <!-- Navigation Menu -->
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
@@ -73,6 +78,7 @@
               <a class="nav-link" href="#">New Arrivals</a>
             </li>
 
+            <!-- Categories Dropdown -->
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -80,35 +86,18 @@
               </a>
 
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-                <li><a class="dropdown-item"
-                    href="{% url 'product_list' %}?category=fishes{{ category.name|urlencode }}&q={{ query }}">Fishes</a>
-                </li>
-                <li><a class="dropdown-item"
-                    href="{% url 'product_list' %}?category=peppers{{ category.name|urlencode }}&q={{ query }}">Peppers</a>
-                </li>
-                <li><a class="dropdown-item"
-                    href="{% url 'product_list' %}?category=seasonings{{ category.name|urlencode }}&q={{ query }}">Seasonings</a>
-                </li>
-                <li><a class="dropdown-item"
-                    href="{% url 'product_list' %}?category=veggies{{ category.name|urlencode }}&q={{ query }}">Veggies</a>
-                </li>
-                <li><a class="dropdown-item"
-                    href="{% url 'product_list' %}?category=lean meat or seafood{{ category.name|urlencode }}&q={{ query }}">Sea
-                    Foods</a>
-                </li>
-                <li><a class="dropdown-item"
-                    href="{% url 'product_list' %}?category=nuts and seeds{{ category.name|urlencode }}&q={{ query }}">Nuts
-                    & Seeds</a>
-                </li>
-
+                <!-- Dynamically generated category links -->
+                {% for category in categories %}
                 <li>
-                  <a class="dropdown-item" href="{% url 'product_list' %}">All Products</a>
+                  <a class="dropdown-item" href="{% url 'product_list' %}?category={{ category.name|urlencode }}&q={{ query|urlencode }}">
+                    {{ category.name }}
+                  </a>
                 </li>
-
+                {% endfor %}
               </ul>
-
             </li>
+
+            <!-- Account Dropdown -->
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button"
                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -116,18 +105,19 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownAccount">
                 {% if request.user.is_authenticated %}
-                {% if request.user.is_superuser %}
-                <li><a class="dropdown-item" href="#">Manage Product</a></li>
-                {% endif %}
-                <a href="#" class="dropdown-item">My Profile</a>
-                <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+                  {% if request.user.is_superuser %}
+                    <li><a class="dropdown-item" href="#">Manage Product</a></li>
+                  {% endif %}
+                  <li><a href="#" class="dropdown-item">My Profile</a></li>
+                  <li><a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a></li>
                 {% else %}
-                <li><a class="dropdown-item" href="{% url 'account_login' %}">Login</a></li>
-                <li><a class="dropdown-item" href="{% url 'account_signup' %}">Register</a></li>
+                  <li><a class="dropdown-item" href="{% url 'account_login' %}">Login</a></li>
+                  <li><a class="dropdown-item" href="{% url 'account_signup' %}">Register</a></li>
                 {% endif %}
-
               </ul>
             </li>
+
+            <!-- Cart Icon and Count -->
             <li class="nav-item">
               <a class="{% if grand_total %}text-primary font-weight-bold{% else %}text-white{% endif %} nav-link"
                 href="{% url 'cart_detail' %}">
@@ -135,9 +125,9 @@
                   <i class="bi bi-cart"></i> ({{ product_count }})
                   <p class="my-0">
                     {% if grand_total %}
-                    €{{ grand_total|floatformat:2 }}
+                      €{{ grand_total|floatformat:2 }}
                     {% else %}
-                    €0.00
+                      €0.00
                     {% endif %}
                   </p>
                 </div>
@@ -148,19 +138,16 @@
       </div>
     </nav>
 
-
+    <!-- Delivery Banner -->
     <div id="delivery-banner" class="row text-center">
-
       <div class="col delivery-banner-child">
-
-        <h4 class="my-1 text-primary"> WE PREPARE A TABLE BEFORE YOU! <strong class="text-white">Free delivery on orders
-            over €</strong>{{ free_delivery_threshold }}!</h4>
-
+        <h4 class="my-1 text-primary">
+          WE PREPARE A TABLE BEFORE YOU! <strong class="text-white">Free delivery on orders over €</strong>{{ free_delivery_threshold }}!
+        </h4>
       </div>
-
     </div>
 
-    <!--Bootstrap Icons CDN for cart icon -->
+    <!-- Bootstrap Icons CDN for cart icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
   </header>
 
@@ -168,8 +155,8 @@
   {% endblock %}
 
   <main class="content">
-    {% block content%}
-    {% endblock content%}
+    {% block content %}
+    {% endblock content %}
   </main>
 
   <!-- Back to Top Button -->
@@ -177,23 +164,21 @@
     <i class="bi bi-arrow-up"></i>
   </a>
 
-  <!-- Toast container -->
+  <!-- Toast container for Django messages -->
   <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3" data-autohide="false">
     {% if messages %}
-        {% for message in messages %}
+      {% for message in messages %}
         <div class="toast align-items-center text-white bg-{{ message.tags }} border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
-            <div class="d-flex">
-                <div class="toast-body">
-                    {{ message }}
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          <div class="d-flex">
+            <div class="toast-body">
+              {{ message }}
             </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
         </div>
-        {% endfor %}
+      {% endfor %}
     {% endif %}
-</div>
-
-
+  </div>
 
   <script>
     $(document).ready(function () {
@@ -217,12 +202,12 @@
   <!-- Custom Script to trigger toast -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var toastElList = [].slice.call(document.querySelectorAll('.toast'));
-        var toastList = toastElList.map(function (toastEl) {
-            return new bootstrap.Toast(toastEl).show();
-        });
+      var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+      var toastList = toastElList.map(function (toastEl) {
+        return new bootstrap.Toast(toastEl).show();
+      });
     });
-</script>
+  </script>
 
 
   <!--Code institute marketing wiskey footer-->

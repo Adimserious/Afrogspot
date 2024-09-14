@@ -6,36 +6,30 @@ from .models import Product, Category, ProductVariant
 
 # Create your views here.
 def product_list(request):
-    """ A view to show list of products that are available, search and category"""
-
-    products = Product.objects.filter(is_active=True).order_by('name')
-    category_name = request.GET.get('category')
     query = request.GET.get('q')
-    
-    if category_name and category_name.strip() != '':
-        # Check if the category exists (case-insensitive search)
-        category = get_object_or_404(Category, name__iexact=category_name)
-        products = products.filter(category=category)
+    category_name = request.GET.get('category')
 
-    
-    # search query
-    if request.GET:
-        if 'q' in request.GET:
-            query = request.GET['q']
-            if not query:
-                messages.error(request, "You didn't enter any search criteria!")
-                
-        
-            queries = Q(name__icontains=query) | Q(description__icontains=query)
-            products = products.filter(queries)
-        
+    products = Product.objects.all()
 
+    if category_name:
+        products = products.filter(category__name__iexact=category_name)
+
+    if query:
+        products = products.filter(
+            Q(name__icontains=query) | 
+            Q(description__icontains=query) |
+            Q(brand__icontains=query)
+        )
+
+    # Handle empty query search scenario
+    if not query and not category_name:
+        messages.warning(request, "You didn't enter a search term. Please enter something to search for products.")
 
     context = {
         'products': products,
         'query': query,
-        'category_name': category_name,  # selected category name
-        'categories': Category.objects.all(),  # To populate the category dropdown in the template
+        'category_name': category_name,
+        'categories': Category.objects.all(),  # For the category dropdown
     }
 
     return render(request, 'product_catalog/product_list.html', context)
