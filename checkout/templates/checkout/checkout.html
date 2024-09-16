@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <div class="container mt-4">
     <h2 class="mb-4">Checkout</h2>
@@ -192,4 +192,11 @@
         </p>
     </form>
 </div>
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    {{ stripe_public_key|json_script:"id_stripe_public_key" }}
+    {{ client_secret|json_script:"id_client_secret" }}
+    <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
 {% endblock %}

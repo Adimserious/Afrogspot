@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import CheckoutForm
@@ -57,7 +58,9 @@ def checkout(request):
     else:
         form = CheckoutForm()
 
-    return render(request, 'checkout/checkout.html', {'form': form})
+    
+
+    return render(request, 'checkout/checkout.html', {'form': form,})
 
 
 def calculate_order_total(request):

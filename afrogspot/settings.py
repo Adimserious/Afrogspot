@@ -207,3 +207,5 @@ LANGUAGES = [
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
 ]
+
+STRIPE_PUBLIC_KEY = 'pk_test_51PzZnaLntMa4ITQs84dTGoPsyk0OPjlkYaclM790Cdq5OrB0H92gjyaChEF1mTZx472aGQ7jcDpjs9RsjKPvAdRv008Jqc75Lc'

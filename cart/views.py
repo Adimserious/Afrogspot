@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from product_catalog.models import Product, ProductVariant
+from django.conf import settings
 
 
 
@@ -43,9 +44,21 @@ def cart_detail(request):
     # Calculates total cart price
     total = sum(item['total_price'] for item in cart_items)
 
+    # free shipping threshold 
+    free_shipping_threshold = getattr(settings, 'FREE_SHIPPING_THRESHOLD', 50)
+
+    # Determines if the cart is eligible for free shipping
+    eligible_for_free_shipping = total >= free_shipping_threshold
+
+    # Calculate amount needed for free shipping
+    #amount_needed_for_free_shipping = max(0, free_shipping_threshold - total)
+
     context = {
         'cart_items': cart_items,
         'total': total,
+        'free_shipping_threshold': free_shipping_threshold,
+        'eligible_for_free_shipping': eligible_for_free_shipping,
+        #'amount_needed_for_free_shipping': amount_needed_for_free_shipping,
     }
 
     return render(request, 'cart/cart.html', context)

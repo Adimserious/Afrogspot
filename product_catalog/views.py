@@ -17,8 +17,7 @@ def product_list(request):
     if query:
         products = products.filter(
             Q(name__icontains=query) | 
-            Q(description__icontains=query) |
-            Q(brand__icontains=query)
+            Q(description__icontains=query)
         )
 
     # Handle empty query search scenario
