@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 from django.contrib.messages import constants as messages
+from decouple import config
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'secondary',  # Bootstrap 'secondary' class for debug messages
@@ -208,4 +209,5 @@ LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
 ]
 
-STRIPE_PUBLIC_KEY = 'pk_test_51PzZnaLntMa4ITQs84dTGoPsyk0OPjlkYaclM790Cdq5OrB0H92gjyaChEF1mTZx472aGQ7jcDpjs9RsjKPvAdRv008Jqc75Lc'
+STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')

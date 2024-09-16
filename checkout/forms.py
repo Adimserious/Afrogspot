@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.html import format_html
 from .models import Order
 
 class CheckoutForm(forms.ModelForm):
@@ -28,10 +29,9 @@ class CheckoutForm(forms.ModelForm):
             'country': forms.TextInput(attrs={'placeholder': 'Country'}),
         }
 
-    # automatically append a star to required fields using Django’s form field rendering
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             if field.required:
-                field.label = f'{field.label} <span class="required">*</span>'
-                field.widget.attrs.update({'class': 'form-control'})
+                field.label = format_html('{} <span class="required">*</span>', field.label)
+            field.widget.attrs.update({'class': 'form-control'})
