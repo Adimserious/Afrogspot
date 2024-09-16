@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .forms import CheckoutForm
 from .models import Order, OrderItem, Product, ProductVariant
 from decimal import Decimal
@@ -62,7 +63,7 @@ def checkout(request):
             # Clear the cart
             request.session['cart'] = {}
 
-            # Save user info if `save_info` is checked
+            # Saves user info if `save_info` is checked
             save_info = 'save_info' in request.POST
             if save_info and request.user.is_authenticated:
                 profile = request.user.profile
@@ -105,3 +106,10 @@ def calculate_order_total(request):
 def order_confirmation(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     return render(request, 'checkout/order_confirmation.html', {'order': order})
+
+
+@login_required
+def order_history(request):
+    # Filter orders for the current user
+    orders = Order.objects.filter(user=request.user).order_by('-date_ordered')
+    return render(request, 'order_history.html', {'orders': orders})

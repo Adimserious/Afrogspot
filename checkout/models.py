@@ -62,7 +62,7 @@ class Order(models.Model):
     @receiver(post_save, sender='checkout.Order')
     def update_order_items(sender, instance, **kwargs):
         """Updates the total price for each OrderItem when the Order is saved."""
-        for item in instance.orderitem_set.all():
+        for item in instance.items.all():
             item.total_price = item.quantity * item.price
             item.save()
 

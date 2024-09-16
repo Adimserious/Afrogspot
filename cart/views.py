@@ -5,6 +5,7 @@ from django.conf import settings
 
 
 
+
 def cart_detail(request):
     # Get the cart from session, default to an empty dictionary
     cart = request.session.get('cart', {})

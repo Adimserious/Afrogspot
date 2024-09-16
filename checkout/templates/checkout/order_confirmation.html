@@ -1,8 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Order Confirmation</h2>
-<p>Thank you for your order!</p>
-<p>Order Number: {{ order.order_number }}</p>
-<p>Order Total: €{{ order.grand_total }}</p>
+<div class="container mt-4">
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Order Confirmation</h4>
+        <p class="mb-0">Thank you for your order!</p>
+    </div>
+    
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Order Details</h5>
+            <p class="card-text"><strong>Order Number:</strong> {{ order.order_number }}</p>
+            <p class="card-text"><strong>Order Total:</strong> €{{ order.grand_total }}</p>
+        </div>
+    </div>
+    
+    <div class="text-center mt-4">
+        <a href="{% url 'home' %}" class="btn btn-primary">Return to Home</a>
+        <a href="{% url 'order_history' %}" class="btn btn-secondary">View Order History</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .alert-heading {
+        font-size: 1.5rem;
+    }
+    .card {
+        border-radius: 8px;
+    }
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+    .btn {
+        margin: 0.5rem;
+    }
+</style>
 {% endblock %}
