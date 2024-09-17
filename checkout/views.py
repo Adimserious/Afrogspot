@@ -110,6 +110,22 @@ def order_confirmation(request, order_id):
 
 @login_required
 def order_history(request):
-    # Filter orders for the current user
+    # Retrieve orders for the current user
     orders = Order.objects.filter(user=request.user).order_by('-date_ordered')
-    return render(request, 'order_history.html', {'orders': orders})
+    
+    context = {
+        'orders': orders,
+    }
+    return render(request, 'checkout/order_history.html', context)
+
+
+def order_detail(request, order_id):
+    # Retrieve a specific order and its items
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    order_items = OrderItem.objects.filter(order=order)
+
+    context = {
+        'order': order,
+        'order_items': order_items,
+    }
+    return render(request, 'checkout/order_detail.html', context)

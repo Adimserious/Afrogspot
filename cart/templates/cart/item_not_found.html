@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Item Not Found</h2>
+<p>The item you're looking for could not be found in your cart.</p>
+<a href="{% url 'order_history' %}" class="btn btn-primary">Back</a>
+{% endblock %}

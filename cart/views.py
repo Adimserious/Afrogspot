@@ -156,5 +156,3 @@ def remove_from_cart(request, item_id):
 
     # Redirect to the cart detail page
     return redirect('cart_detail')
-
-   

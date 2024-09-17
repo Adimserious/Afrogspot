@@ -9,7 +9,6 @@
             <tr>
                 <th>Order Number</th>
                 <th>Date Ordered</th>
-                <th>Total</th>
                 <th>Status</th>
                 <th>Details</th>
             </tr>
@@ -19,10 +18,9 @@
             <tr>
                 <td>{{ order.order_number }}</td>
                 <td>{{ order.date_ordered }}</td>
-                <td>€{{ order.grand_total }}</td>
                 <td>{{ order.order_status }}</td>
                 <td>
-                    <a href="{% url 'cart_detail' order.id %}" class="btn btn-info">View</a>
+                    <a href="{% url 'order_detail' order.id %}" class="btn btn-info">View Details</a>
                 </td>
             </tr>
             {% endfor %}

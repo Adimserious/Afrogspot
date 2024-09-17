@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Order Details</h2>
+
+<h3>Order Number: {{ order.order_number }}</h3>
+<p>Date Ordered: {{ order.date_ordered }}</p>
+<p>Status: {{ order.order_status }}</p>
+
+{% if order_items %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Image</th>
+                <th>Variant</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td><img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" width="50" height="50"></td>
+                <td>{{ item.variant }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>€{{ item.price }}</td>
+                <td>€{{ item.quantity|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No items in this order.</p>
+{% endif %}
+<a href="{% url 'order_history' %}" class="btn btn-primary">Back</a>
+{% endblock %}
