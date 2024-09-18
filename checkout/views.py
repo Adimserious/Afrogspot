@@ -23,21 +23,22 @@ def checkout(request):
     delivery_cost = Decimal('7.00')  # Example delivery cost
     grand_total = order_total + delivery_cost
 
-    # Create PaymentIntent
+    # Creates PaymentIntent
     try:
         intent = stripe.PaymentIntent.create(
             amount=int(grand_total * 100),  # Convert to cents
             currency='eur',
         )
+        print(intent)   
         client_secret = intent.client_secret
     except stripe.error.StripeError as e:
         messages.error(request, f'Error with Stripe: {str(e)}')
-        return redirect('cart_detail')
+        return redirect('cart_detail') 
 
     if request.method == 'POST':
         form = CheckoutForm(request.POST)
         if form.is_valid():
-            # The payment has been confirmed client-side; create the order
+            # The payment has been confirmed client-side; creates the order
             order = form.save(commit=False)
             order.user = request.user if request.user.is_authenticated else None
             order.order_total = order_total
@@ -104,6 +105,7 @@ def calculate_order_total(request):
     return total
 
 def order_confirmation(request, order_id):
+    save_info = request.session.get('save_info')
     order = get_object_or_404(Order, id=order_id)
     return render(request, 'checkout/order_confirmation.html', {'order': order})
 
@@ -120,9 +122,12 @@ def order_history(request):
 
 
 def order_detail(request, order_id):
-    # Retrieve a specific order and its items
-    order = get_object_or_404(Order, id=order_id, user=request.user)
+    order = get_object_or_404(Order, id=order_id)
     order_items = OrderItem.objects.filter(order=order)
+
+    # Pass total calculation to context
+    for item in order_items:
+        item.total_price = item.price * item.quantity
 
     context = {
         'order': order,

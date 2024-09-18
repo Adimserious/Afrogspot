@@ -44,27 +44,27 @@ class Order(models.Model):
 
     def update_total(self):
         """
-        Updates grand total by adding delivery cost to the order total.
+        Updates grand total by recalculating order total and delivery cost.
         """
-        self.grand_total = self.order_total + Decimal(self.delivery_cost)
-        if self.grand_total < settings.FREE_DELIVERY_THRESHOLD:
-            self.delivery_cost = self.grand_total * settings.STANDARD_DELIVERY
+        # Calculate the new order total by summing all order item totals
+        self.order_total = sum(item.total_price for item in self.items.all())
+        
+        # Determine delivery cost based on the order total
+        if self.order_total < settings.FREE_DELIVERY_THRESHOLD:
+            self.delivery_cost = Decimal(7.00)  # Standard delivery cost
         else:
-            self.delivery_cost = 0
-        self.order_total = self.grand_total + self.delivery_cost
+            self.delivery_cost = Decimal(0.00)  # Free delivery
+
+        # Calculate the grand total
+        self.grand_total = self.order_total + self.delivery_cost
+        
+        # Save the order to update the totals
         self.save()
+
 
     
     def __str__(self):
         return f'Order #{self.order_number} by {self.full_name}'
-
-    # signals
-    @receiver(post_save, sender='checkout.Order')
-    def update_order_items(sender, instance, **kwargs):
-        """Updates the total price for each OrderItem when the Order is saved."""
-        for item in instance.items.all():
-            item.total_price = item.quantity * item.price
-            item.save()
 
 
 # stores information about each product that the customer has purchased in that specific order

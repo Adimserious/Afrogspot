@@ -400,7 +400,7 @@
         const stripe = Stripe(stripePublicKey);
         const elements = stripe.elements();
 
-        // Create an instance of the card Element
+        // Creates an instance of the card Element
         const card = elements.create('card', {
             style: {
                 base: {

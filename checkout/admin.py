@@ -26,12 +26,8 @@ class OrderAdmin(admin.ModelAdmin):
     ordering = ('-date_ordered',)
 
     def get_readonly_fields(self, request, obj=None):
-        """
-        Returns the list of fields that should be read-only. The fields is conditional based on
-        whether the object is being created or edited.
-        """
+        """Returns list of read-only fields."""
         if obj:  # Editing an existing order
-            return self.readonly_fields + ('order_number', 'date_ordered', 'grand_total')
+            return self.readonly_fields
         return self.readonly_fields
-
 admin.site.register(Order, OrderAdmin)

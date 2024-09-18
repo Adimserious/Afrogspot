@@ -27,7 +27,8 @@
                 <td>{{ item.variant }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>€{{ item.price }}</td>
-                <td>€{{ item.quantity|floatformat:2 }}</td>
+                <td>€{{ item.total_price|floatformat:2 }}</td>
+
             </tr>
             {% endfor %}
         </tbody>
