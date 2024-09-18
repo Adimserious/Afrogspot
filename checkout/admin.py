@@ -13,7 +13,7 @@ class OrderItemInline(admin.TabularInline):
 
 class OrderAdmin(admin.ModelAdmin):
     # Displays these fields in the admin list view
-    list_display = ('order_number', 'user', 'order_total', 'order_status', 'date_ordered')
+    list_display = ('order_number', 'user', 'order_total', 'delivery_cost', 'grand_total', 'order_status', 'date_ordered')
     
     # Adds filters in the admin interface
     list_filter = ('order_status', 'date_ordered')

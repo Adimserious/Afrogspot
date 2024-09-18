@@ -45,22 +45,24 @@ class Order(models.Model):
     def update_total(self):
         """
         Updates grand total by recalculating order total and delivery cost.
+        Clears the delivery cost if the order total is zero.
         """
         # Calculate the new order total by summing all order item totals
         self.order_total = sum(item.total_price for item in self.items.all())
-        
-        # Determine delivery cost based on the order total
-        if self.order_total < settings.FREE_DELIVERY_THRESHOLD:
+
+        # If the order total is zero, clear the delivery cost
+        if self.order_total == 0:
+            self.delivery_cost = Decimal(0.00)  # Clear delivery cost if no items in the order
+        elif self.order_total < settings.FREE_DELIVERY_THRESHOLD:
             self.delivery_cost = Decimal(7.00)  # Standard delivery cost
         else:
-            self.delivery_cost = Decimal(0.00)  # Free delivery
+            self.delivery_cost = Decimal(0.00)  # Free delivery for orders above the threshold
 
         # Calculate the grand total
         self.grand_total = self.order_total + self.delivery_cost
-        
+
         # Save the order to update the totals
         self.save()
-
 
     
     def __str__(self):
@@ -78,10 +80,14 @@ class OrderItem(models.Model):
 
     def save(self, *args, **kwargs):
         """
-        Calculate the total price for the order item (price * quantity).
+        Calculates the total price for the order item (price * quantity).
+        If quantity is zero, automatically delete the order item.
         """
-        self.total_price = self.price * self.quantity
-        super().save(*args, **kwargs)
+        if self.quantity == 0:
+            self.delete()
+        else:
+            self.total_price = self.price * self.quantity
+            super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.quantity} x {self.product.name} (Order #{self.order.id})'

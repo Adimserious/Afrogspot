@@ -14,6 +14,12 @@ def update_order_total_on_save(sender, instance, **kwargs):
 def update_order_total_on_delete(sender, instance, **kwargs):
     """
     Signal to update the order total when an OrderItem is deleted.
+    If the order has no items left, delete the order.
     """
     order = instance.order
+    # Recalculate order total after an item is deleted
     order.update_total()
+
+    # If the order has no items left, delete the order
+    if order.items.count() == 0:
+        order.delete()
