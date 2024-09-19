@@ -20,7 +20,7 @@ def checkout(request):
 
     # Calculate order total
     order_total = calculate_order_total(request)
-    delivery_cost = Decimal('7.00')  # Example delivery cost
+    delivery_cost = Decimal('7.00')  # Standard delivery cost
     grand_total = order_total + delivery_cost
 
     # Creates PaymentIntent
@@ -38,7 +38,7 @@ def checkout(request):
     if request.method == 'POST':
         form = CheckoutForm(request.POST)
         if form.is_valid():
-            # The payment has been confirmed client-side; creates the order
+            # The payment has been confirmed on the client-side; creates the order
             order = form.save(commit=False)
             order.user = request.user if request.user.is_authenticated else None
             order.order_total = order_total
@@ -94,6 +94,7 @@ def checkout(request):
 
     return render(request, 'checkout/checkout.html', context)
 
+
 def calculate_order_total(request):
     cart = request.session.get('cart', {})
     total = Decimal(0)
@@ -103,6 +104,7 @@ def calculate_order_total(request):
             quantity = item_data['quantity']
             total += price * quantity
     return total
+
 
 def order_confirmation(request, order_id):
     save_info = request.session.get('save_info')
@@ -132,7 +134,7 @@ def order_detail(request, order_id):
     context = {
         'order': order,
         'order_items': order_items,
-        'delivery_cost': order.delivery_cost,  # Add delivery cost
-        'grand_total': order.grand_total,      # Add grand total
+        'delivery_cost': order.delivery_cost,  # Adds delivery cost
+        'grand_total': order.grand_total,      # Adds grand total
     }
     return render(request, 'checkout/order_detail.html', context)

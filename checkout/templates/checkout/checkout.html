@@ -347,44 +347,50 @@
             <div class="col-12 mb-3">
                 <div class="form-check">
                     <input type="checkbox" id="id_save_info" name="save_info" class="form-check-input">
-                    <label class="form-check-label" for="id_save_info">Save this delivery information to my
-                        profile</label>
+                    <label class="form-check-label" for="id_save_info">
+                        Save this delivery information to my profile
+                    </label>
                 </div>
-                {% else %}
-                <div class="form-check">
-                    <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or
-                    <a class="text-info" href="{% url 'account_login' %}">login</a> to save this information
+            </div>
+            {% else %}
+            <div class="col-12 mb-3">
+                <div class="alert alert-info">
+                    <p>To save your delivery information for future purchases, please
+                        <a class="text-info" href="{% url 'account_signup' %}?next={% url 'checkout' %}">create an
+                            account</a> or
+                        <a class="text-info" href="{% url 'account_login' %}?next={% url 'checkout' %}">log in</a> to
+                        continue.
+                    </p>
                 </div>
             </div>
             {% endif %}
-        </div>
 
-        <!-- Payment Section code block from the Code institue boutique ado walkthrogh -->
-        <fieldset class="mb-4">
-            <legend class="small text-black px-2">Payment</legend>
-            <div class="mb-3" id="card-element">
-                <!-- A Stripe card element will go here -->
+            <!-- Payment Section code block from the Code Institute Boutique Ado walkthrough -->
+            <fieldset class="mb-4">
+                <legend class="small text-black px-2">Payment</legend>
+                <div class="mb-3" id="card-element">
+                    <!-- A Stripe card element will go here -->
+                </div>
+                <!-- Used to display form errors -->
+                <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+            </fieldset>
+
+            <div class="d-flex justify-content-between mb-3">
+                <a href="{% url 'cart_detail' %}" class="btn btn-outline-success">
+                    <span class="icon me-2">
+                        <i class="fas fa-chevron-left"></i>
+                    </span>
+                    <span>Adjust Cart</span>
+                </a>
+                <button type="submit" class="btn btn-success">Place Order</button>
             </div>
-            <!-- Used to display form errors -->
-            <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-        </fieldset>
 
-        <div class="d-flex justify-content-between mb-3">
-            <a href="{% url 'cart_detail' %}" class="btn btn-outline-success">
+            <p class="small text-danger mb-0">
                 <span class="icon me-2">
-                    <i class="fas fa-chevron-left"></i>
+                    <i class="fas fa-exclamation-circle"></i>
                 </span>
-                <span>Adjust Cart</span>
-            </a>
-            <button type="submit" class="btn btn-success">Place Order</button>
-        </div>
-
-        <p class="small text-danger mb-0">
-            <span class="icon me-2">
-                <i class="fas fa-exclamation-circle"></i>
-            </span>
-            <span>Your card will be charged <strong>${{ grand_total|floatformat:2 }}</strong></span>
-        </p>
+                <span>Your card will be charged <strong>${{ grand_total|floatformat:2 }}</strong></span>
+            </p>
     </form>
 </div>
 {% endblock %}
