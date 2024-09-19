@@ -24,6 +24,8 @@ def profile_view(request):
 
     context = {
         'form': form,
-        'orders': orders
+        'orders': orders,
+        'user_name': request.user.get_full_name() or request.user.username
+        
     }
     return render(request, 'profiles/profile.html', context)
