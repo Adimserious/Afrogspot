@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm
 from .models import Profile
@@ -15,7 +16,8 @@ def profile_view(request):
         form = ProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('profile')  # Redirect to the profile page after saving
+            messages.success(request, 'Your profile information has been updated.')
+            return redirect('profile_view')  # Redirect to the profile page after saving
 
     # Get user's order history
     orders = Order.objects.filter(user=request.user)
