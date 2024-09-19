@@ -23,7 +23,7 @@ class Order(models.Model):
     address_line_2 = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=20, blank=True, null=True)
-    country = models.CharField(max_length=50)
+    country = models.CharField(max_length=50, blank=False, null=False)
     date_ordered = models.DateTimeField(auto_now_add=True)
     order_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     delivery_cost = models.DecimalField(max_digits=6, decimal_places=2, default=7.00)

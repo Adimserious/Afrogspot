@@ -69,6 +69,15 @@ strong {
     font-weight: bold;
 }
 
+#id_country option {
+    color: black; /* Default color for all countries */
+}
+
+#id_country option:first-child {
+    color: gray; /* Set the first option to black */
+}
+
+
 
 @media (max-width: 768px) {
     .wrapper {

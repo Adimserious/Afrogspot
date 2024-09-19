@@ -1,32 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Order History</h2>
+<h2 class="text-center">Order History</h2>
 
 {% if orders %}
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Order Number</th>
-                <th>Date Ordered</th>
-                <th>Status</th>
-                <th>Details</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for order in orders %}
-            <tr>
-                <td>{{ order.order_number }}</td>
-                <td>{{ order.date_ordered }}</td>
-                <td>{{ order.order_status }}</td>
-                <td>
-                    <a href="{% url 'order_detail' order.id %}" class="btn btn-info">View Details</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Order Number</th>
+            <th>Date Ordered</th>
+            <th>Status</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.order_number }}</td>
+            <td>{{ order.date_ordered }}</td>
+            <td>{{ order.order_status }}</td>
+            <td>
+                <a href="{% url 'order_detail' order.id %}" class="btn btn-info">View Details</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% else %}
-    <p>You have no past orders.</p>
+<p class="text-center">You have no past orders.</p>
 {% endif %}
+<div class="d-flex justify-content-around align-items-center mt-4">
+    <a class="btn btn-success" href="{% url 'product_list' %}">
+        <i class="fas fa-chevron-left"></i> Keep Shopping
+    </a>
+    <a class="btn btn-success" href="{% url 'cart_detail' %}">Back To Cart</a>
+</div>
 {% endblock %}
