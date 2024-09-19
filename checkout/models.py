@@ -7,6 +7,7 @@ from django.db.models import Sum
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from profiles.models import Profile
 
 
 # Function to generate a short order number
@@ -16,6 +17,7 @@ def generate_short_order_number():
 
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+    profile = models.ForeignKey('profiles.Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
     full_name = models.CharField(max_length=100)
     email = models.EmailField()
     phone_number = models.CharField(max_length=15)

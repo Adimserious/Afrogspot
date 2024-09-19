@@ -10,6 +10,7 @@
             <th>Order Number</th>
             <th>Date Ordered</th>
             <th>Status</th>
+            <th>Total</th>
             <th>Details</th>
         </tr>
     </thead>
@@ -19,6 +20,7 @@
             <td>{{ order.order_number }}</td>
             <td>{{ order.date_ordered }}</td>
             <td>{{ order.order_status }}</td>
+            <td>€{{ order.grand_total }}</td>
             <td>
                 <a href="{% url 'order_detail' order.id %}" class="btn btn-info">View Details</a>
             </td>

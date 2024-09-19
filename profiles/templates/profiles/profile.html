@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">My Profile</h2>
+
+    <!-- Profile Form -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title">Update Your Information</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="btn btn-success">Update Information</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order History -->
+    <h2 class="mb-4">Order History</h2>
+
+    {% if orders %}
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Order Number</th>
+                    <th>Date Ordered</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.order_number }}</td>
+                    <td>{{ order.date_ordered }}</td>
+                    <td>{{ order.order_status }}</td>
+                    <td>€{{ order.grand_total|floatformat:2 }}</td>
+                    <td>
+                        <a href="{% url 'order_detail' order.id %}" class="btn btn-success btn-sm">View Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        You have no past orders.
+    </div>
+    {% endif %}
+    <div class="d-flex justify-content-around align-items-center mt-4">
+        <a class="btn btn-success" href="{% url 'product_list' %}">
+            <i class="fas fa-chevron-left"></i> Keep Shopping
+        </a>
+        <a class="btn btn-success" href="{% url 'cart_detail' %}">To Cart</a>
+    </div>
+</div>
+{% endblock %}

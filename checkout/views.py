@@ -29,7 +29,7 @@ def checkout(request):
             amount=int(grand_total * 100),  # Convert to cents
             currency='eur',
         )
-        print(intent)   
+        #print(intent)   
         client_secret = intent.client_secret
     except stripe.error.StripeError as e:
         messages.error(request, f'Error with Stripe: {str(e)}')
@@ -132,5 +132,7 @@ def order_detail(request, order_id):
     context = {
         'order': order,
         'order_items': order_items,
+        'delivery_cost': order.delivery_cost,  # Add delivery cost
+        'grand_total': order.grand_total,      # Add grand total
     }
     return render(request, 'checkout/order_detail.html', context)
