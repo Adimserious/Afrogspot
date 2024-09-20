@@ -1,21 +1,31 @@
-
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>{{ form.instance.id|yesno:"Update Product,Add Product" }}</h2>
+<div class="container my-4">
+    <h2 class="text-center">{{ form.instance.id|yesno:"Update Product,Add Product" }}</h2>
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    
-    <h3>Variants</h3>
-    {{ variant_formset.management_form }}
-    {% for form in variant_formset %}
-        <div class="variant-form">
-            {{ form.as_p }}
+    <form method="POST" enctype="multipart/form-data" class="border p-4 rounded shadow-sm">
+        {% csrf_token %}
+        
+        <!-- Main Product Form -->
+        <div class="mb-3">
+            {{ form.as_p|safe }}
         </div>
-    {% endfor %}
 
-    <button type="submit">{{ form.instance.id|yesno:"Update Product,Add Product" }}</button>
-</form>
+        <h3 class="mt-4">Variants</h3>
+        {{ variant_formset.management_form }}
+        
+        <div class="variant-forms">
+            {% for form in variant_formset %}
+                <div class="variant-form mb-3 border p-3 rounded">
+                    {{ form.as_p|safe }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            {{ form.instance.id|yesno:"Update Product,Add Product" }}
+        </button>
+    </form>
+</div>
 {% endblock %}
