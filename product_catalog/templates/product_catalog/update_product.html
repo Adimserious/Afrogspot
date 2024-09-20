@@ -1,0 +1,19 @@
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <h3>Product Variants</h3>
+    {{ formset.management_form }}
+    <table>
+        {% for form in formset %}
+            <tr>
+                <td>{{ form.size.label_tag }} {{ form.size }}</td>
+                <td>{{ form.price.label_tag }} {{ form.price }}</td>
+                <td>{{ form.stock.label_tag }} {{ form.stock }}</td>
+                <td>{% if form.DELETE %}{{ form.DELETE }} Delete{% endif %}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <button type="submit" class="btn btn-primary">Update Product</button>
+</form>

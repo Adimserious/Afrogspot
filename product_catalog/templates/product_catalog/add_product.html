@@ -1,0 +1,21 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ form.instance.id|yesno:"Update Product,Add Product" }}</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <h3>Variants</h3>
+    {{ variant_formset.management_form }}
+    {% for form in variant_formset %}
+        <div class="variant-form">
+            {{ form.as_p }}
+        </div>
+    {% endfor %}
+
+    <button type="submit">{{ form.instance.id|yesno:"Update Product,Add Product" }}</button>
+</form>
+{% endblock %}
