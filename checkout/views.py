@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import CheckoutForm
+from profiles.forms import ProfileForm
+from profiles.models import Profile
 from .models import Order, OrderItem, Product, ProductVariant
 from decimal import Decimal
 import stripe
@@ -20,7 +22,14 @@ def checkout(request):
 
     # Calculate order total
     order_total = calculate_order_total(request)
-    delivery_cost = Decimal('7.00')  # Standard delivery cost
+
+    # Condition to determine if free delivery should be applied
+    free_delivery_threshold = 50  # Free delivery on orders above €50
+    if order_total >= free_delivery_threshold:
+        delivery_cost = Decimal('0.00')  # Free delivery
+    else:
+        delivery_cost = Decimal('7.00')  # Standard delivery cost
+
     grand_total = order_total + delivery_cost
 
     # Creates PaymentIntent
@@ -65,7 +74,7 @@ def checkout(request):
             request.session['cart'] = {}
 
             # Saves user info if `save_info` is checked
-            save_info = 'save_info' in request.POST
+            save_info = form.cleaned_data.get('save_info')
             if save_info and request.user.is_authenticated:
                 profile = request.user.profile
                 profile.full_name = form.cleaned_data['full_name']

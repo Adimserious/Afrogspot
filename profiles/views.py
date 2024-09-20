@@ -7,6 +7,7 @@ from checkout.models import Order
 
 @login_required
 def profile_view(request):
+    profile = request.user.profile
     # Checks if the profile exists; if not, create one
     profile, created = Profile.objects.get_or_create(user=request.user)
 
@@ -25,6 +26,7 @@ def profile_view(request):
     context = {
         'form': form,
         'orders': orders,
+        'profile': profile,
         'user_name': request.user.get_full_name() or request.user.username
         
     }

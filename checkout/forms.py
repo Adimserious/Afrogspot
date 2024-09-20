@@ -3,6 +3,7 @@ from django.utils.html import format_html
 from .models import Order
 
 class CheckoutForm(forms.ModelForm):
+    save_info = forms.BooleanField(required=False, label="Save this delivery information to my profile")
     class Meta:
         model = Order
         fields = [
