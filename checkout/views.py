@@ -90,6 +90,19 @@ def checkout(request):
             messages.success(request, 'Your order has been placed successfully!')
             return redirect('order_confirmation', order_id=order.id)
     else:
+        # If the user is authenticated, prefill the form with their profile information
+        if request.user.is_authenticated:
+            profile = request.user.profile
+            initial_data = {
+                'full_name': profile.default_full_name,
+                'email': profile.default_email,
+                'phone_number': profile.default_phone_number,
+                'address_line_1': profile.default_address_line_1,
+                'address_line_2': profile.default_address_line_2,
+                'city': profile.default_city,
+                'postal_code': profile.default_postal_code,
+                'country': profile.default_country,
+            }
         form = CheckoutForm()
 
     context = {
