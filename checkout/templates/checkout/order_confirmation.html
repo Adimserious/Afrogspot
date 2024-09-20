@@ -4,14 +4,29 @@
 <div class="container mt-4">
     <div class="alert alert-success" role="alert">
         <h4 class="alert-heading">Order Confirmation</h4>
-        <p class="mb-0">Thank you for your order!</p>
+        <p class="mb-0">Thank you for your order, {{ order.full_name }}! Your order has been successfully placed.</p>
     </div>
     
     <div class="card mt-4">
         <div class="card-body">
             <h5 class="card-title">Order Details</h5>
             <p class="card-text"><strong>Order Number:</strong> {{ order.order_number }}</p>
-            <p class="card-text"><strong>Order Total:</strong> €{{ order.grand_total }}</p>
+            <p class="card-text"><strong>Order Date:</strong> {{ order.date_ordered|date:"F d, Y" }}</p>
+            <p class="card-text"><strong>Order Total:</strong> €{{ order.grand_total|floatformat:2 }}</p>
+        </div>
+    </div>
+
+    <!-- Delivery Address Section -->
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Delivery Information</h5>
+            <p class="card-text"><strong>Delivery Address:</strong></p>
+            <p class="card-text">
+                {{ order.address_line_1 }}<br>
+                {{ order.address_line_2 }}<br>
+                {{ order.city }}, {{ order.postal_code }}<br>
+                {{ order.country }}
+            </p>
         </div>
     </div>
     
@@ -19,7 +34,9 @@
         <a href="{% url 'product_list' %}" class="btn btn-outline-success btn-lg">
             <i class="fas fa-chevron-left"></i> Keep Shopping
         </a>
-        <a href="{% url 'order_history' %}" class="btn btn-success">View Order History</a>
+        <a href="{% url 'order_history' %}" class="btn btn-success btn-lg">
+            View Order History
+        </a>
     </div>
 </div>
 {% endblock %}
@@ -27,14 +44,19 @@
 {% block extra_css %}
 <style>
     .alert-heading {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
     .card {
         border-radius: 8px;
+        margin-bottom: 20px;
     }
     .card-title {
-        font-size: 1.25rem;
+        font-size: 1.4rem;
         font-weight: bold;
+        color: #28a745;
+    }
+    .list-group-item {
+        padding: 15px 20px;
     }
     .btn {
         margin: 0.5rem;

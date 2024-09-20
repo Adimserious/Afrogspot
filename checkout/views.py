@@ -1,4 +1,7 @@
 from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -87,6 +90,9 @@ def checkout(request):
                 profile.country = form.cleaned_data['country']
                 profile.save()
 
+            # Order confirmation email
+            send_order_confirmation_email(order)
+
             messages.success(request, 'Your order has been placed successfully!')
             return redirect('order_confirmation', order_id=order.id)
     else:
@@ -115,6 +121,26 @@ def checkout(request):
     }
 
     return render(request, 'checkout/checkout.html', context)
+
+
+def send_order_confirmation_email(order):
+    subject = f'Order Confirmation - Order #{order.id}'
+    from_email = settings.DEFAULT_FROM_EMAIL
+    to_email = [order.email]
+
+    # Renders the HTML email content using a template
+    html_message = render_to_string('checkout/order_confirmation.html', {'order': order})
+    plain_message = strip_tags(html_message)
+
+    # Sends the email
+    send_mail(
+        subject,
+        plain_message,
+        from_email,
+        to_email,
+        html_message=html_message,
+        fail_silently=False,
+    )
 
 
 def calculate_order_total(request):
