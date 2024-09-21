@@ -7,6 +7,10 @@ from .models import Product, Category, ProductVariant
 from django.forms import modelformset_factory
 from .forms import ProductForm
 
+# ProductVariantFormSet factory
+ProductVariantFormSet = modelformset_factory(ProductVariant, fields=('id', 'size', 'price', 'stock'), extra=1, can_delete=True)
+
+
 # Create your views here.
 def product_list(request):
     query = request.GET.get('q')
@@ -65,22 +69,29 @@ def manage_products(request):
 def add_product(request):
     if request.method == "POST":
         form = ProductForm(request.POST, request.FILES)
-        variant_formset = ProductVariantFormSet(request.POST, instance=Product())
+        variant_formset = ProductVariantFormSet(request.POST) 
+
         if form.is_valid() and variant_formset.is_valid():
-            product = form.save()
-            variant_formset.instance = product
-            variant_formset.save()
-            return redirect('product_list')  # Redirect after saving
+            product = form.save()  # Save the product first
+
+            # Save variants if they exist
+            for variant in variant_formset.save(commit=False):
+                variant.product = product  # Associate each variant with the product
+                variant.save()
+
+            messages.success(request, 'Product has been successfully added!')
+            return redirect('product_list')
+        else:
+            messages.error(request, 'There was an error adding the product. Please check the form and try again.')
     else:
         form = ProductForm()
-        variant_formset = ProductVariantFormSet()
+        variant_formset = ProductVariantFormSet(queryset=ProductVariant.objects.none())  # Empty formset for new variants
 
-    return render(request, 'product_catalog/add_product.html', {'form': form, 'variant_formset': variant_formset})
+    return render(request, 'product_catalog/add_product.html', {
+        'form': form,
+        'variant_formset': variant_formset
+    })
 
-
-
-# ProductVariantFormSet factory
-ProductVariantFormSet = modelformset_factory(ProductVariant, fields=('size', 'price', 'stock'), extra=1, can_delete=True)
 
 @login_required
 def update_product(request, pk):
@@ -90,14 +101,38 @@ def update_product(request, pk):
         formset = ProductVariantFormSet(request.POST, queryset=ProductVariant.objects.filter(product=product))
 
         if product_form.is_valid() and formset.is_valid():
-            product_form.save()
-            formset.save()  # Save variants
+            product_form.save()  # Save the product first
+
+            # Save variants
+            variants = formset.save(commit=False)
+            for variant in variants:
+                variant.product = product  # Set the ForeignKey field
+                if variant.id:  # Check if the variant already exists
+                    variant.product = product  # Associate the existing variant
+                    variant.save()
+                else:
+                    # If it's a new variant, handle it here.
+                    variant.product = product
+                    variant.save()
+
+            # Save any deleted variants
+            formset.save()
+
+            messages.success(request, 'Product has been successfully updated!')
             return redirect('product_list')
+        else:
+            messages.error(request, 'There was an error updating the product. Please check the form and try again.')
+            
     else:
         product_form = ProductForm(instance=product)
         formset = ProductVariantFormSet(queryset=ProductVariant.objects.filter(product=product))
 
-    return render(request, 'product_catalog/update_product.html', {'form': product_form, 'formset': formset})
+    return render(request, 'product_catalog/update_product.html', {
+        'form': product_form,
+        'formset': formset
+    })
+
+
 
 
 # Delete a product
