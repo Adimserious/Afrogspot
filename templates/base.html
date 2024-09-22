@@ -61,10 +61,10 @@
           <!-- Search Form -->
           <form class="d-flex me-auto w-50" method="GET" action="{% url 'product_list' %}">
             <!-- Search input retains the previous search term -->
-            <input class="form-control me-2 w-100" type="text" name="q" value="{{ query|default:'' }}"
+            <input id="search-input" class="form-control me-2 w-100" type="text" name="q" value="{{ query|default:'' }}"
               placeholder="Search for products, brands, and more..." aria-label="Search">
             <!-- Hidden input to retain the selected category when performing a search -->
-            <input type="hidden" name="category" value="{{ category_name|default:'' }}">
+            <input id="category-select" type="hidden" name="category" value="{{ category_name|default:'' }}">
             <button class="btn btn-outline-light" type="submit">Search</button>
           </form>
 
@@ -180,6 +180,30 @@
     {% endif %}
   </div>
 
+  <!-- JavaScript to handle search and category interaction -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('search-input');
+      const categorySelect = document.getElementById('category-select');
+
+      // Reset category when a search is performed
+      searchInput.addEventListener('input', function() {
+          if (searchInput.value.trim() !== '') {
+              categorySelect.value = '';  // Clear the category filter when typing in search
+          }
+      });
+
+      // Reset search query when a category is selected
+      categorySelect.addEventListener('change', function() {
+          if (categorySelect.value !== '') {
+              searchInput.value = '';  // Clear the search input when selecting a category
+          }
+      });
+  });
+</script>
+
+
+<!-- JavaScript to handle back to top button -->
   <script>
     $(document).ready(function () {
       // Show or hide the button based on scroll position

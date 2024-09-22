@@ -11,25 +11,28 @@ from .forms import ProductForm
 ProductVariantFormSet = modelformset_factory(ProductVariant, fields=('id', 'size', 'price', 'stock'), extra=1, can_delete=True)
 
 
-# Create your views here.
 def product_list(request):
-    query = request.GET.get('q')
+    query = request.GET.get('q', '').strip()
     category_name = request.GET.get('category')
 
     products = Product.objects.all()
 
+    # If a category is selected, clear the search query
     if category_name:
         products = products.filter(category__name__iexact=category_name)
+        query = ''  # Reset query when a category is selected
 
+    # If no category is selected and there's a search query, filter by the query
     if query:
         products = products.filter(
             Q(name__icontains=query) | 
             Q(description__icontains=query)
         )
+        category_name = '' # Clear the category query
 
-    # Handle empty query search scenario
-    if not query and not category_name:
-        messages.warning(request, "You didn't enter a search term. Please enter something to search for products.")
+    # Only display the warning if the user explicitly submitted the form without entering a query or selecting a category
+    if request.GET and not query and not category_name:
+        messages.warning(request, "You didn't enter a search term or select a category. Please try again.")
 
     context = {
         'products': products,
@@ -39,6 +42,7 @@ def product_list(request):
     }
 
     return render(request, 'product_catalog/product_list.html', context)
+
 
 
 def product_detail(request, product_id):
@@ -75,9 +79,14 @@ def add_product(request):
             product = form.save()  # Save the product first
 
             # Save variants if they exist
-            for variant in variant_formset.save(commit=False):
+            variants = variant_formset.save(commit=False)
+            for variant in variants:
                 variant.product = product  # Associate each variant with the product
                 variant.save()
+
+            # Handle deleted variants
+            for variant in variant_formset.deleted_objects:
+                variant.delete()
 
             messages.success(request, 'Product has been successfully added!')
             return redirect('product_list')
@@ -101,39 +110,30 @@ def update_product(request, pk):
         formset = ProductVariantFormSet(request.POST, queryset=ProductVariant.objects.filter(product=product))
 
         if product_form.is_valid() and formset.is_valid():
-            product_form.save()  # Save the product first
+            product = product_form.save()  # Save the product first
 
             # Save variants
             variants = formset.save(commit=False)
             for variant in variants:
-                variant.product = product  # Set the ForeignKey field
-                if variant.id:  # Check if the variant already exists
-                    variant.product = product  # Associate the existing variant
-                    variant.save()
-                else:
-                    # If it's a new variant, handle it here.
-                    variant.product = product
-                    variant.save()
+                variant.product = product  # Ensures that each variant is linked to the product
+                variant.save()
 
-            # Save any deleted variants
-            formset.save()
+            # Handle deleted variants
+            for variant in formset.deleted_objects:
+                variant.delete()
 
             messages.success(request, 'Product has been successfully updated!')
             return redirect('product_list')
         else:
             messages.error(request, 'There was an error updating the product. Please check the form and try again.')
-            
     else:
         product_form = ProductForm(instance=product)
         formset = ProductVariantFormSet(queryset=ProductVariant.objects.filter(product=product))
 
     return render(request, 'product_catalog/update_product.html', {
         'form': product_form,
-        'formset': formset
-    })
-
-
-
+        'formset': formset,
+        })
 
 # Delete a product
 @login_required
