@@ -26,6 +26,7 @@
         <button type="submit" class="btn btn-primary">
             {{ form.instance.id|yesno:"Update Product,Add Product" }}
         </button>
+        <a class="btn btn-success" href="{% url 'manage_products' %}">Cancel</a>
     </form>
 </div>
 {% endblock %}
