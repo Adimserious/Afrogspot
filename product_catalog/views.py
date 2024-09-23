@@ -71,6 +71,12 @@ def manage_products(request):
 # Add a product
 @login_required
 def add_product(request):
+    """ Add products to the store """
+
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
+
     if request.method == "POST":
         form = ProductForm(request.POST, request.FILES)
         variant_formset = ProductVariantFormSet(request.POST) 
@@ -104,6 +110,11 @@ def add_product(request):
 
 @login_required
 def update_product(request, pk):
+
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
+
     product = get_object_or_404(Product, pk=pk)
     if request.method == "POST":
         product_form = ProductForm(request.POST, request.FILES, instance=product)
@@ -138,6 +149,10 @@ def update_product(request, pk):
 # Delete a product
 @login_required
 def delete_product(request, pk):
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
+        
     product = get_object_or_404(Product, pk=pk)
     
     if request.method == "POST":
