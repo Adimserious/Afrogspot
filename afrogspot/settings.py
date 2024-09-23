@@ -41,7 +41,7 @@ SECRET_KEY = 'django-insecure-_yayi+d+lpuy5bv^-_)#_74=p6+7q5=1xun@zppn$$$w4lc9nh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-adimserious-afrogspot-w484q2uf062.ws.codeinstitute-ide.net', '8000-adimserious-afrogspot-w484q2uf062.ws.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['8000-adimserious-afrogspot-w484q2uf062.ws.codeinstitute-ide.net', 'afrogspot-e3f40930991f.herokuapp.com']
 
 CSRF_TRUSTED_ORIGINS = ['https://8000-adimserious-afrogspot-w484q2uf062.ws.codeinstitute-ide.net', '.https://*.herokuapp.com']
 
