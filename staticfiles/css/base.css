@@ -1,0 +1,92 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    color: black;
+}
+
+#delivery-banner {
+    padding: 5px;
+    margin: 10px;
+}
+
+.delivery-banner-child {
+    background-color: green;
+}
+
+.shop-now {
+    background-color: green;
+    color: #f1f1f1;
+    margin: 5px;
+    padding: 5px;
+}
+
+/* Flex-grow for the main content */
+.content {
+    flex: 1; /* Grow to fill available space */
+}
+
+/* Footer styles */
+.footer {
+    background-color: #f1f1f1; 
+    padding: 30px;
+    margin: 30px;
+    text-align: center;
+}
+
+.wrapper {
+    background: url('/static/media/background-image.jpg') no-repeat center center fixed;
+    color: black;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    min-height: 100vh;  /* Minimum height to fill the viewport */
+
+}
+
+strong {
+    color: rgb(19, 15, 15);
+}
+
+/* Back to Top button styling */
+#back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none; /* Initially hidden */
+    z-index: 1000;
+    padding: 10px 15px;
+    border-radius: 50%;
+    color: white;
+    font-size: 18px;
+}
+
+#back-to-top:hover {
+    background-color: rgb(19, 15, 15); /* Darken on hover */
+}
+
+.required {
+    color: red;
+    font-weight: bold;
+}
+
+#id_country option {
+    color: black; /* Default color for all countries */
+}
+
+#id_country option:first-child {
+    color: gray; /* Set the first option to black */
+}
+
+
+
+@media (max-width: 768px) {
+    .wrapper {
+        background-position: 50% 0; /* Adjust for smaller screens */
+    }
+}
+
+@media (min-width: 769px) {
+    .wrapper {
+        background-position: 75% 0; /* Adjust for larger screens */
+    }
+}
