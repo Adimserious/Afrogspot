@@ -119,7 +119,7 @@
 
             <!-- Cart Icon and Count -->
             <li class="nav-item">
-              <a class="{% if grand_total %}text-primary font-weight-bold{% else %}text-white{% endif %} nav-link"
+              <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-white{% endif %} nav-link"
                 href="{% url 'cart_detail' %}">
                 <div class="text-center">
                   <i class="bi bi-cart"></i> ({{ product_count }})
@@ -138,11 +138,20 @@
       </div>
     </nav>
 
+    <!-- Cart Floating Button -->
+<a href="{% url 'cart_detail' %}" class="cart-float">
+  <i class="bi bi-cart-fill" style="font-size: 24px;"></i>
+  <!-- Add total number of products as a badge -->
+  <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
+    {{ product_count }}
+  </span>
+</a>
+
     <!-- Delivery Banner -->
     <div id="delivery-banner" class="row text-center">
       <div class="col delivery-banner-child">
-        <h4 class="my-1 text-primary">
-          WE PREPARE A TABLE BEFORE YOU! <strong class="text-white">Free delivery on orders over €</strong>{{ free_delivery_threshold }}!
+        <h4 class="my-1 text-black">
+          WE PREPARE A TABLE BEFORE YOU! <strong class="text-white">Free delivery on orders over €</strong><strong class="text-white">{{ free_delivery_threshold }}!</strong>
         </h4>
       </div>
     </div>
