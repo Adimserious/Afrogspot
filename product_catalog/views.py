@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext as _
 from django.db.models import Q
-from .models import Product, Category, ProductVariant
+from .models import Product, Category, ProductVariant, Country
 from django.forms import modelformset_factory
 from .forms import ProductForm
 
@@ -15,7 +15,25 @@ def product_list(request):
     query = request.GET.get('q', '').strip()
     category_name = request.GET.get('category')
 
-    products = Product.objects.all()
+    products = Product.objects.filter(is_active=True)
+
+    # Filter parameters from request
+    vegan = request.GET.get('vegan', '')
+    gluten_free = request.GET.get('gluten_free', '')
+    country = request.GET.get('country', '')
+
+    # Applying filters
+    if vegan:
+        products = products.filter(is_vegan=True)
+    
+    if gluten_free:
+        products = products.filter(is_gluten_free=True)
+
+    if country:
+        products = products.filter(country__name=country)
+    
+    # List of countries for the filter options
+    countries = Country.objects.all()
 
     # If a category is selected, clear the search query
     if category_name:
@@ -29,9 +47,14 @@ def product_list(request):
             Q(description__icontains=query)
         )
         category_name = '' # Clear the category query
+    
+    # Check if no products are found after all filters
+    if products.count() == 0:
+        messages.info(request, "No products found matching your criteria. Please try again with different filters or a search term.")
+
 
     # Only display the warning if the user explicitly submitted the form without entering a query or selecting a category
-    if request.GET and not query and not category_name:
+    if request.GET and not query and not category_name and not vegan and not gluten_free and not country:
         messages.warning(request, "You didn't enter a search term or select a category. Please try again.")
 
     context = {
@@ -39,6 +62,10 @@ def product_list(request):
         'query': query,
         'category_name': category_name,
         'categories': Category.objects.all(),  # For the category dropdown
+        'countries': countries,
+        'vegan': vegan,
+        'gluten_free': gluten_free,
+        'selected_country': country,
     }
 
     return render(request, 'product_catalog/product_list.html', context)
