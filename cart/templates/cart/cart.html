@@ -75,14 +75,15 @@
                 {% endwith %}
                 {% endwith %}
 
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                    <a class="btn btn-success" href="{% url 'product_list' %}">
+                <div class="d-flex justify-content-between align-items-center mt-4 flex-column flex-sm-row gap-2">
+                    <a class="btn btn-success mb-2 mb-sm-0" href="{% url 'product_list' %}">
                         <i class="fas fa-chevron-left"></i> Keep Shopping
                     </a>
                     <a href="{% url 'checkout' %}" class="btn btn-success">
                         Secure Checkout <i class="fas fa-lock"></i>
                     </a>
                 </div>
+
             </div>
         </div>
     </div>
