@@ -54,19 +54,20 @@
                 <input type="submit" class="btn btn-success rounded-0 text-uppercase mt-5" value="Add to Cart">
                 <input type="hidden" name="redirect_url" value="{{ request.path }}">
             </form>
-            <div class="text-center">
-                <button class="btn btn-success"><span class="small"><a class="text-white text-decoration-none"
-                            href="{% url 'product_list' %}"><span class="icon">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-success">
+                    <span class="small">
+                        <a class="text-white text-decoration-none" href="{% url 'product_list' %}">
+                            <span class="icon">
                                 <i class="fas fa-chevron-left"></i>
                             </span>
-                            <span class="text-uppercase">Keep Shopping</span></a></span>
-                </button>
-                <button class="btn btn-success"><span class="small"><a class="text-white text-decoration-none"
-                        href="{% url 'cart_detail' %}"><span class="icon">
-                        </span>
-                        <span class="text-uppercase">View Cart</span> <i class="fas fa-chevron-right"></i></a></span>
+                            <span class="text-uppercase">Keep Shopping</span>
+                        </a>
+                    </span>
                 </button>
             </div>
+            
+            
         </div>
     </div>
 

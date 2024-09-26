@@ -323,3 +323,107 @@ Django AllAuth is an installable framework that takes care of the user registrat
 
   ![Admin Panel Screenshot]()
 
+## Features remaining to implement
+
+## Technologies Used
+### Frontend
+- [**HTML5**](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5): Used for the web Structures.
+- [**CSS3**](https://developer.mozilla.org/en-US/docs/Web/CSS): For Styling some of the web content.
+- [**Bootstrap**](https://getbootstrap.com/): Responsive design and layout framework.
+
+
+## Backend
+- [**Django**](https://www.djangoproject.com/): A high-level Python web framework.
+- [**Python**](https://www.python.org/): Backend programming language.
+- [**SQLite**](https://www.sqlite.org/index.html) (Development) 
+- [**PostgreSQL**](https://www.postgresql.org/) (Production): Database systems.
+
+
+## Deployment and Version Control
+- [**Git**](https://git-scm.com/): Used for version control.
+- [**GitHub**](https://github.com/): Hosts the repository and facilitates version control and collaboration.
+- [**Heroku**](https://www.heroku.com/): Platform as a service (PaaS) for deploying applications.
+-  **Setting up on Heroku:**
+    1. Create a new app on Heroku.
+    2. Connect the Heroku app to the GitHub repository.
+    3. Set up Config Vars in Heroku including `DATABASE_URL`, `SECRET_KEY`, `CLOUDINARY_URL`, `DISABLE_COLLECTSTATIC`, (this is temporary, and can be removed for the final deployment) etc.
+    4. Deploy the main branch using the Heroku dashboard or enable automatic deployments for every push to the main branch.
+**For deployment Heroku needs two additional files in order to deploy properly.**
+- requirements.txt
+- Procfile
+
+You can install this project's requirements (where applicable) using:
+
+- **pip3 install -r requirements.txt**
+
+If you have your own packages that have been installed, then the requirements file needs updated using:
+
+- **pip3 freeze --local > requirements.txt**
+
+**The Procfile can be created with the following command:**
+
+echo web: gunicorn app_name.wsgi > Procfile
+replace app_name with the name of your primary Django app name; the folder where settings.py is located
+
+## Development Tools
+- [**GitPod**](https://www.gitpod.io/): Preferred IDE for writing and editing code.
+
+## Libraries and Frameworks
+
+- **asgiref (3.8.1)**: Supports asynchronous capabilities in Django, enabling better performance for asynchronous apps.
+- **crispy-bootstrap5 (0.7)**: Allows Django forms to be styled effortlessly with Bootstrap 5, enhancing form presentation without extensive front-end coding.
+- **dj-database-url (0.4.2)**: Simplifies database configuration using a URL scheme, which is especially useful for deployments on platforms like Heroku.
+
+- **Django (4.2.11)**: The main web framework for the project, providing the necessary tools to build a secure, scalable, and maintainable web application.
+- **django-allauth (0.57.2)**: Adds authentication, registration, and account management capabilities, supporting both traditional and social authentication methods.
+- **django-bootstrap4 (24.1)**: Facilitates the use of Bootstrap 4 in Django templates for consistent and responsive design across the application.
+- **django-crispy-forms (2.1)**: Helps in rendering Django forms in a DRY (Don't Repeat Yourself) manner, allowing form styling through template packs.
+- **django-summernote (0.8.20.0)**: Provides a rich text editor for Django forms, enhancing text input fields with WYSIWYG editing capabilities.
+- **gunicorn (20.1.0)**: Serves as a Python WSGI HTTP Server for UNIX, enabling Django apps to handle more concurrent traffic.
+- **oauthlib (3.2.2)**: A generic implementation of OAuth for sharing authentication across services, used in conjunction with django-allauth.
+- **psycopg2 (2.9.9)**: Acts as a PostgreSQL database adapter for Python, essential for database operations in Django projects using PostgreSQL.
+- **PyJWT (2.8.0)**: A Python library for encoding, decoding, and verifying JSON Web Tokens (JWT), useful for stateless authentication mechanisms.
+- **python3-openid (3.2.0)**: Supports Python 3 applications in implementing OpenID authentication, often used in conjunction with django-allauth.
+- **requests-oauthlib (2.0.0)**: Combines the power of the `requests` library with `oauthlib` for OAuth 1 and OAuth 2 authentication of requests.
+- **sqlparse (0.4.4)**: A non-validating SQL parser for Python, which provides formatting and syntax analysis for SQL scripts used within Django.
+- **urllib3 (1.26.18)**: A powerful HTTP client for Python, used for making HTTP requests in various parts of the application.
+- **whitenoise (5.3.0)**: Simplifies static file management in Django by allowing the app to serve its own static files, improving performance and reducing complexity in production setups.
+
+## Validation Tools
+- [**W3C Markup Validation Service**](https://validator.w3.org/): For validating HTML5 code.
+- [**W3C CSS Validation Service**](https://jigsaw.w3.org/css-validator/): For validating CSS3 code.
+- [**JSHint**](https://jshint.com/): A tool that helps to detect errors and potential problems in JavaScript code.
+- [**CI Python Linter**](https://pep8ci.herokuapp.com/): Analyzes Python code to look for bugs and signs of poor quality.
+- [**Google Lighthouse**](https://developers.google.com/web/tools/lighthouse): For auditing performance, accessibility, and search engine optimization of web pages.
+
+- [**Favicon.io**](https://favicon.io/): To generate favicon icons for the website.
+- [**Font Awesome**](https://fontawesome.com/): Provides icons for enhancing UI/UX.
+
+## Testing
+For all testing and validation, please refer to the [TESTING.md](TESTING.md) file.
+
+# Cloning and Forking
+## Cloning the Repository
+- **Local Setup:**
+  1. Clone the repository: [GitHub repository](). 
+ `git clone .
+  2. Navigate into the project directory: `cd cybersecurity mindset`
+  3. Install dependencies: `pip install -r requirements.txt`
+  4. Set up local environment variables in a `.env` file.
+  5. Run migrations: `python manage.py migrate`
+  6. Start the development server: `python manage.py runserver`
+
+## Forking the Repository
+- **For Contributions:**
+  1. Fork the repository on [GitHub repository]().
+  2. Clone your forked repository to your local machine.
+  3. Follow the local setup steps as above.
+  4. Make changes and push them back to your fork.
+  5. Create a pull request from your fork back to the original repo.
+
+# Credits
+## Code
+
+## Media
+
+## Acknowledgements
