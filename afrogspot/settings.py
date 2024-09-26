@@ -15,7 +15,6 @@ import dj_database_url
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 from django.contrib.messages import constants as messages
-#from decouple import config
 from .env import config
 
 MESSAGE_TAGS = {
