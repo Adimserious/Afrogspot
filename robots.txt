@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /accounts/
+Disallow: /cart/
+Sitemap: https://afrogspot-e3f40930991f.herokuapp.com/sitemap.xml
