@@ -15,7 +15,7 @@ import dj_database_url
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 from django.contrib.messages import constants as messages
-from .env import config
+
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'secondary',  # Bootstrap 'secondary' class for debug messages
@@ -28,9 +28,6 @@ MESSAGE_TAGS = {
 BASE_DIR = Path(__file__).resolve().parent.parent
 if os.path.exists("env.py"):
   import env
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -234,8 +231,8 @@ LOCALE_PATHS = [
 ]
 
 STRIPE_CURRENCY = 'eur'
-STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='')
-STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
+STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', '')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
 
 # setting from boutique ado walkthrogh project of the code institute.
 if 'USE_AWS' in os.environ:
