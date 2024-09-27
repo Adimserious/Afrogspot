@@ -34,6 +34,43 @@ html, body {
     text-align: center;
 }
 
+.footer .page-header {
+    text-align: center;
+  }
+  
+.footer .block-divider--short {
+    width: 50px;
+    height: 2px;
+    background-color: #000;
+    margin: 10px auto;
+  }
+  
+.footer .social-icons {
+    display: flex;
+    gap: 15px;  /* Space between icons */
+    margin-top: 10px;
+  }
+  
+.footer .social-icons a {
+    font-size: 24px;  /* Adjust icon size */
+    color: #000;      /* Icon color */
+    transition: color 0.3s;
+  }
+  
+.footer .social-icons a:hover {
+    color: #007bff;  /* Change color on hover */
+  }
+  
+.footer .col-md-6 h3, .footer .col-md-6 h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+.footer .col-md-6 p {
+    font-size: 1rem;
+  }
+  
+
 .wrapper {
     background: url('/static/media/background-image.jpg') no-repeat center center fixed;
     color: black;
