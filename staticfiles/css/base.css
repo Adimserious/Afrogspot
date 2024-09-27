@@ -1,115 +1,211 @@
+/* General Styles */
 html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    color: black;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  color: black;
 }
 
+.site-logo {
+  width: 100px;  /* fixed width */
+    height: auto;  /* adjust proportionally */
+    max-width: 100%;
+}
+
+/* Banner */
 #delivery-banner {
-    padding: 5px;
-    margin: 10px;
+  padding: 5px;
+  margin: 10px;
 }
 
 .delivery-banner-child {
-    background-color: green;
+  background-color: green;
 }
 
 .shop-now {
-    background-color: green;
-    color: #f1f1f1;
-    margin: 5px;
-    padding: 5px;
+  background-color: green;
+  color: #f1f1f1;
+  margin: 5px;
+  padding: 5px;
 }
 
 /* Flex-grow for the main content */
 .content {
-    flex: 1; /* Grow to fill available space */
+  flex: 1; /* Grow to fill available space */
 }
 
 /* Footer styles */
 .footer {
-    background-color: #f1f1f1; 
-    padding: 30px;
-    margin: 30px;
-    text-align: center;
+  background-color: #f1f1f1;
+  padding: 30px;
+  margin: 30px;
+  text-align: center;
 }
 
-.wrapper {
-    background: url('/static/media/background-image.jpg') no-repeat center center fixed;
-    color: black;
-    display: flex;
-    flex-direction: column; /* Stack children vertically */
-    min-height: 100vh;  /* Minimum height to fill the viewport */
+.footer .page-header {
+  text-align: center;
+}
 
+.footer .block-divider--short {
+  width: 50px;
+  height: 2px;
+  background-color: #000;
+  margin: 10px auto;
+}
+
+/* Wrapper */
+.wrapper {
+  background: url('/static/media/background-image.jpg') no-repeat center center fixed;
+  color: black;
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  min-height: 100vh; /* Minimum height to fill the viewport */
 }
 
 strong {
-    color: rgb(19, 15, 15);
+  color: rgb(19, 15, 15);
 }
 
-/* Back to Top button styling */
+/* Back to Top button */
 #back-to-top {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    display: none; /* Initially hidden */
-    z-index: 1000;
-    padding: 10px 15px;
-    border-radius: 50%;
-    color: white;
-    font-size: 18px;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: none; /* Initially hidden */
+  z-index: 1000;
+  padding: 10px 15px;
+  border-radius: 50%;
+  color: white;
+  font-size: 18px;
 }
 
 #back-to-top:hover {
-    background-color: rgb(19, 15, 15); /* Darken on hover */
+  background-color: rgb(19, 15, 15); /* Darken on hover */
 }
 
+/* Required fields */
 .required {
-    color: red;
-    font-weight: bold;
+  color: red;
+  font-weight: bold;
 }
 
+/* Country select dropdown */
 #id_country option {
-    color: black; /* Default color for all countries */
+  color: black; /* Default color for all countries */
 }
 
 #id_country option:first-child {
-    color: gray; /* Set the first option to black */
+  color: gray; /* Set the first option to gray */
 }
 
 /* Floating cart button on mobile */
 .cart-float {
-    position: fixed;
-    bottom: 20px; /* distance from the bottom of the screen */
-    right: 20px; /* distance from the right side of the screen */
-    z-index: 1000; /* ensures it stays on top of other elements */
-    background-color: #1f8b38;
-    color: white;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* shadow for a floating effect */
-  }
-
-/* Responsive for mobile devices */
-@media (min-width: 768px) {
-    .cart-float {
-      display: none; /* Hide floating button on larger screens */
-    }
-  }
-
-
-@media (max-width: 768px) {
-    .wrapper {
-        background-position: 50% 0; /* Adjust for smaller screens */
-    }
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: #1f8b38;
+  color: white;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* shadow for a floating effect */
 }
 
-@media (min-width: 769px) {
-    .wrapper {
-        background-position: 75% 0; /* Adjust for larger screens */
-    }
+/* Footer Styles */
+footer.footer {
+  padding: 40px 0;
+  background-color: #f9f9f9;
+}
+
+footer .social-icons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+footer .social-icons a {
+  color: #333;
+  font-size: 20px; 
+  margin-right: 10px; 
+  transition: color 0.3s;
+  margin-bottom: 10px; /* wrapping */
+}
+
+footer .social-icons a:hover {
+  color: #007bff;
+}
+
+footer h2, footer h3 {
+  color: #333;
+}
+
+footer p {
+  color: #666;
+}
+
+/* Mailchimp Subscription Form */
+#mc_embed_signup {
+  background: #fff;
+  font: 14px Helvetica, Arial, sans-serif;
+  max-width: 100%; /* Full width  */
+  padding: 15px; /* Less padding */
+  box-sizing: border-box;
+}
+
+#mc_embed_signup input[type=email],
+#mc_embed_signup input[type=submit] {
+  width: 100%; /* Full width on mobile */
+  padding: 10px;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+#mc_embed_signup input[type=submit] {
+  background-color: green;
+  color: white;
+  font-size: 16px;
+  padding: 1px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#mc_embed_signup input[type=submit]:hover {
+  background-color: black;
+}
+
+/* Responsive for Larger Screens */
+@media (min-width: 768px) {
+  .wrapper {
+      background-position: 75% 0; /* Adjust for larger screens */
+  }
+
+  .cart-float {
+      display: none; /* Hide floating button on larger screens */
+  }
+
+  .social-icons a {
+      font-size: 24px; /* Increase size for larger screens */
+      margin-right: 15px;
+  }
+
+  #mc_embed_signup input[type=email] {
+      width: 90%; /* Slightly smaller input field for larger screens */
+  }
+}
+
+@media (min-width: 992px) {
+  footer .social-icons a {
+      font-size: 28px; /* Larger social icons for desktops */
+  }
+
+  #mc_embed_signup input[type=submit] {
+      font-size: 16px; /* Larger button for desktops */
+      padding: 5px 10px;
+      
+  }
 }
