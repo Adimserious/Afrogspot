@@ -63,7 +63,7 @@
     <!-- Bootstrap 5 Full-Width Header Template -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'media/logo.jpg' %}" alt="Site Logo" class="site-logo"></a>
+        <a class="navbar-brand" href="{% url 'home' %}"><img src="{{ MEDIA_URL }}logo.jpg" alt="Site Logo" class="site-logo"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
