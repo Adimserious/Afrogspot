@@ -6,6 +6,12 @@ html, body {
   color: black;
 }
 
+.site-logo {
+  width: 100px;  /* fixed width */
+    height: auto;  /* adjust proportionally */
+    max-width: 100%;
+}
+
 /* Banner */
 #delivery-banner {
   padding: 5px;
