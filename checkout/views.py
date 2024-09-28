@@ -10,6 +10,7 @@ from profiles.forms import ProfileForm
 from profiles.models import Profile
 from .models import Order, OrderItem, Product, ProductVariant
 from decimal import Decimal
+from django.utils import timezone
 import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -128,11 +129,19 @@ def send_order_confirmation_email(order):
     from_email = settings.DEFAULT_FROM_EMAIL
     to_email = [order.email]
 
-    # Renders the HTML email content using a template
-    html_message = render_to_string('checkout/order_email_confirmation.html', {'order': order})
+    # Additional context for the email
+    context = {
+        'order': order,
+        'site_name': 'Afrogspot',  # Change this to your site name
+        'current_year': timezone.now().year,  # Dynamically get the current year
+        'support_email': 'support@afrogspot.com',  # Replace with actual support email
+    }
+
+    # Render HTML content using a template and pass context
+    html_message = render_to_string('checkout/order_email_confirmation.html', context)
     plain_message = strip_tags(html_message)
 
-    # Sends the email
+    # Send the email
     send_mail(
         subject,
         plain_message,
