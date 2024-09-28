@@ -129,7 +129,7 @@ def send_order_confirmation_email(order):
     to_email = [order.email]
 
     # Renders the HTML email content using a template
-    html_message = render_to_string('checkout/order_confirmation.html', {'order': order})
+    html_message = render_to_string('checkout/order_email_confirmation.html', {'order': order})
     plain_message = strip_tags(html_message)
 
     # Sends the email

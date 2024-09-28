@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 600px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-top: 30px;
+    }
+    .card {
+      border: none;
+      margin-bottom: 20px;
+    }
+    .card-body {
+      padding: 20px;
+      background-color: #f1f1f1;
+      border-radius: 8px;
+    }
+    h5.card-title {
+      margin-bottom: 15px;
+      font-weight: bold;
+      color: #007bff;
+    }
+    .alert {
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+      color: #155724;
+    }
+    .alert h4 {
+      font-weight: bold;
+    }
+    p {
+      margin-bottom: 10px;
+    }
+    p:last-child {
+      margin-bottom: 0;
+    }
+    .footer-text {
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #6c757d;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="alert alert-success" role="alert">
+      <h4 class="alert-heading">Order Confirmation</h4>
+      <p class="mb-0">Thank you for your order, {{ order.full_name }}! Your order has been successfully placed.</p>
+    </div>
+
+    <!-- Order Details Section -->
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Order Details</h5>
+        <p><strong>Order Number:</strong> {{ order.order_number }}</p>
+        <p><strong>Order Date:</strong> {{ order.date_ordered|date:"F d, Y" }}</p>
+        <p><strong>Order Total:</strong> €{{ order.grand_total|floatformat:2 }}</p>
+      </div>
+    </div>
+
+    <!-- Delivery Address Section -->
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Delivery Information</h5>
+        <p><strong>Delivery Address:</strong></p>
+        <p>
+          {{ order.address_line_1 }}<br>
+          {{ order.address_line_2 }}<br>
+          {{ order.city }}, {{ order.postal_code }}<br>
+          {{ order.country }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Contact Information -->
+    <p>If you have any questions, feel free to contact us at {{ support_email }}.</p>
+
+    <p>Thank you,<br>The {{ Afrogspot }} Team</p>
+    
+    <!-- Footer Text -->
+    <p class="footer-text">© {{ site_name }} {{ current_year }}. All Rights Reserved.</p>
+  </div>
+
+</body>
+</html>
