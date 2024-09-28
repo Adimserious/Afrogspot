@@ -34,12 +34,13 @@ if os.path.exists("env.py"):
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'fallback-secret-key-for-development')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key-for-development')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = 'DEVELOPMENT' in os.environ
-DEBUG = True
+
+DEBUG = os.environ.get('DJANGO_DEVELOPMENT', 'False') == 'True'
 
 ALLOWED_HOSTS = ['8000-adimserious-afrogspot-w484q2uf062.ws.codeinstitute-ide.net', 'afrogspot-e3f40930991f.herokuapp.com']
 
