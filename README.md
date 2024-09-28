@@ -386,9 +386,7 @@ replace app_name with the name of your primary Django app name; the folder where
 - **python3-openid (3.2.0)**: Supports Python 3 applications in implementing OpenID authentication, often used in conjunction with django-allauth.
 - **requests-oauthlib (2.0.0)**: Combines the power of the `requests` library with `oauthlib` for OAuth 1 and OAuth 2 authentication of requests.
 - **sqlparse (0.4.4)**: A non-validating SQL parser for Python, which provides formatting and syntax analysis for SQL scripts used within Django.
-- **urllib3 (1.26.18)**: A powerful HTTP client for Python, used for making HTTP requests in various parts of the application.
-- **whitenoise (5.3.0)**: Simplifies static file management in Django by allowing the app to serve its own static files, improving performance and reducing complexity in production setups.
-
+- **urllib3 (1.26.18)**: A powerful HTTP client for Python, used for making HTTP requests in various 
 ## Validation Tools
 - [**W3C Markup Validation Service**](https://validator.w3.org/): For validating HTML5 code.
 - [**W3C CSS Validation Service**](https://jigsaw.w3.org/css-validator/): For validating CSS3 code.
