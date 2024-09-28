@@ -44,6 +44,7 @@ def checkout(request):
         )
         #print(intent)   
         client_secret = intent.client_secret
+        payment_intent_id = intent.id
     except stripe.error.StripeError as e:
         messages.error(request, f'Error with Stripe: {str(e)}')
         return redirect('cart_detail') 
@@ -57,6 +58,7 @@ def checkout(request):
             order.order_total = order_total
             order.delivery_cost = delivery_cost
             order.grand_total = grand_total
+            order.stripe_payment_intent = payment_intent_id  # Store the payment intent ID
             order.save()
 
             # Create order items
