@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Category, Country, ProductVariant
+from .models import Product, Category, Country, ProductVariant, ProductRating
 
 # Classes from the Boutique Ado Walkthrough project of the code institute.
 
@@ -35,3 +35,10 @@ class ProductVariantAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Country)
+
+
+@admin.register(ProductRating)
+class ProductRatingAdmin(admin.ModelAdmin):
+    list_display = ('user', 'product', 'rating', 'created_at')  # Customize list display
+    search_fields = ('user__username', 'product__name')  # Search functionality
+    list_filter = ('rating', 'created_at')  # Filter options in the sidebar

@@ -16,7 +16,7 @@ def generate_short_order_number():
     return str(uuid.uuid4())[:8]
 
 class Order(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
     profile = models.ForeignKey('profiles.Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
     full_name = models.CharField(max_length=100)
     email = models.EmailField()

@@ -3,9 +3,13 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext as _
 from django.db.models import Q
-from .models import Product, Category, ProductVariant, Country
+from .models import Product, Category, ProductVariant, Country, ProductRating
 from django.forms import modelformset_factory
-from .forms import ProductForm
+from .forms import ProductForm, ProductRatingForm
+from django.conf import settings
+from django.db.models import Avg 
+
+
 
 # ProductVariantFormSet factory
 ProductVariantFormSet = modelformset_factory(ProductVariant, fields=('id', 'size', 'price', 'stock'), extra=1, can_delete=True)
@@ -188,3 +192,58 @@ def delete_product(request, pk):
         return redirect('manage_products')  # Redirect to product management page after deletion
 
     return render(request, 'product_catalog/delete_confirmation.html', {'product': product})
+
+
+
+@login_required
+def rate_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    # Checks if the user has purchased the product
+    if not user_has_purchased_product(request.user, product):
+        messages.error(request, "You can only rate products you've purchased.")
+        return redirect('product_detail', product_id=product_id)
+
+    if request.method == 'POST':
+        form = ProductRatingForm(request.POST)
+        if form.is_valid():
+            # Check if the user has already rated this product
+            existing_rating = ProductRating.objects.filter(product=product, user=request.user).first()
+            if existing_rating:
+                existing_rating.rating = form.cleaned_data['rating']
+                existing_rating.review = form.cleaned_data.get('review')
+                existing_rating.save()
+                messages.success(request, 'Your rating has been updated.')
+            else:
+                rating = form.save(commit=False)
+                rating.user = request.user
+                rating.product = product
+                rating.save()
+                messages.success(request, 'Your rating has been submitted.')
+            
+            # Update product's average rating
+            update_product_rating(product)
+
+            return redirect('product_detail', product_id=product_id)
+    else:
+        form = ProductRatingForm()
+
+    return render(request, 'product_catalog/rate_product.html', {'form': form, 'product': product})
+
+
+def update_product_rating(product):
+    """
+    Recalculate the product's average rating after a new rating is added.
+    """
+    ratings = product.ratings.all()
+    if ratings.exists():
+        product.rating = ratings.aggregate(Avg('rating'))['rating__avg']
+        product.save()
+
+
+
+def user_has_purchased_product(user, product):
+    """
+    Checks if the user has purchased the product.
+    """
+    return user.orders.filter(items__product=product).exists()

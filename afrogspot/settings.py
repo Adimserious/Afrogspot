@@ -39,7 +39,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key-for-development')
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = os.environ.get('DJANGO_DEVELOPMENT', 'False') == 'True'
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['8000-adimserious-afrogspot-w484q2uf062.ws.codeinstitute-ide.net', 'afrogspot-e3f40930991f.herokuapp.com']
 
