@@ -48,11 +48,11 @@
                         <p>Rating:</p>
                         {% for i in "12345" %}
                         {% if product.rating >= forloop.counter %}
-                        <i class="fas fa-star"></i> <!-- Full star -->
+                        <i class="fas fa-star star-full"></i> <!-- Full star -->
                         {% elif product.rating >= forloop.counter0 and product.rating < forloop.counter %} <i
-                            class="fas fa-star-half-alt"></i> <!-- Half star -->
+                            class="fas fa-star-half-alt star-half"></i> <!-- Half star -->
                             {% else %}
-                            <i class="far fa-star"></i> <!-- Empty star -->
+                            <i class="far fa-star star-empty"></i> <!-- Empty star -->
                             {% endif %}
                             {% endfor %}
                     </div>

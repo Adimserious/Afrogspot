@@ -178,6 +178,20 @@ footer p {
   background-color: black;
 }
 
+.star-full {
+  color: #177a17;  /* Green for full stars */
+  font-size: 20px;
+}
+.star-half {
+  color: #FFD700;  /* Gold for half star */
+  font-size: 20px;
+}
+.star-empty {
+  color: #e0e0e0;  /* Gray for empty stars */
+  font-size: 20px;
+}
+
+
 /* Responsive for Larger Screens */
 @media (min-width: 768px) {
   .wrapper {
