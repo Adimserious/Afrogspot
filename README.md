@@ -226,15 +226,38 @@ Checkout page Wireframe
 
 A database schema is the blueprint or architecture of a database, defining how data is organized and how the relationships between data are managed. Here is an overview of the key database schema used in Afrogspot
 
-![Entity Relationship Diagram]()
+![Entity Relationship Diagram](/images/erd-afrogspot.png)
 
 An Entity-Relationship Diagram (ERD) is a visual representation of the data and its relationships within a database. It is a critical tool in database design and modeling, helping to clarify the structure and organization of data. Here is an ERD diagram representation of the Afrogspot.
 
 ## Tables Overview ERD
+### ERD Relationships
 
 User: Django provides a default User model through django.contrib.auth.models.User, which can be extended if necessary. This stores information like The username, optional email  and password for the Afrogspot.
 
-## ERD Relationships
+Order
+user: ForeignKey to the user model (AUTH_USER_MODEL) – an order belongs to a user.
+profile: ForeignKey to the Profile model – an order belongs to a profile.
+order: ForeignKey to OrderItem – one order can have many items.
+
+OrderItem
+order: ForeignKey to Order – an item belongs to an order.
+product: ForeignKey to Product – an item refers to a product.
+variant: ForeignKey to ProductVariant – an item can refer to a specific product variant.
+
+Product
+category: ForeignKey to Category – a product belongs to a category.
+country: ForeignKey to Country – a product can be associated with a country.
+
+ProductVariant
+product: ForeignKey to Product – a variant belongs to a product.
+ProductRating
+
+product: ForeignKey to Product – a rating belongs to a product.
+user: ForeignKey to User – a rating is given by a user.
+
+Profile
+user: OneToOneField to User – a profile is linked to a user.
 
 ## Security
 As with most things, Security is a critical aspect, especially for a platform like Afrogspot that handles personal data.
@@ -246,7 +269,7 @@ All sensitive data, including user passwords and personal information, are encry
 CSRF (Cross-Site Request Forgery) tokens are included in every form to help authenticate the request with the server when the form is submitted. Absence of these tokens can leave a site vulnerable to attackers who may steal users data and use them for malicious purposes.
 
 ### AllAuth
-Django AllAuth is an installable framework that takes care of the user registration and authentication process. Authentication was needed to determine when a user have signed up or signed out which controlled what content was accessible on the Afrogsot which gives store owners extra tasks such as manage products.
+Django AllAuth is an installable framework that takes care of the user registration and authentication process. Authentication was needed to determine when a user have signed up or signed out which controlled what content was accessible on the Afrogsot giving store owners extra tasks such as manage products.
 
 ## Features 
 ## Existing Features
@@ -346,7 +369,7 @@ Django AllAuth is an installable framework that takes care of the user registrat
 -  **Setting up on Heroku:**
     1. Create a new app on Heroku.
     2. Connect the Heroku app to the GitHub repository.
-    3. Set up Config Vars in Heroku including `DATABASE_URL`, `SECRET_KEY`, `CLOUDINARY_URL`, `DISABLE_COLLECTSTATIC`, (this is temporary, and can be removed for the final deployment) etc.
+    3. Set up Config Vars in Heroku including `DATABASE_URL`, `SECRET_KEY`, `DISABLE_COLLECTSTATIC`, (this is temporary, and can be removed for the final deployment) etc.
     4. Deploy the main branch using the Heroku dashboard or enable automatic deployments for every push to the main branch.
 **For deployment Heroku needs two additional files in order to deploy properly.**
 - requirements.txt
