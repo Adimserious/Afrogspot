@@ -94,3 +94,12 @@ class OrderItem(models.Model):
     def __str__(self):
         return f'{self.quantity} x {self.product.name} (Order #{self.order.id})'
 
+
+    def delete(self, *args, **kwargs):
+        """
+        If an OrderItem is deleted, restock the product.
+        """
+        self.product.stock += self.quantity
+        self.product.save()
+        super().delete(*args, **kwargs)
+

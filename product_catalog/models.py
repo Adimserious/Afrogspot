@@ -59,6 +59,11 @@ class Product(models.Model):
             return self.expiration_date < timezone.now().date()
         return False
     
+    def is_in_stock(self, quantity=1):
+        """Check if the product has enough stock available for the given quantity."""
+        return self.stock >= quantity
+
+
     # custom method
     def get_price(self):
         """

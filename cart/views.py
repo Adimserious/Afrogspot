@@ -59,7 +59,6 @@ def cart_detail(request):
         'total': total,
         'free_shipping_threshold': free_shipping_threshold,
         'eligible_for_free_shipping': eligible_for_free_shipping,
-        #'amount_needed_for_free_shipping': amount_needed_for_free_shipping,
     }
 
     return render(request, 'cart/cart.html', context)
@@ -72,19 +71,27 @@ def add_to_cart(request, item_id):
 
     # Handles the case if there are variants
     variant_id = request.POST.get('variant')
-    quantity = int(request.POST.get('quantity', 1))  # Default quantity to 1 
+    quantity = int(request.POST.get('quantity', 1))  # Default quantity to 1
+
 
     # Checks if variant is selected and exists
     if variant_id:
         variant = get_object_or_404(ProductVariant, id=variant_id)
         price = variant.price
+        stock = variant.stock
         # Use both product and variant ID to create a unique key
         key = f"{item_id}-{variant_id}"
     else:
         variant = None
         price = product.price
+        stock = product.stock
         # Use just the product ID for the key if no variant exists
         key = str(item_id)
+
+    # Check if the quantity requested exceeds available stock
+    if stock < quantity:
+        messages.error(request, f'Sorry, only {stock} of {variant.size} kg of {product.name} are available.')
+        return redirect(request.POST.get('redirect_url', '/'))
 
     # Gets the current cart session
     cart = request.session.get('cart', {})
@@ -112,7 +119,6 @@ def add_to_cart(request, item_id):
     return redirect(redirect_url)
 
 
-
 def update_cart_quantity(request, item_id):
     """Updates the quantity of a cart item via form submission."""
     if request.method == 'POST':
@@ -122,15 +128,29 @@ def update_cart_quantity(request, item_id):
         # Get the current cart session
         cart = request.session.get('cart', {})
 
-        # Ensure that the item exists in the cart
+        # Ensures that the item exists in the cart
         if item_id in cart:
+            # Check the current item details
+            item_data = cart[item_id]
+            product = get_object_or_404(Product, id=item_data['product_id'])
+            variant = None
+            
+            if item_data.get('variant_id'):
+                variant = get_object_or_404(ProductVariant, id=item_data['variant_id'])
+
+            # Validate the quantity against stock
             if quantity > 0:
-                # Update the quantity
-                cart[item_id]['quantity'] = quantity
-                messages.success(request, 'Item quantity updated in your cart!')
+                if variant and quantity > variant.stock:
+                    messages.error(request, f'Sorry, only {variant.stock} of {variant.size} kg of {product.name} are available.')
+                elif quantity > product.stock:
+                    messages.error(request, f'Sorry, only {product.stock} of {product.name} are available.')
+                else:
+                    cart[item_id]['quantity'] = quantity
+                    messages.success(request, 'Item quantity updated in your cart!')
             else:
-                # Remove the item if the quantity is 0, this is not implemented yet!
+                # Remove the item if the quantity is 0
                 del cart[item_id]
+                messages.success(request, 'Item removed from your cart!')
 
         # Save the updated cart back to the session
         request.session['cart'] = cart
@@ -146,10 +166,20 @@ def remove_from_cart(request, item_id):
     """Removes an item from the cart."""
     cart = request.session.get('cart', {})
 
-    # Ensure the item exists in the cart before trying to remove it
+    # Ensures the item exists in the cart before trying to remove it
     if str(item_id) in cart:
+        item_data = cart[str(item_id)]
+        product = get_object_or_404(Product, id=item_data['product_id'])
+        variant = None
+        
+        if item_data.get('variant_id'):
+            variant = get_object_or_404(ProductVariant, id=item_data['variant_id'])
+
         del cart[str(item_id)]
-        messages.success(request, 'Item successfully removed from cart!')
+        if variant:
+            messages.success(request, f'{variant.size} kg of {product.name} removed from your cart!')
+        else:
+            messages.success(request, f'{product.name} removed from your cart!')
 
     # Save the updated cart back to the session
     request.session['cart'] = cart

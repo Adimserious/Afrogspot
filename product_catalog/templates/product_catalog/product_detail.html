@@ -35,7 +35,11 @@
                 {% endif %}
                 <br>
                 <p class="mb-3">{{ product.description }}</p>
-                <p class="mb-3">In Stock: {{ product.stock }}</p>
+                {% if product.is_in_stock %}
+                <p class="text-success">In Stock: {{ product.stock }}</p>
+                {% else %}
+                <p class="text-danger">Out of Stock</p>
+                {% endif %}
                 {% if product.category %}
                 <p class="small mt-1 mb-0">View All:
                     <a class="text-muted" href="{% url 'product_list' %}?category={{ product.category.name }}">

@@ -21,11 +21,17 @@
             <tbody>
                 {% for item in cart_items %}
                 <tr>
-                    <td><img class="img-fluid rounded" src="{{ item.product.image.url }}" alt="{{ item.product.name }}"
-                            style="width: 100px;"></td>
+                    <td>
+                        <a href="{% url 'product_detail' item.product.id %}">
+                            <img class="img-fluid rounded" src="{{ item.product.image.url }}" alt="{{ item.product.name }}"
+                                 style="width: 100px;">
+                        </a>
+                    </td>
                     <!-- Product Name and Variant -->
                     <td>
-                        {{ item.product.name }}
+                        <a href="{% url 'product_detail' item.product.id %}">
+                            {{ item.product.name }}
+                        </a>
                         {% if item.variant %}
                         <br><small><strong>Size:</strong> {{ item.variant.size }} kg</small>
                         {% endif %}
@@ -35,7 +41,7 @@
                             {% csrf_token %}
                             <div class="input-group quantity-group">
                                 <input type="number" name="quantity" class="form-control text-center"
-                                    value="{{ item.quantity }}" min="1">
+                                       value="{{ item.quantity }}" min="1">
                                 <button type="submit" class="btn btn-outline-secondary">Update</button>
                             </div>
                         </form>
@@ -44,7 +50,7 @@
                     <td>€{{ item.total_price|floatformat:2 }}</td>
                     <td>
                         <a href="{% url 'remove_from_cart' item.item_id %}" class="btn btn-danger btn-sm"
-                            onclick="return confirmDeletion();">
+                           onclick="return confirmDeletion();">
                             <i class="fas fa-trash-alt"></i> Remove
                         </a>
                     </td>
@@ -83,7 +89,6 @@
                         Secure Checkout <i class="fas fa-lock"></i>
                     </a>
                 </div>
-
             </div>
         </div>
     </div>

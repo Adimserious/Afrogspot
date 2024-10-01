@@ -61,13 +61,33 @@ def checkout(request):
             order.stripe_payment_intent = payment_intent_id  # Store the payment intent ID
             order.save()
 
-            # Create order items
+            # Create order items and reduce stock
             for key, item_data in cart.items():
                 if isinstance(item_data, dict):
                     product = get_object_or_404(Product, id=item_data['product_id'])
                     variant = None
+
+                    # Check if the item is a variant
                     if item_data.get('variant_id'):
                         variant = get_object_or_404(ProductVariant, id=item_data['variant_id'])
+
+                        # Check if enough stock is available for the variant
+                        if variant.stock >= item_data['quantity']:
+                            variant.stock -= item_data['quantity']  # Reduce stock
+                            variant.save()
+                        else:
+                            messages.error(request, f'Sorry, only {variant.stock} of {product.name} (variant) is available.')
+                            return redirect('cart_detail')
+                    else:
+                        # Check if enough stock is available for the product
+                        if product.stock >= item_data['quantity']:
+                            product.stock -= item_data['quantity']  # Reduce stock
+                            product.save()
+                        else:
+                            messages.error(request, f'Sorry, only {product.stock} of {product.name} is available.')
+                            return redirect('cart_detail')
+
+                    # Create the order item after checking stock
                     OrderItem.objects.create(
                         order=order,
                         product=product,
@@ -98,6 +118,7 @@ def checkout(request):
 
             messages.success(request, 'Your order has been placed successfully!')
             return redirect('order_confirmation', order_id=order.id)
+
     else:
         # If the user is authenticated, prefill the form with their profile information
         if request.user.is_authenticated:
@@ -112,7 +133,7 @@ def checkout(request):
                 'postal_code': profile.default_postal_code,
                 'country': profile.default_country,
             }
-        form = CheckoutForm()
+        form = CheckoutForm(initial=initial_data if request.user.is_authenticated else None)
 
     context = {
         'form': form,
@@ -131,12 +152,12 @@ def send_order_confirmation_email(order):
     from_email = settings.DEFAULT_FROM_EMAIL
     to_email = [order.email]
 
-    # Additional context for the email
+    # context for email
     context = {
         'order': order,
-        'site_name': 'Afrogspot',  # Change this to your site name
+        'site_name': 'Afrogspot',
         'current_year': timezone.now().year,  # Dynamically get the current year
-        'support_email': 'support@afrogspot.com',  # Replace with actual support email
+        'support_email': 'support@afrogspot.com',
     }
 
     # Render HTML content using a template and pass context
