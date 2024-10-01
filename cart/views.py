@@ -64,7 +64,6 @@ def cart_detail(request):
     return render(request, 'cart/cart.html', context)
 
 
-
 def add_to_cart(request, item_id):
     # Get the product by ID
     product = get_object_or_404(Product, id=item_id)
@@ -72,7 +71,6 @@ def add_to_cart(request, item_id):
     # Handles the case if there are variants
     variant_id = request.POST.get('variant')
     quantity = int(request.POST.get('quantity', 1))  # Default quantity to 1
-
 
     # Checks if variant is selected and exists
     if variant_id:
@@ -88,19 +86,31 @@ def add_to_cart(request, item_id):
         # Use just the product ID for the key if no variant exists
         key = str(item_id)
 
-    # Check if the quantity requested exceeds available stock
-    if stock < quantity:
-        messages.error(request, f'Sorry, only {stock} of {variant.size} kg of {product.name} are available.')
-        return redirect(request.POST.get('redirect_url', '/'))
-
-    # Gets the current cart session
+    # Get the cart from session
     cart = request.session.get('cart', {})
 
-    # Checks if the product/variant is already in the cart
+    # Check if the product/variant is already in the cart
     if key in cart:
-        # Increment the quantity if the product/variant is already in the cart
+        # If item already in cart, get the current quantity
+        current_quantity = cart[key]['quantity']
+    else:
+        current_quantity = 0
+
+    # Total quantity (including existing) should not exceed stock
+    if current_quantity + quantity > stock:
+        messages.error(
+            request,
+            f'Sorry, only {stock} of {variant.size if variant else ""} kg of {product.name} are available.'
+        )
+        return redirect(request.POST.get('redirect_url', '/'))
+
+    # Update quantity if the product/variant is already in the cart
+    if key in cart:
         cart[key]['quantity'] += quantity
-        messages.success(request, f'Updated quantity for {product.name} in your cart!')
+        messages.success(
+            request,
+            f'Updated quantity for {product.name} in your cart!'
+        )
     else:
         # Adds the product/variant to the cart as a dictionary
         cart[key] = {
@@ -111,7 +121,7 @@ def add_to_cart(request, item_id):
         }
         messages.success(request, f'{product.name} added to your cart!')
 
-    # Saves the updated cart back to the session
+    # Save the updated cart back to the session
     request.session['cart'] = cart
 
     # Redirect to the specified URL
