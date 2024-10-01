@@ -152,7 +152,7 @@ def send_order_confirmation_email(order):
     from_email = settings.DEFAULT_FROM_EMAIL
     to_email = [order.email]
 
-    # context for email
+    # context for email chatgpt, image is attached to readme file
     context = {
         'order': order,
         'site_name': 'Afrogspot',

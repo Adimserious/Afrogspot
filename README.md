@@ -226,14 +226,14 @@ Checkout page Wireframe
 
 Order History page Wireframe
 <details>
-<summary>Click to View Checkout Page wireframe</summary>
+<summary>Click to View Order History Page wireframe</summary>
 
 ![wireframes](/images/order-history-wf.png)
 </details>
 
 Order Details page Wireframe
 <details>
-<summary>Click to View Checkout Page wireframe</summary>
+<summary>Click to View Order Details Page wireframe</summary>
 
 ![wireframes](/images/order-details-wf.png)
 </details>
@@ -460,6 +460,9 @@ For all testing and validation, please refer to the [TESTING.md](TESTING.md) fil
 
 # Credits
 ## Code
+Part of the code for order confirmation email view was gotten from serching how to handle sending actual email to customers
+![Chatgpt order confirmation email context Screenshot](/images/chatgpt-image.png)
+
 
 ## Media
 

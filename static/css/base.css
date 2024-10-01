@@ -191,6 +191,19 @@ footer p {
   font-size: 20px;
 }
 
+.alert-container {
+  position: fixed; /* Position the container fixed */
+  top: 20px; /* Adjust the top position */
+  right: 20px; /* Adjust the right position */
+  z-index: 1050; /* Make sure it's above other elements */
+}
+
+.alert {
+  margin-bottom: 10px; /* Space between alerts */
+  transition: opacity 0.3s ease; /* Smooth transition for dismissal */
+}
+
+
 
 /* Responsive for Larger Screens */
 @media (min-width: 768px) {
