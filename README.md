@@ -122,10 +122,12 @@ African-Inspired Design: The imagery, patterns, and color schemes reflects Afric
 - Visual Elements: relevant and high-quality images is used to enhance content.
 
 ## Project planning
-[GitHub repository for issues and project planning]()
+[GitHub repository for project planning](https://github.com/users/Adimserious/projects/7)
 
 
-![GitHub repository for issues and project planning image]()
+![GitHub repository for issues image](/images/github-issues.png)
+
+![GitHub repository for project planning image](/images/github-project-planning.png)
 
 ## Agile methodology project Management with Github 
 CyberSecurity Mindset adopted the Agile methodology project Management with GitHub using GitHub's features which emphasize flexibility, collaboration, and iterative progress. Here's a comprehensive explanation of some of the features i used for the Cybersecurity Mindset blog to manage an agile project using GitHub:
@@ -166,7 +168,7 @@ CyberSecurity Mindset adopted the Agile methodology project Management with GitH
 
 ## User stories
 User stories are a fundamental element of Agile development, focusing on the needs and experiences of end-users. They are short, simple descriptions of a feature told from the perspective of the person who desires the new capability, usually a user or customer of the system. Here is the link to the Afrogspot user stories.
-[GitHub repository for Afrogspot user stories]()
+[GitHub repository for Afrogspot user stories](https://github.com/Adimserious/Afrogspot/issues)
 
 ## Skeleton and surface 
 ### Wireframes
@@ -250,28 +252,28 @@ An Entity-Relationship Diagram (ERD) is a visual representation of the data and 
 User: Django provides a default User model through django.contrib.auth.models.User, which can be extended if necessary. This stores information like The username, optional email  and password for the Afrogspot.
 
 Order
-user: ForeignKey to the user model (AUTH_USER_MODEL) – an order belongs to a user.
-profile: ForeignKey to the Profile model – an order belongs to a profile.
-order: ForeignKey to OrderItem – one order can have many items.
+- user: ForeignKey to the user model (AUTH_USER_MODEL) – an order belongs to a user.
+- profile: ForeignKey to the Profile model – an order belongs to a profile.
+- order: ForeignKey to OrderItem – one order can have many items.
 
 OrderItem
-order: ForeignKey to Order – an item belongs to an order.
-product: ForeignKey to Product – an item refers to a product.
-variant: ForeignKey to ProductVariant – an item can refer to a specific product variant.
+- order: ForeignKey to Order – an item belongs to an order.
+- product: ForeignKey to Product – an item refers to a product.
+- variant: ForeignKey to ProductVariant – an item can refer to a specific product variant.
 
 Product
-category: ForeignKey to Category – a product belongs to a category.
-country: ForeignKey to Country – a product can be associated with a country.
+- category: ForeignKey to Category – a product belongs to a category.
+- country: ForeignKey to Country – a product can be associated with a country.
 
 ProductVariant
-product: ForeignKey to Product – a variant belongs to a product.
-ProductRating
+- product: ForeignKey to Product – a variant belongs to a product.
 
-product: ForeignKey to Product – a rating belongs to a product.
-user: ForeignKey to User – a rating is given by a user.
+ProductRating
+- product: ForeignKey to Product – a rating belongs to a product.
+- user: ForeignKey to User – a rating is given by a user.
 
 Profile
-user: OneToOneField to User – a profile is linked to a user.
+- user: OneToOneField to User – a profile is linked to a user.
 
 ## Security
 As with most things, Security is a critical aspect, especially for a platform like Afrogspot that handles personal data.
