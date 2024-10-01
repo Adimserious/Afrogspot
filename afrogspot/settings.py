@@ -38,8 +38,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key-for-development')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = os.environ.get('DJANGO_DEVELOPMENT', 'False') == 'True'
-DEBUG = False
+
+DEBUG = 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = ['8000-adimserious-afrogspot-w484q2uf062.ws.codeinstitute-ide.net', 'afrogspot-e3f40930991f.herokuapp.com']
 
@@ -124,7 +124,8 @@ SITE_ID = 1
 
 if 'DEVELOPMENT' in os.environ:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    DEFAULT_FROM_EMAIL = 'afrogspot@gmail.com'
+    # DEFAULT_FROM_EMAIL = 'afrogspot@gmail.com'
+    DEFAULT_FROM_EMAIL = 'something@gmail.com'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = 'smtp.gmail.com'

@@ -176,28 +176,28 @@ Home page Wireframe
 <details>
 <summary>Click to View Home Page wireframe</summary>
 
-![wireframes]()
+![wireframes](/images/homepage-wf.png)
 </details>
 
 Product list wireframe
 <details>
 <summary>Click to View Product list wireframe</summary>
 
-![wireframes]()
+![wireframes](/images/product-list-wf.png)
 </details>
 
 Product Detail Wireframe
 <details>
 <summary>Click to View Product Detail wireframe</summary>
 
-![wireframes]()
+![wireframes](/images/product-detail-wf.png)
 </details>
 
 Manage Product Wireframe
 <details>
 <summary>Click to View Manage Product wireframe</summary>
 
-![wireframes]()
+![wireframes](/images/manage-product-wf.png)
 </details>
 
 
@@ -205,21 +205,35 @@ Profile page Wireframe
 <details>
 <summary>Click to View Profile Page wireframe</summary>
 
-![wireframes]()
+![wireframes](/images/profile-wf.png)
 </details>
 
 Shoping Cart page Wireframe
 <details>
 <summary>Click to View Shoping Cart Page wireframe</summary>
 
-![wireframes]()
+![wireframes](/images/cart-wf.png)
 </details>
 
 Checkout page Wireframe
 <details>
 <summary>Click to View Checkout Page wireframe</summary>
 
-![wireframes]()
+![wireframes](/images/checkout-wf.png)
+</details>
+
+Order History page Wireframe
+<details>
+<summary>Click to View Checkout Page wireframe</summary>
+
+![wireframes](/images/order-history-wf.png)
+</details>
+
+Order Details page Wireframe
+<details>
+<summary>Click to View Checkout Page wireframe</summary>
+
+![wireframes](/images/order-details-wf.png)
 </details>
 
 ## Database Schema
