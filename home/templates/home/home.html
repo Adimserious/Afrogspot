@@ -1,11 +1,24 @@
 {% extends "base.html" %}
 {% load static %}
 
-
 {% block content %}
-<div class="wrapper">
-    <h4>
-        <a href="{% url 'product_list' %}" class="shop-now btn btn-lg rounded-0 text-uppercase py-3">Shop Now</a>
-    </h4>
+<!-- Flex container for side-by-side layout -->
+<div class="content-container d-flex">
+    <!-- Video Section -->
+    <div class="video-section">
+        <video autoplay muted loop id="bg-video">
+            <source src="{{ MEDIA_URL }}background-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="shop-now-container">
+            <a href="{% url 'product_list' %}" class="shop-now btn btn-lg rounded-0 text-uppercase py-3">Shop Now</a>
+        </div>
+    </div>
+
+    <!-- Wrapper with Background Image in base.css -->
+    <div class="wrapper-section">
+        <div class="wrapper">
+        </div>
+    </div>
 </div>
 {% endblock %}
