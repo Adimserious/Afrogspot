@@ -88,19 +88,15 @@
                 <input type="hidden" name="redirect_url" value="{{ request.path }}">
             </form>
             <div class="d-flex justify-content-end">
-                <button class="btn btn-success">
+                <a href="{% url 'product_list' %}" class="btn btn-success text-white text-decoration-none">
                     <span class="small">
-                        <a class="text-white text-decoration-none" href="{% url 'product_list' %}">
-                            <span class="icon">
-                                <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="text-uppercase">Keep Shopping</span>
-                        </a>
+                        <span class="icon">
+                            <i class="fas fa-chevron-left"></i>
+                        </span>
+                        <span class="text-uppercase">Keep Shopping</span>
                     </span>
-                </button>
+                </a>
             </div>
-
-
         </div>
     </div>
 
