@@ -33,13 +33,25 @@
             </thead>
             <tbody>
                 {% for item in cart_items %}
-                <tr>
-                    <td><img class="img-fluid rounded" src="{{ item.product.image.url }}" alt="{{ item.product.name }}"
-                            style="width: 50px;"></td>
-                    <td>{{ item.product.name }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>€{{ item.price|floatformat:2 }}</td>
-                    <td>€{{ item.total_price|floatformat:2 }}</td>
+
+                <td>
+                    <a href="{% url 'product_detail' item.product.id %}">
+                        <img class="img-fluid rounded" src="{{ item.product.image.url }}" alt="{{ item.product.name }}"
+                            style="width: 100px;">
+                    </a>
+                </td>
+                <!-- Product Name and Variant -->
+                <td>
+                    <a href="{% url 'product_detail' item.product.id %}">
+                        {{ item.product.name }}
+                    </a>
+                    {% if item.variant %}
+                    <br><small><strong>Size:</strong> {{ item.variant.size }} kg</small>
+                    {% endif %}
+                </td>
+                <td>{{ item.quantity }}</td>
+                <td>€{{ item.price|floatformat:2 }}</td>
+                <td>€{{ item.total_price|floatformat:2 }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -293,6 +305,6 @@
             alert.remove(); // Remove the alert from the DOM
         }, 300); // Delay for the fade-out effect
     }
-    </script>
-    
+</script>
+
 {% endblock %}

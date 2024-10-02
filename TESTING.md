@@ -37,4 +37,25 @@ To ensure that the Afrogspot meets its requirements and performs its intended fu
 - **Errors** are the actual HTML issues that need to be fixed as they may affect the functionality or appearance of the website.
 - **Warnings** are generally suggestions for best practices, which are not critical but could improve the code efficiency or accessibility.
 
+![Home Page validation image](/images/home.page-html-cherker.png)
 
+![Product Catalog](/images/catalog-html-checker.png)
+
+![Product Detail validation image](/images/product-detail-html-checker.png)
+
+![Cart validation image](/images/cart-html-checker.png)
+
+![Checkout validation image](/images/checkout-html-checker.png)
+
+![Order Confirmation validation image](/images/order-confirm-html-checker.png)
+
+I tried to fix these warnings, these pages have the base template extended to them, i think because it requires login before accessing, the html validation didn't pick up the base template in them.
+![Manage Product](/images/manage-product-html-checker.png)
+
+![Add Product validation image](/images/add-product-html-checker.png)
+
+![Edit Product validation image](/images/update-product-html-checker.png)
+
+![Delete Product validation image](/images/delete-product-html-checker.png)
+
+![Profile validation image](/images/profile-html-checker.png)
