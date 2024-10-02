@@ -235,7 +235,28 @@ footer p {
   transition: opacity 0.3s ease;
 }
 
+.centered-container {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: center; /* Center the content vertically */
+  align-items: center; /* Center the content horizontally */
+  height: 100%; /* Full height of the content area */
+  padding: 20px; 
+}
 
+h1 {
+  margin-top: 0; /* Removes top margin */
+}
+
+p {
+  margin: 10px 0; 
+}
+
+.button-group {
+  display: flex; /* Button layout */
+  gap: 10px; /* Space between buttons */
+  margin-top: 20px;
+}
 
 /* Responsive for Larger Screens */
 @media (min-width: 768px) {
