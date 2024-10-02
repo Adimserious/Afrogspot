@@ -4,7 +4,7 @@ Welcome to Afrogspot, your go-to your premier African online grocery shop! desig
 
 Our aim is to provide a seamless shopping experience that bridges the gap between tradition and modern convenience. We are committed to offering a wide range of authentic African products—from groceries to cultural items—sourced from across the African diaspora and delivered directly to your doorstep. By doing so, Afrogspot fosters a deeper connection with African heritage while supporting communities and promoting sustainable practices.
 
-![Am I Responsive Image]()
+![Am I Responsive Image](/images/am-i-responsive.png)
 
 Link to live website: [CLICK HERE!](https://afrogspot-e3f40930991f.herokuapp.com/)
 
@@ -130,7 +130,7 @@ African-Inspired Design: The imagery, patterns, and color schemes reflects Afric
 ![GitHub repository for project planning image](/images/github-project-planning.png)
 
 ## Agile methodology project Management with Github 
-CyberSecurity Mindset adopted the Agile methodology project Management with GitHub using GitHub's features which emphasize flexibility, collaboration, and iterative progress. Here's a comprehensive explanation of some of the features i used for the Cybersecurity Mindset blog to manage an agile project using GitHub:
+Afrogspot adopted the Agile methodology project Management with GitHub using GitHub's features which emphasize flexibility, collaboration, and iterative progress. Here's a comprehensive explanation of some of the features i used for the Afrogspot to manage an agile project using GitHub:
 
 ### 1. Repositories
 
@@ -358,11 +358,15 @@ Django AllAuth is an installable framework that takes care of the user registrat
 
 #### Admin Panel
 
- - Administrators have access to a backend panel where they can manage users, Cybersecurity posts, categories, and comments.
+ - Administrators have access to a backend panel where they can manage products, update, delete and create products.
 
   ![Admin Panel Screenshot]()
 
 ## Features remaining to implement
+Due to time constraints, the following features are remaining to implement
+- Wish list creation and functionality
+- Real time Notifications
+- 
 
 ## Technologies Used
 ### Frontend
@@ -444,7 +448,7 @@ For all testing and validation, please refer to the [TESTING.md](TESTING.md) fil
 - **Local Setup:**
   1. Clone the repository: [GitHub repository](). 
  `git clone .
-  2. Navigate into the project directory: `cd cybersecurity mindset`
+  2. Navigate into the project directory: `cd Afrogspot`
   3. Install dependencies: `pip install -r requirements.txt`
   4. Set up local environment variables in a `.env` file.
   5. Run migrations: `python manage.py migrate`
