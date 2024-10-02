@@ -16,6 +16,7 @@ class ProductAdmin(admin.ModelAdmin):
         'name',
         'category',
         'price',
+        'total_stock_display',
         'stock',
         'image',
         'is_active',
@@ -24,6 +25,13 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('name', 'description')
     list_filter = ('is_active', 'is_vegan', 'is_gluten_free')
     ordering = ('name',)
+
+    # This is the total stock for variants products only
+    def total_stock_display(self, obj):
+        """Display total stock for products."""
+        return obj.total_stock
+    total_stock_display.short_description = 'Total Stock'  # Customized column header
+
 
 
 @admin.register(ProductVariant)

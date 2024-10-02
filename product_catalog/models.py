@@ -36,7 +36,7 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     discount_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    stock = models.IntegerField()
+    stock = models.IntegerField(null=True, blank=True)
     image = models.ImageField(null=True, blank=True, default='static/media/background-image.jpg')
     rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     image_url = models.URLField(max_length=1024, null=True, blank=True)
@@ -61,7 +61,14 @@ class Product(models.Model):
     
     def is_in_stock(self, quantity=1):
         """Check if the product has enough stock available for the given quantity."""
+        if self.stock is None:  # If stock is not set, consider it as out of stock
+            return False
         return self.stock >= quantity
+
+    @property
+    def total_stock(self):
+        """Calculate total stock from all variants."""
+        return sum(variant.stock for variant in self.variants.all())
 
 
     # custom method
@@ -84,6 +91,12 @@ class ProductVariant(models.Model):
 
     def __str__(self):
         return f"{self.size} kg - {self.product.name}"
+
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # Updates the product's total stock after saving the variant
+        self.product.save()  # This will update the total stock property
 
 
 class ProductRating(models.Model):

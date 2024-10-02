@@ -20,32 +20,41 @@
             <form method="POST" action="{% url 'add_to_cart' product.id %}">
                 {% csrf_token %}
                 {% if variants %}
-                <h5>Available Sizes:</h5>
-                <div class="form-group">
-                    <label for="variant">Select Size:</label>
-                    <select name="variant" id="variant" class="form-control">
-                        {% for variant in variants %}
-                        <option value="{{ variant.id }}">{{ variant.size }} kg - €{{ variant.price|floatformat:2 }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
+                    <h5>Available Sizes:</h5>
+                    <div class="form-group">
+                        <label for="variant">Select Size:</label>
+                        <select name="variant" id="variant" class="form-control">
+                            {% for variant in variants %}
+                                <option value="{{ variant.id }}">{{ variant.size }} kg - €{{ variant.price|floatformat:2 }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 {% else %}
-                <h5>Price: €{{ product.price|floatformat:2 }}</h5>
+                    <h5>Price: €{{ product.price|floatformat:2 }}</h5>
                 {% endif %}
                 <br>
                 <p class="mb-3">{{ product.description }}</p>
-                {% if product.is_in_stock %}
-                <p class="text-success">In Stock: {{ product.stock }}</p>
+
+                {% if variants %}
+                    {% if product.total_stock > 0 %}
+                        <p class="text-success">In Stock: {{ product.total_stock }}</p>
+                    {% else %}
+                        <p class="text-danger">Out of Stock</p>
+                    {% endif %}
                 {% else %}
-                <p class="text-danger">Out of Stock</p>
+                    {% if product.stock > 0 %}
+                        <p class="text-success">In Stock: {{ product.stock }}</p>
+                    {% else %}
+                        <p class="text-danger">Out of Stock</p>
+                    {% endif %}
                 {% endif %}
+
                 {% if product.category %}
-                <p class="small mt-1 mb-0">View All:
-                    <a class="text-muted" href="{% url 'product_list' %}?category={{ product.category.name }}">
-                        <i class="fas fa-tag mr-1"></i>{{ product.category.friendly_name }}
-                    </a>
-                </p>
+                    <p class="small mt-1 mb-0">View All:
+                        <a class="text-muted" href="{% url 'product_list' %}?category={{ product.category.name }}">
+                            <i class="fas fa-tag mr-1"></i>{{ product.category.friendly_name }}
+                        </a>
+                    </p>
                 {% endif %}
                 <br>
 
@@ -53,31 +62,27 @@
                 <div class="product-rating">
                     <p>Rating:</p>
                     {% for i in "12345" %}
-                    {% if product.rating >= forloop.counter %}
-                    <i class="fas fa-star star-full"></i> <!-- Full star -->
-                    {% elif product.rating >= forloop.counter0 and product.rating < forloop.counter %} <i
-                        class="fas fa-star-half-alt star-half"></i> <!-- Half star -->
+                        {% if product.rating >= forloop.counter %}
+                            <i class="fas fa-star star-full"></i> <!-- Full star -->
+                        {% elif product.rating >= forloop.counter0 and product.rating < forloop.counter %}
+                            <i class="fas fa-star-half-alt star-half"></i> <!-- Half star -->
                         {% else %}
-                        <i class="far fa-star star-empty"></i> <!-- Empty star -->
+                            <i class="far fa-star star-empty"></i> <!-- Empty star -->
                         {% endif %}
-                        {% endfor %}
-                        <p>Average Rating: {{ product.rating|floatformat:1 }}</p>
+                    {% endfor %}
+                    <p>Average Rating: {{ product.rating|floatformat:1 }}</p>
                 </div>
 
-
-
                 {% if user.is_authenticated %}
-                <a href="{% url 'rate_product' product.id %}">Rate this Product</a>
+                    <a href="{% url 'rate_product' product.id %}">Rate this Product</a>
                 {% else %}
-                <a class="text-info" href="{% url 'account_signup' %}?next={% url 'product_detail' product.id %}">
-                    create an account
-                </a> or
-                <a class="text-info" href="{% url 'account_login' %}?next={% url 'product_detail' product.id %}">
-                    log in
-                </a> to rate this product.
+                    <a class="text-info" href="{% url 'account_signup' %}?next={% url 'product_detail' product.id %}">
+                        create an account
+                    </a> or
+                    <a class="text-info" href="{% url 'account_login' %}?next={% url 'product_detail' product.id %}">
+                        log in
+                    </a> to rate this product.
                 {% endif %}
-
-
 
                 <p class="mt-3"><strong>Quantity:</strong></p>
                 <input class="form-control qty_input" type="number" name="quantity" value="1" min="1" max="99"
@@ -99,7 +104,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 {% endblock %}
