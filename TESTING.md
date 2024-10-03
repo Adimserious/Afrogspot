@@ -65,7 +65,7 @@ I tried to fix these warnings, these pages have the base template extended to th
 - **Purpose:** Ensures that the CSS code used across the platform adheres to the standards set by the W3C and is free of errors.
 - **Process:** The CSS files are submitted to the W3C CSS Validator. Corrections are made based on feedback to improve performance and cross-browser compatibility.
 
-![CSS Screenshot]()
+![CSS Screenshot](/images/css-validatn-img.png)
 
 #### Python Validation
 - **Tool Used:** [CI Python Linter](https://pep8ci.herokuapp.com/#)

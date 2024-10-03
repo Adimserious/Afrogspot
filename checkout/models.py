@@ -102,4 +102,3 @@ class OrderItem(models.Model):
         self.product.stock += self.quantity
         self.product.save()
         super().delete(*args, **kwargs)
-
