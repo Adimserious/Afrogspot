@@ -8,7 +8,7 @@ from django.forms import modelformset_factory
 from .forms import ProductForm, ProductRatingForm
 from django.conf import settings
 from django.db.models import Avg 
-
+import logging
 
 
 # ProductVariantFormSet factory
@@ -241,9 +241,20 @@ def update_product_rating(product):
         product.save()
 
 
-
 def user_has_purchased_product(user, product):
     """
     Checks if the user has purchased the product.
     """
     return user.orders.filter(items__product=product).exists()
+
+logger = logging.getLogger('product_catalog')
+def new_arrivals(request):
+    new_arrival_products = Product.get_new_arrivals().order_by('-created_at')[:30]
+
+    logger.info(f'New arrival products count: {new_arrival_products.count()}')  # Log the count
+    
+    context = {
+        'new_arrival_products': new_arrival_products
+    }
+    
+    return render(request, 'product_catalog/new_arrivals.html', context)

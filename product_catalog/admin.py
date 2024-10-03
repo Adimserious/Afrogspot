@@ -18,12 +18,14 @@ class ProductAdmin(admin.ModelAdmin):
         'price',
         'total_stock_display',
         'stock',
-        'image',
         'is_active',
+        'is_new_arrival',
+        'created_at',
+        'updated_at',
     )
 
     search_fields = ('name', 'description')
-    list_filter = ('is_active', 'is_vegan', 'is_gluten_free')
+    list_filter = ('is_active', 'is_vegan', 'is_gluten_free', 'is_new_arrival')
     ordering = ('name',)
 
     # This is the total stock for variants products only

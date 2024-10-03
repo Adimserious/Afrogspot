@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load product_extras %}
+
+
+{% block title %}New Arrivals{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h1 class="mb-3 text-center">New Arrivals</h1>
+
+    {% if new_arrival_products %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for product in new_arrival_products %}
+        <div class="col mb-4">
+            <div class="card h-100">
+                <!-- Product Image -->  
+                <img src="{{ product|product_image }}" class="card-img-top img-fluid" alt="{{ product.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+
+                    <!-- Product Description -->
+                    <p class="card-text">{{ product.description|truncatewords:20 }}</p>
+
+                    <!-- Price -->
+                    <p class="card-text">
+                        <strong>Price:</strong> €{{ product.price }}
+                    </p>
+
+                    <!-- Category Link -->
+                    {% if product.category %}
+                    <p class="small mt-1 mb-0">View All:
+                        <a class="text-muted" href="{% url 'product_list' %}?category={{ product.category.name }}">
+                            <i class="fas fa-tag mr-1"></i>{{ product.category.friendly_name }}
+                        </a>
+                    </p>
+                    {% endif %}
+
+                    <!-- Product Rating -->
+                    <div class="product-rating mt-3">
+                        <p>Rating:</p>
+                        {% for i in "12345" %}
+                        {% if product.rating >= forloop.counter %}
+                        <i class="fas fa-star star-full"></i> <!-- Full star -->
+                        {% elif product.rating >= forloop.counter0 and product.rating < forloop.counter %}
+                        <i class="fas fa-star-half-alt star-half"></i> <!-- Half star -->
+                        {% else %}
+                        <i class="far fa-star star-empty"></i> <!-- Empty star -->
+                        {% endif %}
+                        {% endfor %}
+                        <p>Average Rating: {{ product.rating|floatformat:1 }}</p>
+                    </div>
+                </div>
+
+                <div class="card-footer text-center">
+                    <a href="{% url 'product_detail' product.id %}?next={% url 'new_arrivals' %}" 
+                       class="btn btn-success text-uppercase">
+                       View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-center">No new products available.</p>
+    {% endif %}
+</div>
+{% endblock %}

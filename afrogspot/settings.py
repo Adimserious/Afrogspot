@@ -16,6 +16,36 @@ from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 from django.contrib.messages import constants as messages
 
+import logging
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',  # Use the verbose formatter
+        },
+    },
+    'loggers': {
+        'product_catalog': {
+            'handlers': ['console'],
+            'level': logging.DEBUG,
+        },
+    },
+}
+
+
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'secondary',  # Bootstrap 'secondary' class for debug messages
@@ -61,7 +91,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
     'home',
-    'product_catalog',
+    'product_catalog.apps.ProductCatalogConfig',
     'profiles',
     'cart',
     'checkout',

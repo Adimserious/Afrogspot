@@ -86,7 +86,7 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#">New Arrivals</a>
+              <a class="nav-link" href="{% url 'new_arrivals' %}">New Arrivals</a>
             </li>
 
             <!-- Categories Dropdown -->
@@ -97,6 +97,17 @@
               </a>
 
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <!-- Static 'All Products' link -->
+                <li>
+                  <a class="dropdown-item" href="{% url 'product_list' %}">
+                    All Products
+                  </a>
+                </li>
+
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+
                 <!-- Dynamically generated category links -->
                 {% for category in categories %}
                 <li>
@@ -187,11 +198,12 @@
   </a>
 
   <!-- Toast container for Django messages -->
-  <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3 alert-container" data-autohide="false">
+  <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3 alert-container"
+    data-autohide="false">
     {% if messages %}
     {% for message in messages %}
-    <div class=" alert alert toast align-items-center text-white bg-{{ message.tags }} border-0" role="alert" aria-live="assertive"
-      aria-atomic="true" data-bs-delay="3000">
+    <div class=" alert alert toast align-items-center text-white bg-{{ message.tags }} border-0" role="alert"
+      aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
       <div class="d-flex">
         <div class="toast-body">
           {{ message }}
@@ -257,16 +269,16 @@
     });
   </script>
 
-<!-- Custom Script to dismiss messages -->
-<script>
-  function dismissMessage(element) {
+  <!-- Custom Script to dismiss messages -->
+  <script>
+    function dismissMessage(element) {
       const alert = element.closest('.alert');
       alert.style.opacity = '0'; // Fade out effect
       setTimeout(() => {
-          alert.remove(); // Remove the alert from the DOM
+        alert.remove(); // Remove the alert from the DOM
       }, 300); // Delay for the fade-out effect
-  }
-</script>
+    }
+  </script>
 
   <script src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
   <script>(function ($) { window.fnames = new Array(); window.ftypes = new Array(); fnames[0] = 'EMAIL'; ftypes[0] = 'email'; fnames[1] = 'FNAME'; ftypes[1] = 'text'; fnames[2] = 'LNAME'; ftypes[2] = 'text'; fnames[3] = 'ADDRESS'; ftypes[3] = 'address'; fnames[4] = 'PHONE'; ftypes[4] = 'phone'; fnames[5] = 'BIRTHDAY'; ftypes[5] = 'birthday'; fnames[6] = 'COMPANY'; ftypes[6] = 'text'; }(jQuery)); var $mcj = jQuery.noConflict(true);</script>

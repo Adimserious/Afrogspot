@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.conf import settings
+from datetime import timedelta
 
 
 # Create your models here.
@@ -47,6 +48,22 @@ class Product(models.Model):
     is_gluten_free = models.BooleanField(default=False)
     expiration_date = models.DateField(null=True, blank=True)
     country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, blank=True, default=1)
+    is_new_arrival = models.BooleanField(default=False)
+
+
+    def save(self, *args, **kwargs):
+        # Ensures created_at is set when creating a new product
+        if not self.pk:
+            self.created_at = timezone.now()
+
+        # Mark as new arrival if created or updated within the last 30 days
+        recent_threshold = timezone.now() - timedelta(days=30)
+        if self.created_at >= recent_threshold or self.updated_at >= recent_threshold:
+            self.is_new_arrival = True
+        else:
+            self.is_new_arrival = False
+        
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -80,6 +97,12 @@ class Product(models.Model):
         if self.variants.exists():
             return self.variants.first().price  # displaying the first variant price
         return self.price  # Default product price
+
+
+    @classmethod
+    def get_new_arrivals(cls):
+        """Return products marked as new arrivals."""
+        return cls.objects.filter(is_new_arrival=True, is_active=True)
 
 
 # custom model

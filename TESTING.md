@@ -59,3 +59,127 @@ I tried to fix these warnings, these pages have the base template extended to th
 ![Delete Product validation image](/images/delete-product-html-checker.png)
 
 ![Profile validation image](/images/profile-html-checker.png)
+
+#### CSS Validation
+- **Tool Used:** [W3C CSS Validator](https://jigsaw.w3.org/css-validator/)
+- **Purpose:** Ensures that the CSS code used across the platform adheres to the standards set by the W3C and is free of errors.
+- **Process:** The CSS files are submitted to the W3C CSS Validator. Corrections are made based on feedback to improve performance and cross-browser compatibility.
+
+![CSS Screenshot]()
+
+#### Python Validation
+- **Tool Used:** [CI Python Linter](https://pep8ci.herokuapp.com/#)
+- **Purpose:** Analyzes Python source code to identify coding errors, enforce a coding standard, and look for code smells.
+- **Process:** Python code within Afrogspot is analyzed with Pylint to ensure adherence to coding standards and to improve code quality.
+
+- Afrogspot Project Module Python Validation Results**
+
+**settings.py** 
+![screenshot]()
+
+**manage.py**
+![screenshot]()
+
+**asgi.py**
+![screenshot]()
+
+**wsgi.py**
+![screenshot]()
+
+**urls.py**
+![screenshot]()
+
+Home Module Python Validation Results
+
+**views.py**
+![screenshot]()
+
+**forms.py**
+![screenshot]()
+
+**urls.py**
+![screenshot]()
+
+**admin.py**
+![screenshot]()
+
+**apps.py**
+![screenshot]()
+
+Product Catalog Module Python Validation Results
+
+**views.py**
+![screenshot]()
+
+**models.py**
+![screenshot]()
+
+**forms.py**
+![screenshot]()
+
+**urls.py**
+![screenshot]()
+
+**admin.py**
+![screenshot]()
+
+**apps.py**
+![screenshot]()
+
+Cart Module Python Validation Results
+
+**views.py**
+![screenshot]()
+
+**models.py**
+![screenshot]()
+
+**urls.py**
+![screenshot]()
+
+**admin.py**
+![screenshot]()
+
+**apps.py**
+![screenshot]()
+
+Checkout Module Python Validation Results
+
+**views.py**
+![screenshot]()
+
+**models.py**
+![screenshot]()
+
+**forms.py**
+![screenshot]()
+
+**urls.py**
+![screenshot]()
+
+**admin.py**
+![screenshot]()
+
+**apps.py**
+![screenshot]()
+
+Profiles Module Python Validation Results
+
+**views.py**
+![screenshot]()
+
+**models.py**
+![screenshot]()
+
+**forms.py**
+![screenshot]()
+
+**urls.py**
+![screenshot]()
+
+**admin.py**
+![screenshot]()
+
+**apps.py**
+![screenshot]()
+
