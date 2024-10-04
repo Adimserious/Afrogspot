@@ -213,3 +213,41 @@ Profiles Module Python Validation Results
 ![Order Comfirmation Screenshot](/images/lighthouse-order-confirm.png)
 
 
+## Manual Testing
+
+## Automated Testing
+I am not able to complete automated testing in the Afrogspot E-commerce site.
+
+### Running the Tests
+
+To run the automated tests for Afrogspot E-commerce site, follow these steps:
+
+1. Open your terminal or command prompt.
+2. Navigate to the root directory of the project where the `manage.py` file is located.
+3. Execute the following command:
+   ```bash
+   python manage.py test
+   ```
+   This command will initiate the Django test runner, which will find and run tests written throughout the project.
+
+
+### Test Database
+
+During testing, Django creates a separate database to ensure that the tests do not interfere with the production or development database. This test database is created before the tests run and is destroyed once the tests have completed. This process ensures that the testing environment is isolated and consistent.
+
+### Importance of Testing
+
+Automated tests help us to:
+- Quickly detect and fix bugs.
+- Ensure that new features integrate seamlessly without breaking existing functionality.
+- Improve code quality and maintainability.
+- Build confidence in the stability of the application.
+
+## Bugs
+
+### Solved Bugs
+
+### Known Bugs
+
+### Unknown Bugs
+I am not aware of any unknown bugs so far.
