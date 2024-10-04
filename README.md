@@ -2,7 +2,7 @@
 ### Afrogspot
 Welcome to Afrogspot, your go-to premier African online grocery shop! designed to celebrate African-inspired products, art, fashion, and culture. Whether you're looking for everyday essentials or specialty items, we are here to make your shopping experience seamless and enjoyable. Our platform is designed to provide you with the best selection of authentic African products, delivered right to your doorstep. Afrogspot, where tradition meets convenience! from across the African diaspora.
 
-Our aim is to provide a seamless shopping experience that bridges the gap between tradition and modern convenience. We are committed to offering a wide range of authentic African products—from groceries to cultural items—sourced from across the Africa and delivered directly to your doorstep. By doing so, Afrogspot fosters a deeper connection with African heritage while supporting communities and promoting sustainable practices.
+Our aim is to provide a seamless shopping experience that bridges the gap between tradition and modern convenience. We are committed to offering a wide range of authentic African products—from groceries to cultural items—sourced from across Africa and delivered directly to your doorstep. By doing so, Afrogspot fosters a deeper connection with African heritage while supporting communities and promoting sustainable practices.
 
 ![Am I Responsive Image](/images/am-i-responsive.png)
 
@@ -71,29 +71,28 @@ Product Variants: Some products come with size and price variations, allowing cu
 1. Clear Navigation and Structure
 Header with Navigation: This includes a navigation bar with links to key areas (home, new arrivals, categories, account). This remains visible as users browse, providing easy access to important pages.
 
-Search Functionality: The search bar is central to the navigation. Making it sure prominent and functional, allowing users to find products quickly. Which includes filters for category, price, and availability.
+Search Functionality: The search bar is central to the navigation. Making it sure prominent and functional, allowing users to find products quickly. Which includes filters for category, key words and availability.
 
 Categories Dropdown: The category dropdown helps users explore different product types, allowing for easy exploration.
 
 2. Seamless Product Discovery
-Product List Page: The products displayed under categories or search results include thumbnails, descriptions,pricing, and links to all products in that category. 
+Product List Page: The products displayed under categories or search results include thumbnails, descriptions,pricing, ratings and links to all products in that category. 
 
 Product Filters: There is an easy-to-use filters for product attributes like “vegan,” “gluten-free,” or by country of origin.
 
 Product Variants: Product variants (e.g., different sizes),are displayed on the product detail page with the relevant prices and stock information.
-
 
 3. Product Images: product images are of high quality and represent the authenticity of the African products sold.
 
 4. Smooth Checkout Process
 Cart and Checkout: The cart icon with the total price and item count are always visible. The checkout process is simple, with clear call-to-action buttons.
 
-Delivery Banner: The banner promoting free delivery on orders above a 50 euros encourages users to spend more. This banner updated and visible on all pages.
+Delivery Banner: The banner promoting free delivery on orders above 50 euros encourages users to spend more. This banner is updated and visible on all pages.
 
 5. User-Centric Account Management
 Account Menu: The account dropdown menu provides options for login, profile view, and product management for superusers. These pages are simple and easy to navigate.
 
-Profile Page: On the profile page, users are greeted with their names, view their order history, address details, and can update their information easily.
+Profile Page: On the profile page, users are greeted with their names, can view their order history, address and shipping details, and can update their information easily.
 
 6. Back to Top Button
 The back-to-top button ensures that users can quickly return to the top of the page after scrolling through long product listings.
@@ -102,7 +101,7 @@ The back-to-top button ensures that users can quickly return to the top of the p
 Given that a large number of users might access the site via mobile, the design is fully responsive. collapsible menus (as shown in the navigation bar) are utilized effectively for different screen sizes. Product images opens in a separate window when clicked and buttons are touch-friendly, with appropriate spacing for easy interaction on mobile devices.
 
 8. Interactive and Engaging Footer
-Social Media Integration: The footer includes social media links and a subscription option, which is great for building a community and keeping users informed. icons for Facebook, Instagram, Tiktok, WhatsApp, platforms where many African businesses thrive are present.
+Social Media Integration: The footer includes social media links and a subscription option, which is great for building a community and keeping users informed. icons for Facebook, Youtube, Instagram, Tiktok, WhatsApp, platforms where many African businesses thrive are present.
 
 Newsletter Signup: A simple call-to-action for subscribing to the newsletter keeps users connected and engaged.
 
@@ -115,7 +114,7 @@ The toast notifications system is in place to display feedback messages to users
 ![Colors image]()
 
 Consistent Branding and Visuals
-African-Inspired Design: The imagery, patterns, and color schemes reflects African culture. vibrant, warm colors of green, white, and orange, combined with traditional African patterns in the design of the home page hero image and section, users are greeted with a very attractive African shop where people are seen doing some shopping.
+African-Inspired Design: The imagery, patterns, and color schemes reflects African culture. vibrant, warm colors of green, white, and orange, combined with traditional African patterns in the design of the home page hero image and section, users are greeted with a very attractive products clip with a shop now button and African shop where people are seen doing some shopping.
 
 - Typography: There is a Clear and readable fonts, with a good contrast against the background.
 
@@ -201,7 +200,6 @@ Manage Product Wireframe
 
 ![wireframes](/images/manage-product-wf.png)
 </details>
-
 
 Profile page Wireframe
 <details>
@@ -291,65 +289,56 @@ Django AllAuth is an installable framework that takes care of the user registrat
 ## Existing Features
 
 #### Home Page
-![Home Page Screenshot]()
+![Home Page Screenshot](/images/homepage-img.png)
 
 #### User Registration, Login, and Logout
 
   - New users can sign up by providing their username, email, and password. Existing users can log in using their credentials to access personalized features.
 
   **Registration/SignUp**
-      ![Sign Up Screenshot]()
+  ![Sign Up Screenshot](/images/signup-img.png)
 
   **Login/SignIn**  
-      ![Log in Screenshot]()
+  ![Log in Screenshot](/images/signin-img.png)
 
   **Logout/Signout**
-      ![Log out Screenshot]()
+  ![Log out Screenshot](/images/signout-img.png)
 
 #### Product Lists
- 
-  ![Product Lists Screenshot]()
+  ![Product Lists Screenshot](/images/product-list-img.png)
 
-#### Product Detail
-  - 
-  ![Product Detail Screenshot]()
+#### Product Detail 
+  ![Product Detail Screenshot](/images/product-detail-img.png)
 
 #### Manage Product
-
-  - 
-  ![Manage Product Screenshot]()
+This is the Front-end Product management for Store owners.
+  ![Manage Product Screenshot](/images/manage-product-img.png)
 
 #### Profile
-  - 
-  ![Profile Screenshot]()
+  ![Profile Screenshot](/images/profile-img.png)
 
 #### Responsive Navigation Bar
-  - 
-  ![Navigation Bar Screenshot]()
+  ![Navigation Bar Screenshot](/images/nav-bar-img.png)
 
 #### Shopping Cart
-  - 
-  ![Shopping Cart Screenshot]()
+  ![Empty Shopping Cart Screenshot](/images/empt-cart-img.png)
+  ![Shopping Cart Screenshot](/images/cart-img.png)
 
 #### Checkout
-  - 
-  ![ Checkout Screenshot]()
+  ![Checkout Screenshot](/images/checkout-1-img.png)
+  ![Checkout Screenshot](/images/checkout-2-img.png)
 
 #### Order Comfirmation
- - 
-  ![Order Comfirmation Screenshot]()
+  ![Order Comfirmation Screenshot](/images/oder-confirm-img.png)
+  ![Order Comfirmation Email Screenshot](/images/order-email-confirm-img.png)
 
 #### Footer
-
- - The footer is consistent across the platform and offers additional navigation options, social media links, and legal information.
-
-  ![Footer Screenshot]()
+ - The footer is consistent across the platform and offers additional navigation options, social media links, and subscription.
+  ![Footer Screenshot](/images/footer-img.png)
 
 #### Admin Panel
-
  - Administrators have access to a backend panel where they can manage products, update, delete and create products.
-
-  ![Admin Panel Screenshot]()
+  ![Admin Panel Screenshot](/images/admin-img.png)
 
 ## Features remaining to implement
 Due to time constraints, the following features are remaining to implement or fix
