@@ -17,7 +17,7 @@
     <!-- Greeting the user by name -->
     <div class="alert alert-info" role="alert">
         <h4 class="alert-heading">Hello, {{ user_name }}!</h4>
-        <p>Welcome to your profile page. Here you can update your information and view your order history.</p>
+        <p>Welcome to your profile page. Here you can View, Update, Delete your information and view your order history.</p>
     </div>
 
     <!-- Profile Form -->
@@ -33,6 +33,12 @@
                 </div>
                 <button type="submit" class="btn btn-success">Update Information</button>
             </form>
+            <br>
+            <form action="{% url 'profile_delete' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete Profile</button>
+            </form>
+            
         </div>
     </div>
 

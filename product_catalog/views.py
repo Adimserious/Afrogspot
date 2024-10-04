@@ -9,6 +9,7 @@ from .forms import ProductForm, ProductRatingForm
 from django.conf import settings
 from django.db.models import Avg 
 import logging
+from django.utils.http import url_has_allowed_host_and_scheme
 
 
 # ProductVariantFormSet factory
@@ -204,6 +205,11 @@ def rate_product(request, product_id):
         messages.error(request, "You can only rate products you've purchased.")
         return redirect('product_detail', product_id=product_id)
 
+    # Capture the 'next' parameter from the GET request, or fallback to the product detail page
+    next_url = request.GET.get('next', None)
+    if not next_url or not url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
+        next_url = reverse('product_detail', kwargs={'product_id': product_id})
+
     if request.method == 'POST':
         form = ProductRatingForm(request.POST)
         if form.is_valid():
@@ -228,8 +234,11 @@ def rate_product(request, product_id):
     else:
         form = ProductRatingForm()
 
-    return render(request, 'product_catalog/rate_product.html', {'form': form, 'product': product})
-
+    return render(request, 'product_catalog/rate_product.html', {
+        'form': form,
+        'product': product,
+        'next_url': next_url
+    })
 
 def update_product_rating(product):
     """

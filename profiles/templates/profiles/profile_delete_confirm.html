@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-danger">
+        <h4>Are you sure you want to delete your profile?</h4>
+        <p>This action cannot be undone.</p>
+        <form action="{% url 'profile_delete' %}" method="POST">
+            {% csrf_token %}
+            {{ form.confirm }}
+            <button type="submit" class="btn btn-danger">Yes, delete my profile</button>
+            <a href="{% url 'profile_view' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

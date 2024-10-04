@@ -388,16 +388,12 @@ replace app_name with the name of your primary Django app name; the folder where
 - [**GitPod**](https://www.gitpod.io/): Preferred IDE for writing and editing code.
 
 ## Libraries and Frameworks
-
 - **asgiref (3.8.1)**: Supports asynchronous capabilities in Django, enabling better performance for asynchronous apps.
-- **crispy-bootstrap5 (0.7)**: Allows Django forms to be styled effortlessly with Bootstrap 5, enhancing form presentation without extensive front-end coding.
 - **dj-database-url (0.4.2)**: Simplifies database configuration using a URL scheme, which is especially useful for deployments on platforms like Heroku.
-
 - **Django (4.2.11)**: The main web framework for the project, providing the necessary tools to build a secure, scalable, and maintainable web application.
 - **django-allauth (0.57.2)**: Adds authentication, registration, and account management capabilities, supporting both traditional and social authentication methods.
 - **django-bootstrap4 (24.1)**: Facilitates the use of Bootstrap 4 in Django templates for consistent and responsive design across the application.
 - **django-crispy-forms (2.1)**: Helps in rendering Django forms in a DRY (Don't Repeat Yourself) manner, allowing form styling through template packs.
-- **django-summernote (0.8.20.0)**: Provides a rich text editor for Django forms, enhancing text input fields with WYSIWYG editing capabilities.
 - **gunicorn (20.1.0)**: Serves as a Python WSGI HTTP Server for UNIX, enabling Django apps to handle more concurrent traffic.
 - **oauthlib (3.2.2)**: A generic implementation of OAuth for sharing authentication across services, used in conjunction with django-allauth.
 - **psycopg2 (2.9.9)**: Acts as a PostgreSQL database adapter for Python, essential for database operations in Django projects using PostgreSQL.
@@ -432,7 +428,7 @@ For all testing and validation, please refer to the [TESTING.md](TESTING.md) fil
 
 ## Forking the Repository
 - **For Contributions:**
-  1. Fork the repository on [GitHub repository]().
+  1. Fork the repository on [GitHub repository](https://github.com/Adimserious/Afrogspot).
   2. Clone your forked repository to your local machine.
   3. Follow the local setup steps as above.
   4. Make changes and push them back to your fork.

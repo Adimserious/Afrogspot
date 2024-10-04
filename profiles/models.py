@@ -7,14 +7,14 @@ from django_countries.fields import CountryField
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    default_full_name = models.CharField(max_length=100, blank=True, null=True)
-    default_email = models.EmailField(blank=True, null=True)
-    default_phone_number = models.CharField(max_length=15, blank=True, null=True)
-    default_address_line_1 = models.CharField(max_length=255, blank=True, null=True)
-    default_address_line_2 = models.CharField(max_length=255, blank=True, null=True)
-    default_city = models.CharField(max_length=100, blank=True, null=True)
-    default_postal_code = models.CharField(max_length=20, blank=True, null=True)
-    default_country = CountryField(blank_label='Select a country', blank=True, null=True)
+    default_full_name = models.CharField(max_length=100, blank=False)
+    default_email = models.EmailField(blank=False)
+    default_phone_number = models.CharField(max_length=15, blank=False)
+    default_address_line_1 = models.CharField(max_length=255, blank=False)
+    default_address_line_2 = models.CharField(max_length=255,  blank=True, null=True)
+    default_city = models.CharField(max_length=100, blank=False)
+    default_postal_code = models.CharField(max_length=20, blank=False)
+    default_country = CountryField(blank_label='Select a country', blank=False)
 
     def __str__(self):
         return self.user.username

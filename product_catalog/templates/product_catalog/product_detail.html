@@ -75,7 +75,7 @@
                 </div>
 
                 {% if user.is_authenticated %}
-                <a href="{% url 'rate_product' product.id %}">Rate this Product</a>
+                <a href="{% url 'rate_product' product.id %}?next={{ request.path }}">Rate this Product</a>
                 {% else %}
                 <a class="text-info" href="{% url 'account_signup' %}?next={% url 'product_detail' product.id %}">
                     create an account
