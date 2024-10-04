@@ -11,11 +11,10 @@ def profile_view(request):
     try:
         # Check if profile exists
         profile = request.user.profile
-        #profile, created = Profile.objects.get_or_create(user=request.user)
     except Profile.DoesNotExist:
         # Redirect to profile creation form if no profile exists
         messages.info(request, 'You do not have a profile. Please create one.')
-        return redirect('create_profile')  # Adjust with the correct view name for creating a profile
+        return redirect('create_profile')
 
     form = ProfileForm(instance=profile)
 
