@@ -40,8 +40,6 @@ Link to live website: [CLICK HERE!](https://afrogspot-e3f40930991f.herokuapp.com
    - [AllAuth](#AllAuth)
 - [Features](#Features)
    - [Existing features](#Existing-features)
-   - [functionality](#functionality)
-   - [CRUD Functionality](#CRUD-Functionality)
 - [Featue remaining to implement](#Featue-remaining-to-implement)
 - [Technologies Used](#Technologies-Used)
 -  [fontend](#fontend)
@@ -109,9 +107,8 @@ Newsletter Signup: A simple call-to-action for subscribing to the newsletter kee
 The toast notifications system is in place to display feedback messages to users, such as successful actions or errors and it’s easy to understand.
 
 ## Design Aesthetic
-- Color Scheme: 
-
-![Colors image]()
+- Color Scheme: Green, Black and white colors were mostly used.
+![Colors image](/images/colors-img.png)
 
 Consistent Branding and Visuals
 African-Inspired Design: The imagery, patterns, and color schemes reflects African culture. vibrant, warm colors of green, white, and orange, combined with traditional African patterns in the design of the home page hero image and section, users are greeted with a very attractive products clip with a shop now button and African shop where people are seen doing some shopping.
@@ -240,12 +237,13 @@ Order Details page Wireframe
 
 A database schema is the blueprint or architecture of a database, defining how data is organized and how the relationships between data are managed. Here is an overview of the key database schema used in Afrogspot
 
+## Entity Relationship Diagram
 ![Entity Relationship Diagram](/images/erd-afrogspot.png)
 
 An Entity-Relationship Diagram (ERD) is a visual representation of the data and its relationships within a database. It is a critical tool in database design and modeling, helping to clarify the structure and organization of data. Here is an ERD diagram representation of the Afrogspot.
 
-## Tables Overview ERD
-### ERD Relationships
+## Entity Relationship Overview
+### Relationships
 
 User: Django provides a default User model through django.contrib.auth.models.User, which can be extended if necessary. This stores information like The username, optional email  and password for the Afrogspot.
 
