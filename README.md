@@ -443,7 +443,14 @@ For all testing and validation, please refer to the [TESTING.md](TESTING.md) fil
 Part of the code for order confirmation email view was gotten from serching how to handle sending actual email to customers
 ![Chatgpt order confirmation email context Screenshot](/images/chatgpt-image.png)
 
-
 ## Media
+- The Product images used for the Afrogspot E-commerce site was from me.
+- The Home page clip was generated with CapCut
+- The Home page image was generated from ChatGPT image generator pro
 
 ## Acknowledgements
+- Many thanks to **my husband and children** for their continued support and time when i needed extra time to study
+- Thank you to my Code Institute mentor **Mitko** for his positive support, guidance and advice.
+- Thanks to **Kristyna**, Cohort facilitator at Code Institute how she always there to give all the infromation needed to keep the positive energy.
+- Thanks to my **fellow students and slack community** for constantly inspiring and being there for each other to help in trouble.
+- Many Thanks to code institude tutor support, you all are amazing.
