@@ -183,3 +183,33 @@ Profiles Module Python Validation Results
 **apps.py**
 ![screenshot]()
 
+#### Lighthouse Scores
+- **Tool Used:** [Google Lighthouse](https://en.wikipedia.org/wiki/Google_Lighthouse)
+- **Purpose:** To assess the quality of web pages in terms of performance, accessibility, progressive web apps, SEO, and best practices.
+- **Process:** Afrogspot is tested with Google Lighthouse, which provides a detailed report on various aspects of the site’s performance and offers recommendations for improvement.
+
+#### Home Page Lighthouse
+![Home Page Screenshot](/images/lighthouse-home-page.png)
+
+#### Product Lists Lighthouse
+![Product Lists Screenshot](/images/lighthouse-product-catalog.png)
+
+#### Product Detail Lighthouse
+![Product Detail Screenshot](/images/lighthouse-product-detail.png)
+
+#### Manage Product Lighthouse
+![Manage Product Screenshot](/images/lighthouse-manage-product.png)
+
+#### Profile Lighthouse
+![Profile Screenshot](/images/lighthouse-profile.png)
+
+#### Shopping Cart Lighthouse
+![Shopping Cart Screenshot](/images/lighthouse-cart.png)
+
+#### Checkout Lighthouse
+![Checkout Screenshot](/images/lighthouse-checkout.png)
+
+#### Order Comfirmation Lighthouse
+![Order Comfirmation Screenshot](/images/lighthouse-order-confirm.png)
+
+

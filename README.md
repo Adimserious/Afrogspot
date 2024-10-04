@@ -307,12 +307,10 @@ Django AllAuth is an installable framework that takes care of the user registrat
       ![Log out Screenshot]()
 
 #### Product Lists
-
-  - 
+ 
   ![Product Lists Screenshot]()
 
 #### Product Detail
-
   - 
   ![Product Detail Screenshot]()
 
@@ -322,31 +320,22 @@ Django AllAuth is an installable framework that takes care of the user registrat
   ![Manage Product Screenshot]()
 
 #### Profile
-
   - 
-
   ![Profile Screenshot]()
 
 #### Responsive Navigation Bar
-
   - 
-
   ![Navigation Bar Screenshot]()
 
 #### Shopping Cart
-
   - 
-
   ![Shopping Cart Screenshot]()
 
 #### Checkout
-
   - 
-
   ![ Checkout Screenshot]()
 
 #### Order Comfirmation
-
  - 
   ![Order Comfirmation Screenshot]()
 
@@ -363,10 +352,10 @@ Django AllAuth is an installable framework that takes care of the user registrat
   ![Admin Panel Screenshot]()
 
 ## Features remaining to implement
-Due to time constraints, the following features are remaining to implement
+Due to time constraints, the following features are remaining to implement or fix
 - Wish list creation and functionality
 - Real time Notifications
-- 
+- Light house performance and best practices
 
 ## Technologies Used
 ### Frontend
