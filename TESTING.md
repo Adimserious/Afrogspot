@@ -218,13 +218,13 @@ Profiles Module Python Validation Results
 
 | Feature            | Tested? | Action        | Expected Outcome | Pass/Fail | Screenshots |
 |--------------------|---------|---------------|------------------|-----------|-------|
-| Sign up Form  | Yes     | Submit form   | User receives an email message to confirm their email, then login with their details to the Home page. | Pass      | ![screenshot]()     |
-| Login Form         | Yes     | Submit credentials | User is logged in and redirected to the homepage with a pop up login confirmation with users name. | Pass      | ![screenshot]()     |
-| Profile Form          | Yes     | Updates user information   | Users information is submitted and updated to their profile  | Pass      | ![screenshot]()     |
-| Subscription Form  | Yes     | Submit form   | User receives confirmation in to different page and can go back to the sites homepage with a click  | Pass      | ![screenshot]()     |
+| Sign up Form  | Yes     | Submit form   | User receives an email message to confirm their email, then login with their details to the Home page. | Pass      | ![screenshot](/images/email-verify-signup.png)     |
+| Login Form         | Yes     | Submit credentials | User is logged in and redirected to the homepage with a pop up login confirmation with users name. | Pass      | ![screenshot](/images/signin-confirm-img.png)     |
+| Profile Form          | Yes     | Updates, Creates or delete user information   | Users information is submitted and updated to their profile or deleted from profile  | Pass      | ![screenshot](/images/profile-update-confirm.png) ![screenshot](/images/profile-creatn-confirm.png)  ![screenshot](/images/profile-delete-confirm.png)   |
+| Subscription Form  | Yes     | Submit form   | User receives confirmation in to different page to confirm their email and can go back to the sites homepage with a click  | Pass      | ![screenshot](/images/email-subscriptn-confirm.png)     |
 | Rating Form       | Yes     | Submit Rating | Rating is added to the product with rating star count | Pass      | ![screenshot](/images/rating-confirm.img.png)     |
-| Add Product Form       | Yes     | Submit new category | Category is added to existing ones. | Pass      | ![screenshot]()     |
-| Sign outpage       | Yes     | Sign user out | User is signed out successfully. | Pass      | ![screenshot]()     |
+| Add Product Form       | Yes     | Submit new category | Category is added to existing ones. | Pass      | ![screenshot](/images/add-product-confirm.png)     |
+| Sign outpage       | Yes     | Sign user out | User is signed out successfully. | Pass      | ![screenshot](/images/signout-confirm.png)     |
 
 
 **User Input**
