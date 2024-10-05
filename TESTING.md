@@ -227,14 +227,24 @@ Profiles Module Python Validation Results
 | Sign outpage       | Yes     | Sign user out | User is signed out successfully. | Pass      | ![screenshot](/images/signout-confirm.png)     |
 
 
-**User Input**
-
-
 ### User Story Testing
-
-
-
-
+| User Story ID | Title | Tested? | Response | Acceptance Criteria | Pass/Fail |
+|---------------|-------|---------|----------|---------------------|-----------|
+| #1 | User Registration & Login | Yes | No issues | User can register with an email and password | Pass |
+| #2 | Returning User Login | Yes | No issues | User is redirected to the homepage after a successful login | Pass |
+| #3 | Product Catalog lists | Yes | No issues | Registered User and visitors can browse the product catalog | Pass |
+| #4 | Individual Product | Yes | No issues | Users can view detailed information about a product | Pass |
+| #5 | Shopping Cart Management | Yes | No issues | Users can manage their cart such as update, delete and view the details | Pass |
+| #6 | Checkout Process | Yes | No issues | Users can proceed to checkout and can make purchases | Pass |
+| #7 | Order confirmation | Yes | No issues | User can see an order confirmation page after purchase as well as as email confirmation | Pass |
+| #8 | Payment Integration | Yes | No issues | User can pay for their order using a secure and reliable payment method | Pass |
+| #9 | Order Management | Yes | No issues | Store owners can  manage orders and can fulfill customer purchases | Pass |
+| #10 | User Account Management | Yes | No issues | registered user can manage their account in profile and personal information with full CRUD functionality. | Pass |
+| #11 | Product Reviews | Yes | No issues | Users can  leave a review for a product they purchased | Pass |
+| #12 | Search and Filtering | Yes | No issues | Users can search and filter products | Pass |
+| #13 | Wish List |  |  | Not yet implemented |  |
+| #14 | Notifications |  |  | Not yet implemented | Pass |
+| #15 | Security and Performance | Yes | No issues | data transmitted between the user and the server is secure. | Pass |
 
 ## Automated Testing
 I am not able to complete automated testing in the Afrogspot E-commerce site.
@@ -265,10 +275,10 @@ Automated tests help us to:
 - Build confidence in the stability of the application.
 
 ## Bugs
-
 ### Solved Bugs
 
 ### Known Bugs
+- I tied to add asterisk to the required fields in the oder form but they wouldn't show up.
 
 ### Unknown Bugs
 I am not aware of any unknown bugs so far.

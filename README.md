@@ -26,7 +26,6 @@ Link to live website: [CLICK HERE!](https://afrogspot-e3f40930991f.herokuapp.com
      - [Project Boards](#Project-Boards)
      - [milestones](#milestones)
      - [user stories](#user-stories)
-     - [Epics](#Epics)
 - [Scope plan](#Scope-plan)
 - [Skeleton and surface](#Skeleton-and-surface) 
     - [wireframes](#wireframes)
@@ -110,12 +109,13 @@ The toast notifications system is in place to display feedback messages to users
 - Color Scheme: Green, Black and white colors were mostly used.
 ![Colors image](/images/colors-img.png)
 
+## Colour Scheme
 Consistent Branding and Visuals
 African-Inspired Design: The imagery, patterns, and color schemes reflects African culture. vibrant, warm colors of green, white, and orange, combined with traditional African patterns in the design of the home page hero image and section, users are greeted with a very attractive products clip with a shop now button and African shop where people are seen doing some shopping.
 
-- Typography: There is a Clear and readable fonts, with a good contrast against the background.
+## Typography: There is a Clear and readable fonts, with a good contrast against the background.
 
-- Visual Elements: relevant and high-quality images is used to enhance content.
+## Visual Elements: relevant and high-quality images is used to enhance content.
 
 ## Project planning
 [GitHub repository for project planning](https://github.com/users/Adimserious/projects/7)
@@ -442,7 +442,7 @@ Part of the code for order confirmation email view was gotten from serching how 
 ## Media
 - The Product images used for the Afrogspot E-commerce site was from me.
 - The Home page clip was generated with CapCut
-- The Home page image was generated from ChatGPT image generator pro
+- The Home page image was generated from ChatGPT image generator pro and products description.
 
 ## Acknowledgements
 - Many thanks to **my husband and children** for their continued support and time when i needed extra time to study
