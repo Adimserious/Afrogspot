@@ -40,6 +40,11 @@ Link to live website: [CLICK HERE!](https://afrogspot-e3f40930991f.herokuapp.com
 - [Features](#Features)
    - [Existing features](#Existing-features)
 - [Featue remaining to implement](#Featue-remaining-to-implement)
+- [Ecommerce Business Model](#Ecommerce-Business-Model)
+- [Search Engine Optimization (SEO) & Social Media Marketing](#Search-Engine-Optimization-(SEO)-&-Social-Media-Marketing)
+    - [Sitemap](#Sitemap)
+    - [Robots](#Robots)
+    - [Social Media Marketing](#Social-Media-Marketing)
 - [Technologies Used](#Technologies-Used)
 -  [fontend](#fontend)
 -  [backend](#backend)
@@ -344,6 +349,228 @@ Due to time constraints, the following features are remaining to implement or fi
 - Real time Notifications
 - Light house performance and best practices
 
+## Ecommerce Business Model
+Ecommerce Business Model
+This site operates on a Business to Customer (B2C) model, selling products directly to individual customers and therefore follows a `Business to Customer` model. It follows one of the simplest forms of **B2C**, focusing on individual transactions without the need for recurring payments like monthly or annual subscriptions.
+
+- The site is still in its early development stages but already features a newsletter system and social media marketing links.
+
+- Social media has the potential to grow a community of users around the business and increase site traffic, especially when leveraging major platforms like Facebook.
+
+- The newsletter allows the business to send regular updates to users, including information about special offers, new arrivals, changes in business hours, upcoming events, and more!
+
+## Search Engine Optimization (SEO) & Social Media Marketing
+### Keywords
+- I have identified relevant keywords to optimize my site, which should make it easier for users to find my page through search engines. These keywords include a range of types, such as:
+
+- Short-tail (head terms) keywords
+- Long-tail keywords
+- these are the keywords i added in the meta description and keywords of Afrogspot.
+- ![screenshot](/images/seo-keywords.png)
+
+### Sitemap
+- I used XML-Sitemaps to create a sitemap.xml file for my website. The sitemap was generated using the URL of my deployed site: https://afrogspot-e3f40930991f.herokuapp.com/
+
+- Once the site crawling was complete, it generated a sitemap.xml file, which I then downloaded and included in my repository.
+
+### Robots
+
+- I’ve placed the robots.txt file in the root directory, containing the default configurations.
+
+```
+User-agent: *
+Disallow: /accounts/
+Disallow: /cart/
+Sitemap: https://afrogspot-e3f40930991f.herokuapp.com/sitemap.xml
+```
+Here are additional resources for future implementation:
+
+[Google Search Console]((https://search.google.com/search-console))
+[How to create and submit a sitemap](https://developers.google.com/search/docs/advanced/sitemaps/build-sitemap)
+[Managing sitemaps and using sitemap reports](https://support.google.com/webmasters/answer/7451001)
+[Testing your robots.txt file](https://support.google.com/webmasters/answer/6062598)
+
+### Social Media Marketing
+- Building a robust social community that encourages participation and connects to the business website can significantly boost sales. Leveraging widely-used platforms like Facebook, which have a larger user base, generally increases site visibility.
+- I have created a facebook page for Afrogspot which has some followers already since its a real online shop.
+![screenshot](/images/facebook-page.png)
+
+### Newsletter Marketing
+I have integrated a newsletter sign-up form into my application, enabling users to provide their email addresses if they wish to receive more information.
+
+Additionally, users can unsubscribe from the newsletter at any time by clicking the link included in their subscription confirmation email.
+
+### Amazon AWS
+This project utilizes AWS for storing media and static files online, as Heroku does not retain this type of data.
+
+To connect your project, first create and log into your AWS account. Ensure you are on the AWS Management Console page, then follow these steps:
+
+S3 Bucket
+Search for S3.
+
+Create a new bucket, name it to match your Heroku app, and select the nearest region.
+
+Uncheck Block all public access and confirm that the bucket will be public (this is necessary for it to function on Heroku).
+
+In the Object Ownership section, enable ACLs and select Bucket owner preferred.
+
+Go to the Properties tab, enable static website hosting, and enter index.html and error.html in their respective fields, then click Save.
+
+In the Permissions tab, paste the following CORS configuration:
+
+[
+    {
+        "AllowedHeaders": [
+            "Authorization"
+        ],
+        "AllowedMethods": [
+            "GET"
+        ],
+        "AllowedOrigins": [
+            "*"
+        ],
+        "ExposeHeaders": []
+    }
+]
+
+- Copy your ARN string.
+
+- In the Bucket Policy tab, click on the Policy Generator link and follow these steps:
+
+Policy Type: S3 Bucket Policy
+Effect: Allow
+Principal: *
+Actions: GetObject
+Amazon Resource Name (ARN): paste-your-ARN-here
+Click Add Statement
+Click Generate Policy
+Copy the entire policy and paste it into the Bucket Policy Editor:
+
+{
+    "Id": "Policy1234567890",
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Stmt1234567890",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::your-bucket-name/*",
+            "Principal": "*"
+        }
+    ]
+}
+
+Before saving, ensure you add /* to the end of the Resource key in the Bucket Policy Editor.
+Click Save.
+In the Access Control List (ACL) section, click "Edit," enable List for Everyone (public access), and acknowledge the warning.
+
+If the edit button is disabled, adjust the Object Ownership section above to ACLs enabled as mentioned earlier.
+
+### IAM
+Return to the AWS Services Menu, search for and open IAM (Identity and Access Management). Once you are on the IAM page, follow these steps:
+
+In the User Groups section, click Create New Group.
+
+Suggested Name: group-Afrogspot (group + project name)
+Tags are optional, but you need to click it to proceed to the review policy page.
+
+Select your newly created group from User Groups and navigate to the Permissions tab.
+
+Open the Add Permissions dropdown and click Attach Policies.
+
+Choose the desired policy, then click Add Permissions at the bottom when you're done.
+
+In the JSON tab, click on the Import Managed Policy link.
+
+Search for S3, select the AmazonS3FullAccess policy, and then click Import.
+You will need to paste your copied ARN from the S3 Bucket into the "Resources" key in the policy:
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::your-bucket-name",
+                "arn:aws:s3:::your-bucket-name/*"
+            ]
+        }
+    ]
+}
+
+Click Review Policy.
+
+Suggested Name: policy-Afrogspot (policy + project name)
+Description:
+"Access to S3 Bucket for afrogspot static files."
+Click Create Policy.
+
+From User Groups, select your "group-afrogspot".
+
+Click Attach Policy.
+
+Search for the policy you just created ("policy-afrogspot"), select it, and click Attach Policy.
+
+In User Groups, click Add User.
+
+Suggested Name: user-Afrogspot (user + project name)
+For "Select AWS Access Type," choose Programmatic Access.
+
+Select the group to which you want to add the new user: group-afrogspot.
+
+Tags are optional, but you need to click it to go to the review user page.
+
+Click Create User when you are finished.
+
+A button will appear to Download .csv; click it to save a copy on your system.
+
+IMPORTANT: Once you leave this page, you cannot return to download it again, so do it immediately!
+This file contains the user's Access key ID and Secret access key.
+AWS_ACCESS_KEY_ID = Access key ID
+AWS_SECRET_ACCESS_KEY = Secret access key
+
+### Final AWS Setup
+If the DISABLE_COLLECTSTATIC variable is still present in the Heroku Config Vars, it can now be removed so that AWS will manage the static files.
+In S3, create a new folder named media.
+Select any existing media images for your project that you wish to upload into this new folder.
+Under Manage Public Permissions, choose Grant public read access to this object(s).
+No additional settings are needed, so click Upload.
+
+### Stripe API
+- This project utilizes Stripe to manage ecommerce payments.
+
+- After creating and logging into your Stripe account, follow these steps to connect your project:
+
+- In your Stripe dashboard, expand the section labeled "Get your test API keys."
+You will find two keys:
+- STRIPE_PUBLIC_KEY = Publishable Key (begins with pk)
+- STRIPE_SECRET_KEY = Secret Key (begins with sk)
+
+### Gmail API
+- This project utilizes Gmail to send emails for account verification and purchase order confirmations.
+
+- After creating and logging into your Gmail (Google) account, follow these steps to connect your project:
+
+- Click the Account Settings (cog icon) in the top-right corner of Gmail.
+- Navigate to the Accounts and Import tab.
+- In the "Change account settings" section, click the link for Other Google Account settings.
+- On the new page, select Security from the left-hand menu.
+- Enable 2-Step Verification (you may need to verify your password and account).
+- Once verified, click Turn On for two-factor authentication (2FA).
+- Return to the Security page, where you will find a new option called App passwords.
+- You may need to confirm your password and account again.
+- For the app type, select Mail.
+- For the device type, choose Other (Custom name).
+- Enter any custom name, such as "Django" or "Adrogspot."
+- You will receive a 16-character password (API key).
+- Save this key in a secure location, as you won’t be able to access it again later!
+- EMAIL_HOST_PASS = the user's 16-character API key
+- EMAIL_HOST_USER = the user's personal Gmail email address
+
+
 ## Technologies Used
 ### Frontend
 - [**HTML5**](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5): Used for the web Structures.
@@ -384,6 +611,64 @@ If you have your own packages that have been installed, then the requirements fi
 echo web: gunicorn app_name.wsgi > Procfile
 replace app_name with the name of your primary Django app name; the folder where settings.py is located
 
+###Local Deployment
+You can clone or fork this project to create a local copy on your system.
+
+Regardless of the method you choose, you will need to install the necessary packages listed in the requirements.txt file:
+
+Run the command: pip3 install -r requirements.txt.
+Next, create a new file named env.py at the root level and include the same environment variables specified in the Heroku deployment steps.
+
+Here’s a sample env.py file:
+import os
+
+os.environ.setdefault("AWS_ACCESS_KEY_ID", "your_value_here")
+os.environ.setdefault("AWS_SECRET_ACCESS_KEY", "your_value_here")
+os.environ.setdefault("DATABASE_URL", "your_value_here")
+os.environ.setdefault("EMAIL_HOST_PASS", "your_value_here")
+os.environ.setdefault("EMAIL_HOST_USER", "your_value_here")
+os.environ.setdefault("SECRET_KEY", "your_value_here")
+os.environ.setdefault("STRIPE_PUBLIC_KEY", "your_value_here")
+os.environ.setdefault("STRIPE_SECRET_KEY", "your_value_here")
+os.environ.setdefault("STRIPE_WH_SECRET", "your_value_here")
+
+# local environment only (do not include these in production/deployment!)
+os.environ.setdefault("DEBUG", "True")
+
+# Cloning and Forking
+## Cloning the Repository
+- **Local Setup:**
+  1. Clone the repository: [GitHub repository](). 
+ `git clone .
+  2. Navigate into the project directory: `cd Afrogspot`
+  3. Install dependencies: `pip install -r requirements.txt`
+  4. Set up local environment variables in a `.env` file.
+  5. Run migrations: `python manage.py migrate`
+  6. Start the development server: `python manage.py runserver`
+
+Once the project is cloned or forked, follow these steps to run it locally:
+
+Start the Django application: python3 manage.py runserver.
+Stop the application after it loads by pressing CTRL+C or ⌘+C (on Mac).
+Apply any necessary migrations: python3 manage.py makemigrations.
+Migrate the data to the database: python3 manage.py migrate.
+Create a superuser account: python3 manage.py createsuperuser.
+Load fixtures if needed: python3 manage.py loaddata file-name.json (repeat this for each file).
+Everything should be set up now, so restart the Django application: python3 manage.py runserver.
+To back up your database models, use the following command for each model you want to create a fixture for:
+
+python3 manage.py dumpdata your-model > your-model.json.
+Repeat this process for each model you wish to back up.
+
+## Forking the Repository
+- **For Contributions:**
+  1. Fork the repository on [GitHub repository](https://github.com/Adimserious/Afrogspot).
+  2. Clone your forked repository to your local machine.
+  3. Follow the local setup steps as above.
+  4. Make changes and push them back to your fork.
+  5. Create a pull request from your fork back to the original repo.
+
+
 ## Development Tools
 - [**GitPod**](https://www.gitpod.io/): Preferred IDE for writing and editing code.
 
@@ -414,25 +699,6 @@ replace app_name with the name of your primary Django app name; the folder where
 
 ## Testing
 For all testing and validation, please refer to the [TESTING.md](TESTING.md) file.
-
-# Cloning and Forking
-## Cloning the Repository
-- **Local Setup:**
-  1. Clone the repository: [GitHub repository](). 
- `git clone .
-  2. Navigate into the project directory: `cd Afrogspot`
-  3. Install dependencies: `pip install -r requirements.txt`
-  4. Set up local environment variables in a `.env` file.
-  5. Run migrations: `python manage.py migrate`
-  6. Start the development server: `python manage.py runserver`
-
-## Forking the Repository
-- **For Contributions:**
-  1. Fork the repository on [GitHub repository](https://github.com/Adimserious/Afrogspot).
-  2. Clone your forked repository to your local machine.
-  3. Follow the local setup steps as above.
-  4. Make changes and push them back to your fork.
-  5. Create a pull request from your fork back to the original repo.
 
 # Credits
 ## Code
