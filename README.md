@@ -564,7 +564,7 @@ You will find two keys:
 - You may need to confirm your password and account again.
 - For the app type, select Mail.
 - For the device type, choose Other (Custom name).
-- Enter any custom name, such as "Django" or "Adrogspot."
+- Enter any custom name, such as "Django" or "Afrogspot."
 - You will receive a 16-character password (API key).
 - Save this key in a secure location, as you won’t be able to access it again later!
 - EMAIL_HOST_PASS = the user's 16-character API key
@@ -611,7 +611,7 @@ If you have your own packages that have been installed, then the requirements fi
 echo web: gunicorn app_name.wsgi > Procfile
 replace app_name with the name of your primary Django app name; the folder where settings.py is located
 
-###Local Deployment
+### Local Deployment
 You can clone or fork this project to create a local copy on your system.
 
 Regardless of the method you choose, you will need to install the necessary packages listed in the requirements.txt file:
@@ -622,15 +622,15 @@ Next, create a new file named env.py at the root level and include the same envi
 Here’s a sample env.py file:
 import os
 
-os.environ.setdefault("AWS_ACCESS_KEY_ID", "your_value_here")
-os.environ.setdefault("AWS_SECRET_ACCESS_KEY", "your_value_here")
-os.environ.setdefault("DATABASE_URL", "your_value_here")
-os.environ.setdefault("EMAIL_HOST_PASS", "your_value_here")
-os.environ.setdefault("EMAIL_HOST_USER", "your_value_here")
-os.environ.setdefault("SECRET_KEY", "your_value_here")
-os.environ.setdefault("STRIPE_PUBLIC_KEY", "your_value_here")
-os.environ.setdefault("STRIPE_SECRET_KEY", "your_value_here")
-os.environ.setdefault("STRIPE_WH_SECRET", "your_value_here")
+- os.environ.setdefault("AWS_ACCESS_KEY_ID", "your_value_here")
+- os.environ.setdefault("AWS_SECRET_ACCESS_KEY", "your_value_here")
+- os.environ.setdefault("DATABASE_URL", "your_value_here")
+- os.environ.setdefault("EMAIL_HOST_PASS", "your_value_here")
+- os.environ.setdefault("EMAIL_HOST_USER", "your_value_here")
+- os.environ.setdefault("SECRET_KEY", "your_value_here")
+- os.environ.setdefault("STRIPE_PUBLIC_KEY", "your_value_here")
+- os.environ.setdefault("STRIPE_SECRET_KEY", "your_value_here")
+- os.environ.setdefault("STRIPE_WH_SECRET", "your_value_here")
 
 # local environment only (do not include these in production/deployment!)
 os.environ.setdefault("DEBUG", "True")
