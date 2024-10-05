@@ -62,6 +62,11 @@ def product_list(request):
     if request.GET and not query and not category_name and not vegan and not gluten_free and not country:
         messages.warning(request, "You didn't enter a search term or select a category. Please try again.")
 
+    # Identify products the user has purchased
+    purchased_products = []
+    if request.user.is_authenticated:
+        purchased_products = [product.id for product in products if user_has_purchased_product(request.user, product)]
+
     context = {
         'products': products,
         'query': query,
@@ -71,6 +76,7 @@ def product_list(request):
         'vegan': vegan,
         'gluten_free': gluten_free,
         'selected_country': country,
+        'purchased_products': purchased_products,
     }
 
     return render(request, 'product_catalog/product_list.html', context)

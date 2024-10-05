@@ -2,7 +2,6 @@
 
 {% load product_extras %}
 
-
 {% block content %}
 
 <div class="container my-4">
@@ -29,12 +28,12 @@
         <button type="submit" class="btn btn-success">Filter</button>
     </form>
 
-
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for product in products %}
         <div class="col">
             <div class="card h-100">
-                <img src="{{ product|product_image:'/media/logo.jpg' }}" class="card-img-top img-fluid" alt="{{ product.name }}">
+                <img src="{{ product|product_image:'/media/logo.jpg' }}" class="card-img-top img-fluid"
+                    alt="{{ product.name }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
                     <p class="card-text">{{ product.description|truncatewords:20 }}</p>
@@ -58,7 +57,10 @@
                             {% endif %}
                             {% endfor %}
                     </div>
-
+                    <!-- Buy Again Text if user has purchased the product -->
+                    {% if product.id in purchased_products %}
+                    <p class="text-success mt-2"><strong>Buy Again</strong></p>
+                    {% endif %}
                 </div>
                 <div class="card-footer text-center">
                     <a href="{% url 'product_detail' product.id %}" class="btn btn-success">View Details</a>
