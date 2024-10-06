@@ -95,13 +95,22 @@
             </form>
 
             <div class="d-flex justify-content-end">
-                {% if request.GET.next %}
-                <a href="{{ request.GET.next }}" class="btn btn-success text-white text-decoration-none">
+                {% if request.GET.next == 'new_arrival' %}
+                <a href="{% url 'new_arrivals' %}" class="btn btn-success text-white text-decoration-none">
                     <span class="small">
                         <span class="icon">
                             <i class="fas fa-chevron-left"></i>
                         </span>
                         <span class="text-uppercase">Back To New Arrival</span>
+                    </span>
+                </a>
+                {% elif request.GET.next == 'profile' %}
+                <a href="{% url 'profile_view' %}" class="btn btn-success text-white">
+                    <span class="small">
+                        <span class="icon">
+                            <i class="fas fa-chevron-left"></i>
+                        </span>
+                        <span class="text-uppercase">Back to Profile</span>
                     </span>
                 </a>
                 {% else %}
@@ -115,6 +124,7 @@
                 </a>
                 {% endif %}
             </div>
+
         </div>
     </div>
 </div>

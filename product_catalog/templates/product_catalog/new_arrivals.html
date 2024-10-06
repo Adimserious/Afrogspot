@@ -13,7 +13,7 @@
         {% for product in new_arrival_products %}
         <div class="col mb-4">
             <div class="card h-100">
-                <!-- Product Image -->  
+                <!-- Product Image -->
                 <img src="{{ product|product_image }}" class="card-img-top img-fluid" alt="{{ product.name }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
@@ -41,20 +41,20 @@
                         {% for i in "12345" %}
                         {% if product.rating >= forloop.counter %}
                         <i class="fas fa-star star-full"></i> <!-- Full star -->
-                        {% elif product.rating >= forloop.counter0 and product.rating < forloop.counter %}
-                        <i class="fas fa-star-half-alt star-half"></i> <!-- Half star -->
-                        {% else %}
-                        <i class="far fa-star star-empty"></i> <!-- Empty star -->
-                        {% endif %}
-                        {% endfor %}
-                        <p>Average Rating: {{ product.rating|floatformat:1 }}</p>
+                        {% elif product.rating >= forloop.counter0 and product.rating < forloop.counter %} <i
+                            class="fas fa-star-half-alt star-half"></i> <!-- Half star -->
+                            {% else %}
+                            <i class="far fa-star star-empty"></i> <!-- Empty star -->
+                            {% endif %}
+                            {% endfor %}
+                            <p>Average Rating: {{ product.rating|floatformat:1 }}</p>
                     </div>
                 </div>
 
                 <div class="card-footer text-center">
-                    <a href="{% url 'product_detail' product.id %}?next={% url 'new_arrivals' %}" 
-                       class="btn btn-success text-uppercase">
-                       View Details
+                    <a href="{% url 'product_detail' product.id %}?next=new_arrival"
+                        class="btn btn-success text-uppercase">
+                        View Details
                     </a>
                 </div>
             </div>

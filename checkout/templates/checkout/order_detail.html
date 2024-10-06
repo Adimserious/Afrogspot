@@ -36,7 +36,8 @@
                     <td>{{ item.product.name }}</td>
                     <td>
                         <a href="{% url 'product_detail' item.product.id %}">
-                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-thumbnail" style="width: 50px; height: 50px;">
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-thumbnail"
+                                style="width: 50px; height: 50px;">
                         </a>
                     </td>
                     <td>{{ item.variant }}</td>
@@ -44,9 +45,9 @@
                     <td>€{{ item.price }}</td>
                     <td>€{{ item.total_price|floatformat:2 }}</td>
                     <td>
-                        <!-- Buy Again Button pointing to Product Details -->
-                        <a href="{% url 'product_detail' item.product.id %}" class="btn btn-success">
-                            View product Detail
+                        <!-- Buy Again, View Product Detail Button with Return URL to Profile -->
+                        <a href="{% url 'product_detail' item.product.id %}?next=profile" class="btn btn-success">
+                            View Product Detail
                         </a>
                     </td>
                 </tr>
