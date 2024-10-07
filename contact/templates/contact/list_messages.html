@@ -1,13 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>Your Messages</h2>
-  <ul>
-    {% for message in messages %}
-      <li>
-        {{ message.message }} (Sent: {{ message.created_at }})
-        <a href="{% url 'update_message' message.id %}">Edit</a> | 
-        <a href="{% url 'delete_message' message.id %}">Delete</a>
-      </li>
-    {% endfor %}
-  </ul>
+<h2>Your Contact Messages</h2>
+<ul>
+  {% for message in messages %}
+  <li>
+    <p><strong>Name:</strong> {{ message.name }}</p>
+    <p><strong>Email:</strong> {{ message.email }}</p>
+    <p><strong>Message:</strong> {{ message.message }}</p>
+    <p><strong>Created At:</strong> {{ message.created_at }}</p>
+    <a href="{% url 'update_message' message.id %}">Edit</a>
+    <form action="{% url 'delete_message' message.id %}" method="post" style="display:inline;">
+      {% csrf_token %}
+      <button type="submit">Delete</button>
+    </form>
+  </li>
+  {% empty %}
+  <li>No messages found.</li>
+  {% endfor %}
+</ul>
+
 {% endblock %}

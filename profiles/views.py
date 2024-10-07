@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm, ProfileDeleteForm
 from .models import Profile
 from checkout.models import Order
+from contact.models import ContactMessage
 
 
 @login_required
@@ -28,11 +29,19 @@ def profile_view(request):
     # Get user's order history
     orders = Order.objects.filter(user=request.user)
 
+    print(f"User Email: {request.user.email}")
+
+    # Get user's contact messages
+    contact_messages = ContactMessage.objects.filter(email=request.user.email)
+    print(f"Contact Messages: {contact_messages}")
+
+
     context = {
         'form': form,
         'orders': orders,
         'profile': profile,
-        'user_name': request.user.get_full_name() or request.user.username
+        'user_name': request.user.get_full_name() or request.user.username,
+        'contact_messages': contact_messages,
     }
     return render(request, 'profiles/profile.html', context)
 

@@ -293,71 +293,65 @@
     <div class="container quotes-container content-container">
       <section class="footer">
         <div class="row">
-          <div class="col-12 page-header mb-4">
+          <div class="col-12 page-header mb-4 text-center">
             <h2 class="text-uppercase">Stay in touch:</h2>
-            <hr class="block-divider block-divider--short">
+            <hr class="block-divider block-divider--short mx-auto">
           </div>
         </div>
 
         <div class="row d-flex align-items-center">
           <!-- Social Section (Left) -->
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-6 mb-4 mb-md-0 text-center text-md-left">
             <h3>Socials</h3>
             <p>Keep up to date with all our latest offers</p>
             <div class="social-icons">
-              <a href="https://www.facebook.com/profile.php?id=61561168221163" target="_blank" rel="noopener"
-                aria-label="Facebook">
+              <a href="https://www.facebook.com/profile.php?id=61561168221163" target="_blank" rel="noopener" aria-label="Facebook">
                 <i class="fa-brands fa-facebook"></i>
               </a>
-              <a href="https://www.instagram.com/afrogspot.de?igsh=YzVqM25wMGl4cjZy&utm_source=qr" target="_blank"
-                rel="noopener" aria-label="Instagram">
+              <a href="https://www.instagram.com/afrogspot.de?igsh=YzVqM25wMGl4cjZy&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram">
                 <i class="fa-brands fa-instagram"></i>
               </a>
               <a href="https://wa.me/c/4915212658400" target="_blank" rel="noopener" aria-label="WhatsApp">
                 <i class="fab fa-whatsapp"></i>
               </a>
-              <a href="https://youtube.com/@afrogspot?si=1zTpFzNeVDoCeavA" target="_blank" rel="noopener"
-                aria-label="YouTube">
+              <a href="https://youtube.com/@afrogspot?si=1zTpFzNeVDoCeavA" target="_blank" rel="noopener" aria-label="YouTube">
                 <i class="fa-brands fa-youtube"></i>
               </a>
-              <a href="https://www.tiktok.com/@afrogspot?_t=8q4Kn38aM2D&_r=1" target="_blank" rel="noopener"
-                aria-label="TikTok">
+              <a href="https://www.tiktok.com/@afrogspot?_t=8q4Kn38aM2D&_r=1" target="_blank" rel="noopener" aria-label="TikTok">
                 <i class="fab fa-tiktok"></i>
               </a>
             </div>
           </div>
 
           <!-- Subscription Form Section (Right) -->
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-6 text-center text-md-left">
             <h2>Subscribe!</h2>
             <p>Get exclusive offers and discount codes by subscribing to our monthly newsletter</p>
             <div id="mc_embed_signup">
-              <form
-                action="https://herokuapp.us11.list-manage.com/subscribe/post?u=13b6a03dbb7bdb1ea86e2ef56&amp;id=cdbe87f839&amp;f_id=00874ae0f0"
-                method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate"
-                target="_blank">
+              <form action="https://herokuapp.us11.list-manage.com/subscribe/post?u=13b6a03dbb7bdb1ea86e2ef56&amp;id=cdbe87f839&amp;f_id=00874ae0f0"
+                    method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
                 <div id="mc_embed_signup_scroll">
                   <div class="mc-field-group">
                     <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
-                    <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="">
+                    <input type="email" name="EMAIL" class="required email form-control" id="mce-EMAIL" required="">
                   </div>
                   <div class="clear foot">
-                    <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Subscribe">
+                    <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="btn btn-success btn-sm mt-2" value="Subscribe">
                   </div>
                 </div>
               </form>
             </div>
           </div>
         </div>
+
         <br>
         <hr>
         <div class="container">
           <div class="row">
-            <div class="col-12 d-flex justify-content-between align-items-center">
-              <p class="mb-0">&copy; 2024 Afrogspot. All Rights Reserved.</p>
-              <a href="{% url 'send_message' %}" class="btn btn-primary" target="_blank">Contact Us</a>
-              <a href="https://www.termsfeed.com/live/1ad16289-79b0-4a38-93d9-d3bf322d7f47" target="_blank"
-                rel="noopener noreferrer">Privacy Policy</a>
+            <div class="col-12 d-flex justify-content-between align-items-center flex-column flex-md-row">
+              <p class="mb-0 text-center">&copy; 2024 Afrogspot. All Rights Reserved.</p>
+              <a href="{% url 'send_message' %}" class="btn btn-success btn-sm mt-2 mt-md-0" target="_blank">Contact Us</a>
+              <a href="https://www.termsfeed.com/live/1ad16289-79b0-4a38-93d9-d3bf322d7f47" class="mt-2 mt-md-0 list-inline-item" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
             </div>
           </div>
         </div>

@@ -6,18 +6,19 @@
 
     <!-- Display messages with a close button -->
     {% if messages %}
-        <div class="alert alert-info alert-dismissible fade show custom-alert" role="alert">
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+    <div class="alert alert-info alert-dismissible fade show custom-alert" role="alert">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     {% endif %}
 
     <!-- Greeting the user by name -->
     <div class="alert alert-info" role="alert">
         <h4 class="alert-heading">Hello, {{ user_name }}!</h4>
-        <p>Welcome to your profile page. Here you can View, Update, Delete your information and view your order history.</p>
+        <p>Welcome to your profile page. Here you can View, Update, Delete your information and view your order history.
+        </p>
     </div>
 
     <!-- Profile Form -->
@@ -38,7 +39,7 @@
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger">Delete Profile</button>
             </form>
-            
+
         </div>
     </div>
 
@@ -77,6 +78,24 @@
         You have no past orders.
     </div>
     {% endif %}
+
+    <h2>Your Contact Messages</h2>
+    <ul>
+        {% for message in contact_messages %}
+        <li>
+            <p><strong>Name:</strong> {{ message.name }}</p>
+            <p><strong>Email:</strong> {{ message.email }}</p>
+            <p><strong>Message:</strong> {{ message.message }}</p>
+            <p><strong>Created At:</strong> {{ message.created_at }}</p>
+            <a href="{% url 'update_message' message.id %}">Edit</a>
+            <a href="{% url 'delete_message' message.id %}">Delete</a>
+        </li>
+        {% empty %}
+        <li>No messages found.</li>
+        {% endfor %}
+    </ul>
+
+
     <div class="d-flex justify-content-around align-items-center mt-4">
         <a class="btn btn-success" href="{% url 'product_list' %}">
             <i class="fas fa-chevron-left"></i> Keep Shopping

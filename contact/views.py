@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import ContactMessage
 from .forms import ContactMessageForm
+from django.contrib import messages
 
 @login_required
 def send_message(request):
@@ -27,25 +28,41 @@ def list_user_messages(request):
 
 @login_required
 def update_message(request, message_id):
-    message = ContactMessage.objects.get(id=message_id, user=request.user)
+    try:
+        message = ContactMessage.objects.get(id=message_id, user=request.user)
+    except ContactMessage.DoesNotExist:
+        raise Http404("Contact message does not exist.")
+
     if request.method == 'POST':
         form = ContactMessageForm(request.POST, instance=message)
         if form.is_valid():
             form.save()
-            return redirect('list_user_messages')
+            messages.success(request, 'Contact message updated successfully!')
+            return redirect('profile_view')
+        else:
+            # If form is invalid, return the form with errors back to the template
+            return render(request, 'contact/update_message.html', {'form': form})
+    
+    # If the request method is GET, render the form with the existing message data
     else:
         form = ContactMessageForm(instance=message)
-    
+
     return render(request, 'contact/update_message.html', {'form': form})
+
 
 
 @login_required
 def delete_message(request, message_id):
-    message = ContactMessage.objects.get(id=message_id, user=request.user)
+    try:
+        message = ContactMessage.objects.get(id=message_id, user=request.user)
+    except ContactMessage.DoesNotExist:
+        raise Http404("Contact message does not exist.")
+    
     if request.method == 'POST':
         message.delete()
-        return redirect('list_user_messages')
-
+        messages.success(request, 'Contact message deleted successfully!')
+        return redirect('profile_view')
+    
     return render(request, 'contact/delete_message.html', {'message': message})
 
 

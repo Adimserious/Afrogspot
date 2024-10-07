@@ -34,7 +34,7 @@ LOGGING = {
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'formatter': 'verbose',  # Use the verbose formatter
+            'formatter': 'verbose',
         },
     },
     'loggers': {
