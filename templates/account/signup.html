@@ -1,43 +1,33 @@
 {% extends "base.html" %}
-{% load allauth i18n %}
+{% load i18n %}
+
 {% block head_title %}
     {% trans "Signup" %}
 {% endblock head_title %}
 
 {% block content %}
     <div class="centered-container"> <!-- Wrapper div to center content -->
-        {% element h1 %}
-            {% trans "Sign Up" %}
-        {% endelement %}
+        <h1>{% trans "Sign Up" %}</h1>
         
-        {% setvar link %}
-            <a href="{{ login_url }}">
-        {% endsetvar %}
-            {% setvar end_link %}
-            </a>
-        {% endsetvar %}
-        
-        {% element p %}
-            {% blocktranslate %}Already have an account? Then please {{ link }}sign in{{ end_link }}.{% endblocktranslate %}
-        {% endelement %}
+        <p>
+            {% blocktranslate %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktranslate %}
+        </p>
         
         {% if not SOCIALACCOUNT_ONLY %}
             {% url 'account_signup' as action_url %}
-            {% element form form=form method="post" action=action_url tags="entrance,signup" %}
-                {% slot body %}
-                    {% csrf_token %}
-                    {% element fields form=form unlabeled=True %}
-                    {% endelement %}
-                    {{ redirect_field }}
-                {% endslot %}
-                {% slot actions %}
-                    <div class="button-group"> <!-- Div for button grouping -->
-                        {% element button tags="prominent,signup" type="submit" %}
-                            {% trans "Sign Up" %}
-                        {% endelement %}
-                    </div>
-                {% endslot %}
-            {% endelement %}
+            <form method="post" action="{{ action_url }}">
+                {% csrf_token %}
+                {{ redirect_field }}
+                <div class="form-group">
+                    <!-- Fields -->
+                    {{ form.as_p }}  <!-- Render the form fields here, assuming you're using Django forms -->
+                </div>
+                <div class="button-group"> <!-- Div for button grouping -->
+                    <button type="submit" class="prominent signup"> <!-- Sign Up button -->
+                        {% trans "Sign Up" %}
+                    </button>
+                </div>
+            </form>
         {% endif %}
         
         {% if SOCIALACCOUNT_ENABLED %}
