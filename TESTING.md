@@ -207,6 +207,10 @@ Profiles Module Python Validation Results
 | #14 | Notifications |  |  | Not yet implemented | Pass |
 | #15 | Security and Performance | Yes | No issues | data transmitted between the user and the server is secure. | Pass |
 
+## 404 page
+- A custom 404 page to handle errors.
+![404 Page](/images/error-page.png)
+
 ## Automated Testing
 I am not able to complete automated testing in the Afrogspot E-commerce site.
 
