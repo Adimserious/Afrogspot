@@ -308,39 +308,80 @@ Django AllAuth is an installable framework that takes care of the user registrat
   ![Log out Screenshot](/images/signout-img.png)
 
 #### Product Lists
+- The shop now button takes user to the lists of products that are active, if products are not marked active, they will not appear in the list of products, this way, products are managed so that users don't order unavailable products.
   ![Product Lists Screenshot](/images/product-list-img.png)
 
-#### Product Detail 
+#### Product Detail
+- Clicking on view detail takes user to individual product details.
+- Some product have variants or sizes with corresponding prices that user can choose from.
+- products that are in stock, are shown a green colour with product count.
+- Products that are out of stock are shown in red colour with the Out os stock text seen.
+- when orders are placed, available products counts are updated accordingly.
+- Descriptive pop up messages are shown when user wants to add a product variant that is out of 
+  stock to cart.
+- Link to categories of similar products are in the product detail page for easy navigation.
+- Authenticated users can rate product from the product detail if they have purchased the product.
+- Product quantity can be selected or inputed with a minimum of one.
+
   ![Product Detail Screenshot](/images/product-detail-img.png)
 
 #### Manage Product
-This is the Front-end Product management for Store owners.
+This is the Front-end Product management for Store owners with full CRUD functionality.
   ![Manage Product Screenshot](/images/manage-product-img.png)
 
 #### Profile
+- Logged in users can view their profile from Account dropdown menu.
+- Users are greeted with their names with a descriptive message of what they can do in their  
+  profile.
+- Users can update and delete their profile.
+- deleted profiles can be created again when user visit their profile page on log in.
+- Order history can be accessed from the profile.
+- Contact messages sent by the user can be managed in the profile, they can update or delete their 
+  messages.
+
   ![Profile Screenshot](/images/profile-img.png)
+
+### Contact Form
+- User can contact store owners through the contact form located at the footer.
+![Contact form image](/images/contact-form-img.png)
 
 #### Responsive Navigation Bar
   ![Navigation Bar Screenshot](/images/nav-bar-img.png)
 
 #### Shopping Cart
+- Shopping cart quantity can be updated or deleted.
+- product detail can be viewed from the shopping cart by clicking the product image or name.
+- Cart details are displayed, including total price and shipping costs
+- Cart total above 50 euros will have free shipping
+- Standard delivery fee of 7 euros for oders below 50 euros.
+- order history can be accessed from the shopping cart.
+
   ![Empty Shopping Cart Screenshot](/images/empt-cart-img.png)
   ![Shopping Cart Screenshot](/images/cart-img.png)
 
 #### Checkout
+- Smooth checkout with users profile details prefilled if they have updated their profile.
+- order details are also seen in the checkout page.
+- Users details are saved to their profile if they tick the Save this delivery information to my 
+  profile check box.
+- Users are informed of how much their card will be charged before checking out.
+
   ![Checkout Screenshot](/images/checkout-1-img.png)
   ![Checkout Screenshot](/images/checkout-2-img.png)
 
 #### Order Comfirmation
+- Users receive a confirmation of order in the site and in their email.
   ![Order Comfirmation Screenshot](/images/oder-confirm-img.png)
   ![Order Comfirmation Email Screenshot](/images/order-email-confirm-img.png)
 
 #### Footer
- - The footer is consistent across the platform and offers additional navigation options, social media links, and subscription.
+ - The footer is consistent across the platform and offers additional navigation options, social media link to contact, privacy policy and subscription.
+
   ![Footer Screenshot](/images/footer-img.png)
 
 #### Admin Panel
  - Administrators have access to a backend panel where they can manage products, update, delete and create products.
+ 
   ![Admin Panel Screenshot](/images/admin-img.png)
 
 ## Features remaining to implement
