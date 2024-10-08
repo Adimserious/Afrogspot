@@ -15,9 +15,22 @@ def generate_short_order_number():
     # Return the first 8 characters of a UUID
     return str(uuid.uuid4())[:8]
 
+
 class Order(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
-    profile = models.ForeignKey('profiles.Profile', on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='orders'
+    )
+    profile = models.ForeignKey(
+        'profiles.Profile',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='orders'
+    )
     full_name = models.CharField(max_length=100)
     email = models.EmailField()
     phone_number = models.CharField(max_length=15)
@@ -30,19 +43,38 @@ class Order(models.Model):
     order_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     delivery_cost = models.DecimalField(max_digits=6, decimal_places=2, default=7.00)
     grand_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    stripe_payment_intent = models.CharField(max_length=200, null=True, blank=True) # Stores Stripe payment intent ID
-    order_number = models.CharField(max_length=8, default=generate_short_order_number, null=False, editable=False, unique=True)
-    payment_status = models.CharField(max_length=10, choices=[
-        ('pending', 'Pending'),
-        ('completed', 'Completed'),
-        ('failed', 'Failed'),
-        ('refunded', 'Refunded')], default='pending')
-    order_status = models.CharField(max_length=12, choices=[
-        ('processing', 'Processing'),
-        ('shipped', 'Shipped'),
-        ('delivered', 'Delivered'),
-        ('cancelled', 'Cancelled')], default='processing')
-    
+    stripe_payment_intent = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True
+    )  # Stores Stripe payment intent ID
+    order_number = models.CharField(
+        max_length=8,
+        default=generate_short_order_number,
+        null=False,
+        editable=False,
+        unique=True
+    )
+    payment_status = models.CharField(
+        max_length=10,
+        choices=[
+            ('pending', 'Pending'),
+            ('completed', 'Completed'),
+            ('failed', 'Failed'),
+            ('refunded', 'Refunded')
+        ],
+        default='pending'
+    )
+    order_status = models.CharField(
+        max_length=12,
+        choices=[
+            ('processing', 'Processing'),
+            ('shipped', 'Shipped'),
+            ('delivered', 'Delivered'),
+            ('cancelled', 'Cancelled')
+        ],
+        default='processing'
+    )
 
     def update_total(self):
         """
@@ -54,7 +86,8 @@ class Order(models.Model):
 
         # If the order total is zero, clear the delivery cost
         if self.order_total == 0:
-            self.delivery_cost = Decimal(0.00)  # Clear delivery cost if no items in the order
+            # Clear delivery cost if no items in the order
+            self.delivery_cost = Decimal(0.00)
         elif self.order_total < settings.FREE_DELIVERY_THRESHOLD:
             self.delivery_cost = Decimal(7.00)  # Standard delivery cost
         else:
@@ -66,19 +99,31 @@ class Order(models.Model):
         # Save the order to update the totals
         self.save()
 
-    
     def __str__(self):
         return f'Order #{self.order_number} by {self.full_name}'
 
 
-# stores information about each product that the customer has purchased in that specific order
+# stores information about each product that the customer has purchased
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    order = models.ForeignKey(
+        Order,
+        related_name='items',
+        on_delete=models.CASCADE
+    )
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    variant = models.ForeignKey(ProductVariant, on_delete=models.SET_NULL, null=True, blank=True)
+    variant = models.ForeignKey(
+        ProductVariant,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
     quantity = models.IntegerField(default=1)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
+    total_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        editable=False
+    )
 
     def save(self, *args, **kwargs):
         """
@@ -93,7 +138,6 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f'{self.quantity} x {self.product.name} (Order #{self.order.id})'
-
 
     def delete(self, *args, **kwargs):
         """

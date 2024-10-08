@@ -2,18 +2,22 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext as _
-from django.db.models import Q
+from django.db.models import Q, Avg
 from .models import Product, Category, ProductVariant, Country, ProductRating
 from django.forms import modelformset_factory
 from .forms import ProductForm, ProductRatingForm
 from django.conf import settings
-from django.db.models import Avg 
 import logging
 from django.utils.http import url_has_allowed_host_and_scheme
 
 
 # ProductVariantFormSet factory
-ProductVariantFormSet = modelformset_factory(ProductVariant, fields=('id', 'size', 'price', 'stock'), extra=1, can_delete=True)
+ProductVariantFormSet = modelformset_factory(
+    ProductVariant,
+    fields=('id', 'size', 'price', 'stock'),
+    extra=1,
+    can_delete=True
+)
 
 
 def product_list(request):
@@ -30,13 +34,13 @@ def product_list(request):
     # Applying filters
     if vegan:
         products = products.filter(is_vegan=True)
-    
+
     if gluten_free:
         products = products.filter(is_gluten_free=True)
 
     if country:
         products = products.filter(country__name=country)
-    
+
     # List of countries for the filter options
     countries = Country.objects.all()
 
@@ -45,20 +49,22 @@ def product_list(request):
         products = products.filter(category__name__iexact=category_name)
         query = ''  # Reset query when a category is selected
 
-    # If no category is selected and there's a search query, filter by the query
+    # If no category is selected and there's a search query, filter by query
     if query:
         products = products.filter(
-            Q(name__icontains=query) | 
+            Q(name__icontains=query) |
             Q(description__icontains=query)
         )
-        category_name = '' # Clear the category query
-    
+
+        category_name = ''  # Clear the category query
+
     # Check if no products are found after all filters
     if products.count() == 0:
         messages.info(request, "No products found matching your criteria. Please try again with different filters or a search term.")
 
 
-    # Only display the warning if the user explicitly submitted the form without entering a query or selecting a category
+    # Only display the warning if the user explicitly submitted
+    # the form without entering a query or selecting a category
     if request.GET and not query and not category_name and not vegan and not gluten_free and not country:
         messages.warning(request, "You didn't enter a search term or select a category. Please try again.")
 

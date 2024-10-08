@@ -11,7 +11,7 @@ from datetime import timedelta
 class Category(models.Model):
     class Meta:
         verbose_name_plural = 'Categories'
-        
+
     name = models.CharField(max_length=250)
     friendly_name = models.CharField(max_length=250, null=True, blank=True)
 
@@ -33,13 +33,29 @@ class Country(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=255)
     sku = models.CharField(max_length=254, null=True, blank=True)
-    category = models.ForeignKey(Category, null=True, blank=True, related_name='products', on_delete=models.SET_NULL)
+    category = models.ForeignKey(
+        Category,
+        null=True,
+        blank=True,
+        related_name='products',
+        on_delete=models.SET_NULL
+    )
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    discount_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    discount_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True
+    )
     stock = models.IntegerField(null=True, blank=True)
-    image = models.ImageField(null=True, blank=True, default='static/media/background-image.jpg')
-    rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    image = models.ImageField(
+        null=True,
+        blank=True,
+        default='static/media/background-image.jpg'
+    )
+    rating = models.DecimalField(max_digits=6, decimal_places=2,
+                                 null=True, blank=True)
     image_url = models.URLField(max_length=1024, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -47,9 +63,14 @@ class Product(models.Model):
     is_vegan = models.BooleanField(default=False)
     is_gluten_free = models.BooleanField(default=False)
     expiration_date = models.DateField(null=True, blank=True)
-    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, blank=True, default=1)
+    country = models.ForeignKey(
+        Country,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        default=1
+    )
     is_new_arrival = models.BooleanField(default=False)
-
 
     def save(self, *args, **kwargs):
         # Ensures created_at is set when creating a new product
@@ -58,11 +79,12 @@ class Product(models.Model):
 
         # Mark as new arrival if created or updated within the last 30 days
         recent_threshold = timezone.now() - timedelta(days=30)
-        if self.created_at >= recent_threshold or self.updated_at >= recent_threshold:
+        if (self.created_at >= recent_threshold or
+                self.updated_at >= recent_threshold):
             self.is_new_arrival = True
         else:
             self.is_new_arrival = False
-        
+
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -75,10 +97,13 @@ class Product(models.Model):
         if self.expiration_date:
             return self.expiration_date < timezone.now().date()
         return False
-    
+
     def is_in_stock(self, quantity=1):
-        """Check if the product has enough stock available for the given quantity."""
-        if self.stock is None:  # If stock is not set, consider it as out of stock
+        """Check if the product has enough stock
+         available for the given quantity."""
+
+        # If stock is not set, consider it as out of stock
+        if self.stock is None:
             return False
         return self.stock >= quantity
 
@@ -87,17 +112,17 @@ class Product(models.Model):
         """Calculate total stock from all variants."""
         return sum(variant.stock for variant in self.variants.all())
 
-
     # custom method
     def get_price(self):
         """
-        Returns the base price of the product or the price of the first variant if variants exist.
+        Returns the base price of the product or the price of the first
+        variant if variants exist.
         """
         # Check if the product has variants
         if self.variants.exists():
-            return self.variants.first().price  # displaying the first variant price
+            # displaying the first variant price
+            return self.variants.first().price
         return self.price  # Default product price
-
 
     @classmethod
     def get_new_arrivals(cls):
@@ -107,14 +132,14 @@ class Product(models.Model):
 
 # custom model
 class ProductVariant(models.Model):
-    product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='variants',
+                                on_delete=models.CASCADE)
     size = models.DecimalField(max_digits=5, decimal_places=2)  # Size in kg
-    price = models.DecimalField(max_digits=10, decimal_places=2)  # Price based on size
-    stock = models.IntegerField() # The stock level for this specific size
+    price = models.DecimalField(max_digits=10, decimal_places=2)  # Size Price
+    stock = models.IntegerField()  # The stock level for this specific size
 
     def __str__(self):
         return f"{self.size} kg - {self.product.name}"
-
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -123,8 +148,10 @@ class ProductVariant(models.Model):
 
 
 class ProductRating(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='ratings')
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                related_name='ratings')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
     rating = models.IntegerField()  # Store integer rating (1 to 5 stars)
     review = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

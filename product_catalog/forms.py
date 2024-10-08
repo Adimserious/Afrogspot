@@ -9,6 +9,7 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = '__all__'
 
+
 # Formset to manage ProductVariants in the same form as the Product
 ProductVariantFormSet = inlineformset_factory(
     Product, ProductVariant,
@@ -23,4 +24,5 @@ class ProductRatingForm(forms.ModelForm):
         fields = ['rating', 'review']
 
     RATING_CHOICES = [(i, str(i)) for i in range(1, 6)]
-    rating = forms.ChoiceField(choices=RATING_CHOICES, widget=forms.RadioSelect, label="Rate this product")
+    rating = forms.ChoiceField(choices=RATING_CHOICES, widget=forms.
+                               RadioSelect, label="Rate this product")

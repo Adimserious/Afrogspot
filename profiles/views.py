@@ -23,7 +23,8 @@ def profile_view(request):
         form = ProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your profile information has been updated.')
+            messages.success(request,
+                             'Your profile information has been updated.')
             return redirect('profile_view')
 
     # Get user's order history
@@ -34,7 +35,6 @@ def profile_view(request):
     # Get user's contact messages
     contact_messages = ContactMessage.objects.filter(email=request.user.email)
     print(f"Contact Messages: {contact_messages}")
-
 
     context = {
         'form': form,
@@ -59,7 +59,8 @@ def profile_delete(request):
     else:
         form = ProfileDeleteForm()
 
-    return render(request, 'profiles/profile_delete_confirm.html', {'profile': profile, 'form': form})
+    return render(request, 'profiles/profile_delete_confirm.html',
+                  {'profile': profile, 'form': form})
 
 
 @login_required

@@ -75,113 +75,74 @@ I tried to fix these warnings, these pages have the base template extended to th
 - Afrogspot Project Module Python Validation Results**
 
 **settings.py** 
-![screenshot]()
-
-**manage.py**
-![screenshot]()
-
-**asgi.py**
-![screenshot]()
-
-**wsgi.py**
-![screenshot]()
+![screenshot](/images/python-linter-settings.png)
 
 **urls.py**
-![screenshot]()
+![screenshot](/images/python-linter-project-url.png)
 
 Home Module Python Validation Results
 
 **views.py**
-![screenshot]()
-
-**forms.py**
-![screenshot]()
+![screenshot](/images/python-linter-home-views.png)
 
 **urls.py**
-![screenshot]()
-
-**admin.py**
-![screenshot]()
-
-**apps.py**
-![screenshot]()
+![screenshot](/images/python-linter-home-urls.png)
 
 Product Catalog Module Python Validation Results
 
-**views.py**
-![screenshot]()
-
 **models.py**
-![screenshot]()
+![screenshot](/images/python-linter-product-model.png)
 
 **forms.py**
-![screenshot]()
+![screenshot](/images/python-linter-product-forms.png)
 
 **urls.py**
-![screenshot]()
+![screenshot](/images/python-linter-product-urls.png)
 
 **admin.py**
-![screenshot]()
-
-**apps.py**
-![screenshot]()
+![screenshot](/images/python-linter-product-admin.png)
 
 Cart Module Python Validation Results
 
 **views.py**
-![screenshot]()
+![screenshot](/images/python-linter-cart-views.png)
 
 **models.py**
-![screenshot]()
+![screenshot](/images/python-linter-cart-model.png)
 
 **urls.py**
-![screenshot]()
+![screenshot](/images/python-linter-cart-urls.png)
 
 **admin.py**
-![screenshot]()
-
-**apps.py**
-![screenshot]()
+![screenshot](/images/python-linter-cart-admin.png)
 
 Checkout Module Python Validation Results
 
-**views.py**
-![screenshot]()
-
-**models.py**
-![screenshot]()
-
 **forms.py**
-![screenshot]()
+![screenshot](/images/python-linter-checkout-forms.png)
 
 **urls.py**
-![screenshot]()
+![screenshot](/images/python-linter-checkout-urls.png)
 
 **admin.py**
-![screenshot]()
-
-**apps.py**
-![screenshot]()
+![screenshot](/images/python-linter-checkout-admin.png)
 
 Profiles Module Python Validation Results
 
 **views.py**
-![screenshot]()
+![screenshot](/images/python-linter-profile-view.png)
 
 **models.py**
-![screenshot]()
+![screenshot](/images/python-linter-profile-models.png)
 
 **forms.py**
-![screenshot]()
+![screenshot](/images/python-linter-profile-forms.png)
 
 **urls.py**
-![screenshot]()
+![screenshot](/images/python-linter-profile-urls.png)
 
 **admin.py**
-![screenshot]()
-
-**apps.py**
-![screenshot]()
+![screenshot](/images/python-linter-profile-admin.png)
 
 #### Lighthouse Scores
 - **Tool Used:** [Google Lighthouse](https://en.wikipedia.org/wiki/Google_Lighthouse)
@@ -278,7 +239,7 @@ Automated tests help us to:
 ### Solved Bugs
 
 ### Known Bugs
-- I tied to add asterisk to the required fields in the oder form but they wouldn't show up.
+I am not aware of any known bugs so far.
 
 ### Unknown Bugs
 I am not aware of any unknown bugs so far.

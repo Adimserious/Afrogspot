@@ -4,7 +4,7 @@ from product_catalog.models import Category
 # Create your views here.
 def home(request):
     """ A view to render the home page """
-    categories = Category.objects.all()  # Fetch categories for dropdown
+    categories = Category.objects.all()
 
     context = {
         'categories': categories,

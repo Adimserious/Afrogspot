@@ -21,7 +21,10 @@ def checkout(request):
 
     # Check if cart is empty
     if not cart:
-        messages.error(request, 'Your cart is empty. Please add items to your cart before proceeding to checkout.')
+        messages.error(
+            request,
+            'Your cart is empty. Please add items to your cart before proceeding to checkout.'
+        )
         return redirect('cart_detail')
 
     # Calculate order total
@@ -42,7 +45,6 @@ def checkout(request):
             amount=int(grand_total * 100),  # Convert to cents
             currency='eur',
         )
-        #print(intent)   
         client_secret = intent.client_secret
         payment_intent_id = intent.id
     except stripe.error.StripeError as e:
@@ -76,7 +78,10 @@ def checkout(request):
                             variant.stock -= item_data['quantity']  # Reduce stock
                             variant.save()
                         else:
-                            messages.error(request, f'Sorry, only {variant.stock} of {product.name} (variant) is available.')
+                            messages.error(
+                                request,
+                                f'Sorry, only {variant.stock} of {product.name} (variant) is available.'
+                            )
                             return redirect('cart_detail')
                     else:
                         # Check if enough stock is available for the product
@@ -84,7 +89,10 @@ def checkout(request):
                             product.stock -= item_data['quantity']  # Reduce stock
                             product.save()
                         else:
-                            messages.error(request, f'Sorry, only {product.stock} of {product.name} is available.')
+                            messages.error(
+                                request,
+                                f'Sorry, only {product.stock} of {product.name} is available.'
+                            )
                             return redirect('cart_detail')
 
                     # Create the order item after checking stock
@@ -152,7 +160,7 @@ def send_order_confirmation_email(order):
     from_email = settings.DEFAULT_FROM_EMAIL
     to_email = [order.email]
 
-    # context for email chatgpt, image is attached to readme file
+    # context for email
     context = {
         'order': order,
         'site_name': 'Afrogspot',
@@ -189,7 +197,11 @@ def calculate_order_total(request):
 def order_confirmation(request, order_id):
     save_info = request.session.get('save_info')
     order = get_object_or_404(Order, id=order_id)
-    return render(request, 'checkout/order_confirmation.html', {'order': order})
+    return render(
+        request,
+        'checkout/order_confirmation.html',
+        {'order': order}
+    )
 
 
 @login_required

@@ -4,38 +4,38 @@ from product_catalog.models import Product, ProductVariant
 from django.conf import settings
 
 
-
 def cart_detail(request):
     # Get the cart from session, default to an empty dictionary
     cart = request.session.get('cart', {})
-    
     cart_items = []
-    
+
     # Iterate over the cart dictionary
     for key, item_data in cart.items():
         # Ensures that item_data is a dictionary
         if not isinstance(item_data, dict):
             continue  # Skips this item if item_data is not a dictionary
-        
+
         # Checks that the product_id exists in item_data
         if 'product_id' not in item_data:
             continue  # Skips if the data is malformed
-        
+
         # Gets the product from the database
         product = get_object_or_404(Product, id=item_data['product_id'])
-        
+
         # Creates the cart item dictionary
         item = {
             'item_id': key,  # The key is either product or variant ID
             'product': product,
             'quantity': item_data['quantity'],
             'price': float(item_data['price']),
-            'total_price': float(item_data['quantity']) * float(item_data['price']),
+            'total_price': float(item_data['quantity']) *
+            float(item_data['price']),
         }
 
         # Check if a variant exists
         if item_data.get('variant_id'):
-            variant = get_object_or_404(ProductVariant, id=item_data['variant_id'])
+            variant = get_object_or_404(ProductVariant,
+                                        id=item_data['variant_id'])
             item['variant'] = variant  # Add variant info to item
 
         # Appends the item to the cart_items list
@@ -44,14 +44,12 @@ def cart_detail(request):
     # Calculates total cart price
     total = sum(item['total_price'] for item in cart_items)
 
-    # free shipping threshold 
-    free_shipping_threshold = getattr(settings, 'FREE_SHIPPING_THRESHOLD', 50)
+    # free shipping threshold
+    free_shipping_threshold = getattr(settings,
+                                      'FREE_SHIPPING_THRESHOLD', 50)
 
     # Determines if the cart is eligible for free shipping
     eligible_for_free_shipping = total >= free_shipping_threshold
-
-    # Calculate amount needed for free shipping
-    #amount_needed_for_free_shipping = max(0, free_shipping_threshold - total)
 
     context = {
         'cart_items': cart_items,
@@ -99,7 +97,8 @@ def add_to_cart(request, item_id):
     if current_quantity + quantity > stock:
         messages.error(
             request,
-            f'Sorry, only {stock} of {variant.size if variant else ""} kg of {product.name} are available.'
+            f'Sorry, only {stock} of {variant.size if variant else ""} '
+            f'kg of {product.name} are available.'
         )
         return redirect(request.POST.get('redirect_url', '/'))
 
@@ -143,23 +142,31 @@ def update_cart_quantity(request, item_id):
             item_data = cart[item_id]
             product = get_object_or_404(Product, id=item_data['product_id'])
             variant = None
-            
+
             if item_data.get('variant_id'):
-                variant = get_object_or_404(ProductVariant, id=item_data['variant_id'])
+                variant = get_object_or_404(ProductVariant,
+                                            id=item_data['variant_id'])
 
             # Validate the quantity against stock
             if quantity > 0:
                 if variant and quantity > variant.stock:
-                    messages.error(request, f'Sorry, only {variant.stock} of {variant.size} kg of {product.name} are available.')
+                    messages.error(request,
+                                   f'Sorry, only {variant.stock} of '
+                                   f'{variant.size} kg of {product.name} '
+                                   f'are available.')
                 elif quantity > product.stock:
-                    messages.error(request, f'Sorry, only {product.stock} of {product.name} are available.')
+                    messages.error(request,
+                                   f'Sorry, only {product.stock} of '
+                                   f'{product.name} are available.')
                 else:
                     cart[item_id]['quantity'] = quantity
-                    messages.success(request, 'Item quantity updated in your cart!')
+                    messages.success(request,
+                                     'Item quantity updated in your cart!')
             else:
                 # Remove the item if the quantity is 0
                 del cart[item_id]
-                messages.success(request, 'Item removed from your cart!')
+                messages.success(request,
+                                 'Item removed from your cart!')
 
         # Save the updated cart back to the session
         request.session['cart'] = cart
@@ -180,15 +187,19 @@ def remove_from_cart(request, item_id):
         item_data = cart[str(item_id)]
         product = get_object_or_404(Product, id=item_data['product_id'])
         variant = None
-        
+
         if item_data.get('variant_id'):
-            variant = get_object_or_404(ProductVariant, id=item_data['variant_id'])
+            variant = get_object_or_404(ProductVariant,
+                                        id=item_data['variant_id'])
 
         del cart[str(item_id)]
         if variant:
-            messages.success(request, f'{variant.size} kg of {product.name} removed from your cart!')
+            messages.success(request,
+                             f'{variant.size} kg of {product.name} '
+                             f'removed from your cart!')
         else:
-            messages.success(request, f'{product.name} removed from your cart!')
+            messages.success(request,
+                             f'{product.name} removed from your cart!')
 
     # Save the updated cart back to the session
     request.session['cart'] = cart

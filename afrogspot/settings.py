@@ -45,26 +45,25 @@ LOGGING = {
     },
 }
 
-
-
 MESSAGE_TAGS = {
-    messages.DEBUG: 'secondary',  # Bootstrap 'secondary' class for debug messages
-    messages.INFO: 'info',        # Bootstrap 'info' class for informational messages
-    messages.SUCCESS: 'success',  # Bootstrap 'success' class for success messages
-    messages.WARNING: 'warning',  # Bootstrap 'warning' class for warnings
-    messages.ERROR: 'danger',     # Bootstrap 'danger' class for error messages
+    messages.DEBUG: 'secondary',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
 }
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 if os.path.exists("env.py"):
-  import env
+    import env
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key-for-development')
+SECRET_KEY = os.environ.get('SECRET_KEY',
+                            'fallback-secret-key-for-development')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -73,8 +72,10 @@ DEBUG = 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = ['8000-adimserious-afrogspot-w484q2uf062.ws.codeinstitute-ide.net', 'afrogspot-e3f40930991f.herokuapp.com']
 
-CSRF_TRUSTED_ORIGINS = ['https://8000-adimserious-afrogspot-w484q2uf062.ws.codeinstitute-ide.net', '.https://*.herokuapp.com']
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-adimserious-afrogspot-w484q2uf062.ws.codeinstitute-ide.net',
+    'https://*.herokuapp.com'
+]
 
 # Application definition
 
@@ -127,16 +128,16 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request', # required by allauth to access http request in templates
+                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'cart.context_processors.cart_content', 
+                'cart.context_processors.cart_content',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
             ],
             'builtins': [
                 'crispy_forms.templatetags.crispy_forms_tags',
-                'crispy_forms.templatetags.crispy_forms_field',]
+                'crispy_forms.templatetags.crispy_forms_field', ]
         },
     },
 ]
@@ -191,26 +192,35 @@ else:
         }
     }
 
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator'
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'MinimumLengthValidator'
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'CommonPasswordValidator'
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'NumericPasswordValidator'
+        ),
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -231,12 +241,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-#STATICFILES_DIRS = [BASE_DIR / "static"]
-if not 'USE_AWS' in os.environ:
+# STATICFILES_DIRS = [BASE_DIR / "static"]
+if 'USE_AWS' not in os.environ:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 if DEBUG:  # In development
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+    STATICFILES_STORAGE = (
+        'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+    )
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -278,7 +290,7 @@ if 'USE_AWS' in os.environ:
     AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
     AWS_DEFAULT_ACL = 'public-read'
-    
+
 # Static and media files
     STATICFILES_STORAGE = 'custom_storages.StaticStorage'
     STATICFILES_LOCATION = 'static'
