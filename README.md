@@ -434,7 +434,12 @@ Here are additional resources for future implementation:
 ### Social Media Marketing
 - Building a robust social community that encourages participation and connects to the business website can significantly boost sales. Leveraging widely-used platforms like Facebook, which have a larger user base, generally increases site visibility.
 - I have created a facebook page for Afrogspot which has some followers already since its a real online shop.
-![screenshot](/images/facebook-page.png)
+
+![Facebook screenshoot](/images/facebook-page.png)
+![Facebook screenshoot](/images/faceboot-1.png)
+![Facebook screenshoot](/images/facebook-2.png)
+![Facebook screenshoot](/images/facebook-3.png)
+![Facebook screenshoot](/images/facebook-4.png)
 
 ### Newsletter Marketing
 I have integrated a newsletter sign-up form into my application, enabling users to provide their email addresses if they wish to receive more information.
