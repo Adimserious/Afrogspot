@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% url 'account_signup' as signup_url %}
 
 {% block head_title %}
     {% trans "Sign In" %}
@@ -12,7 +13,7 @@
 
         {% if not SOCIALACCOUNT_ONLY %}
             <p>
-                {% blocktranslate %}If you have not created an account yet, then please <a href="{{ signup_url }}">{{ trans "sign up" }}</a> first.{% endblocktranslate %}
+                {% blocktranslate %}If you have not created an account yet, then please <a href="{{ signup_url }}">sign up</a> first.{% endblocktranslate %}
             </p>
 
             {% url 'account_login' as login_url %}
