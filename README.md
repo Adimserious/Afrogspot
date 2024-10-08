@@ -331,7 +331,7 @@ This is the Front-end Product management for Store owners with full CRUD functio
 
 #### Profile
 - Logged in users can view their profile from Account dropdown menu.
-- Users are greeted with their names with a descriptive message of what they can do in their  
+- Users are greeted with their names and a descriptive message of what they can do in their  
   profile.
 - Users can update and delete their profile.
 - deleted profiles can be created again when user visit their profile page on log in.
@@ -381,7 +381,7 @@ This is the Front-end Product management for Store owners with full CRUD functio
 
 #### Admin Panel
  - Administrators have access to a backend panel where they can manage products, update, delete and create products.
- 
+
   ![Admin Panel Screenshot](/images/admin-img.png)
 
 ## Features remaining to implement
