@@ -22,6 +22,22 @@ html, body {
   flex: 1; /* Grow to fill available space */
 }
 
+.row {
+  max-width: 100%;
+  
+}
+
+input, select, textarea {
+  max-width: 100%;
+}
+
+#id_description {
+  resize: vertical;
+  max-height: 200px;
+  min-height: 100px;
+  width: 100%;
+}
+
 /* Footer styles */
 .footer {
   background-color: #f1f1f1;

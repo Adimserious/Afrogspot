@@ -6,19 +6,68 @@
 
     <form method="POST" enctype="multipart/form-data" class="border p-4 rounded shadow-sm">
         {% csrf_token %}
-        
+
         <!-- Main Product Form -->
-        <div class="mb-3">
-            {{ form.as_p|safe }}
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.name.label_tag }} {{ form.name }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.sku.label_tag }} {{ form.sku }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.category.label_tag }} {{ form.category }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.price.label_tag }} {{ form.price }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.discount_price.label_tag }} {{ form.discount_price }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.stock.label_tag }} {{ form.stock }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.is_active.label_tag }} {{ form.is_active }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.is_vegan.label_tag }} {{ form.is_vegan }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.is_gluten_free.label_tag }} {{ form.is_gluten_free }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.expiration_date.label_tag }} {{ form.expiration_date }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.country.label_tag }} {{ form.country }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.image.label_tag }} {{ form.image }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.image_url.label_tag }} {{ form.image_url }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.rating.label_tag }} {{ form.rating }}
+            </div>
+            
+            <div class="col-md-6 mb-3">
+                {{ form.description.label_tag }} {{ form.description }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.is_new_arrival.label_tag }} {{ form.is_new_arrival }}
+            </div>
         </div>
 
+        <!-- Variants Section -->
         <h3 class="mt-4">Variants</h3>
         {{ variant_formset.management_form }}
         
-        <div class="variant-forms">
-            {% for form in variant_formset %}
-                <div class="variant-form mb-3 border p-3 rounded">
-                    {{ form.as_p|safe }}
+        <div class="variant-forms row">
+            {% for variant_form in variant_formset %}
+                <div class="variant-form col-md-6 mb-3 border p-3 rounded">
+                    {{ variant_form.as_p }}
                 </div>
             {% endfor %}
         </div>
