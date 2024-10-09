@@ -449,7 +449,8 @@ Here are additional resources for future implementation:
 ![Facebook screenshoot](/images/facebook-2.png)
 ![Facebook screenshoot](/images/facebook-3.png)
 ![Facebook screenshoot](/images/facebook-4.png)
-![Facebook page](https://www.facebook.com/profile.php?id=61561168221163)
+
+Link to Facebook page: [CLICK HERE!](https://www.facebook.com/profile.php?id=61561168221163)
 
 ### Newsletter Marketing
 I have integrated a newsletter sign-up form into my application, enabling users to provide their email addresses if they wish to receive more information.
