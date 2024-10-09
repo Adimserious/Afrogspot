@@ -58,6 +58,10 @@
                 </p>
                 {% endif %}
                 <br>
+                <!-- Check if a product has an expiration date -->
+                {% if product.expiration_date %}
+                <p><strong>Expiration Date:</strong> {{ product.expiration_date|date:"F j, Y" }}</p>
+                {% endif %}
 
                 <!-- Rating -->
                 <div class="product-rating">
