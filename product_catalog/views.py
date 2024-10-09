@@ -89,19 +89,18 @@ def product_list(request):
     return render(request, 'product_catalog/product_list.html', context)
 
 
-
 def product_detail(request, product_id):
     """ A view to show individual products"""
 
     product = get_object_or_404(Product, id=product_id)
     variants = product.variants.all()  # Get all available size variants if they exist
-
-
-    
+    reviews = ProductRating.objects.filter(product=product).order_by('-created_at')
+  
     context = {
         'product': product,
         'description': _(product.description),
-        'variants': variants,  
+        'variants': variants,
+        'reviews': reviews, 
     }
 
     return render(request, 'product_catalog/product_detail.html', context)
