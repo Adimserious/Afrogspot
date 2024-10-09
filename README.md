@@ -325,6 +325,10 @@ Django AllAuth is an installable framework that takes care of the user registrat
 
   ![Product Detail Screenshot](/images/product-detail-img.png)
 
+### New Arrivals
+- New added and updated  product upto 30 days will appear in the new arrivals page.
+![New Arrivals](/images/new-arrivals-img.png)
+
 #### Manage Product
 This is the Front-end Product management for Store owners with full CRUD functionality.
   ![Manage Product Screenshot](/images/manage-product-img.png)

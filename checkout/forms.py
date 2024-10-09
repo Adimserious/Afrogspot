@@ -50,15 +50,16 @@ class CheckoutForm(forms.ModelForm):
             }),
         }
 
-    # Override the __init__ method to update field labels and add CSS classes
+    # Override the __init__ method
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Add the CountryField from django-countries
+        # Add CountryField from django-countries and set the label
         self.fields['country'] = CountryField(
             blank_label='Select a country'
         ).formfield(
-            widget=forms.Select(attrs={'class': 'form-control'})
+            widget=forms.Select(attrs={'class': 'form-control'}),
+            label="Country"
         )
 
         # Add asterisks for required fields and apply form-control class

@@ -184,7 +184,7 @@ Profiles Module Python Validation Results
 | Profile Form          | Yes     | Updates, Creates or delete user information   | Users information is submitted and updated to their profile or deleted from profile  | Pass      | ![screenshot](/images/profile-update-confirm.png) ![screenshot](/images/profile-creatn-confirm.png)  ![screenshot](/images/profile-delete-confirm.png)   |
 | Subscription Form  | Yes     | Submit form   | User receives confirmation in to different page to confirm their email and can go back to the sites homepage with a click  | Pass      | ![screenshot](/images/email-subscriptn-confirm.png)     |
 | Rating Form       | Yes     | Submit Rating | Rating is added to the product with rating star count | Pass      | ![screenshot](/images/rating-confirm.img.png)     |
-| Add Product Form       | Yes     | Submit new category | Category is added to existing ones. | Pass      | ![screenshot](/images/add-product-confirm.png)     |
+| Add Product Form       | Yes     | Submit new product | New product is added to existing ones. | Pass      | ![screenshot](/images/add-product-confirm.png)     |
 | Sign outpage       | Yes     | Sign user out | User is signed out successfully. | Pass      | ![screenshot](/images/signout-confirm.png)     |
 
 
@@ -208,7 +208,7 @@ Profiles Module Python Validation Results
 | #15 | Security and Performance | Yes | No issues | data transmitted between the user and the server is secure. | Pass |
 
 ## 404 page
-- A custom 404 page to handle errors.
+- A custom 404 page to handle errors such as pages that does not exit and redirect user to the homepage.
 ![404 Page](/images/error-page.png)
 
 ## Automated Testing

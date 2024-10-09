@@ -75,7 +75,7 @@
 
             <div class="col-md-6 mb-3">
                 <div class="form-group">
-                    <label for="{{ form.full_name.id_for_label }}">Full Name</label>
+                    {{ form.full_name.label_tag }}
                     {{ form.full_name }}
                     {% if form.full_name.errors %}
                     <div class="invalid-feedback">
@@ -86,7 +86,7 @@
             </div>
             <div class="col-md-6 mb-3">
                 <div class="form-group">
-                    <label for="{{ form.email.id_for_label }}">Email Address</label>
+                    {{ form.email.label_tag }}
                     {{ form.email }}
                     {% if form.email.errors %}
                     <div class="invalid-feedback">
@@ -97,7 +97,7 @@
             </div>
             <div class="col-md-6 mb-3">
                 <div class="form-group">
-                    <label for="{{ form.phone_number.id_for_label }}">Phone Number</label>
+                    {{ form.phone_number.label_tag }}
                     {{ form.phone_number }}
                     {% if form.phone_number.errors %}
                     <div class="invalid-feedback">
@@ -108,7 +108,7 @@
             </div>
             <div class="col-md-6 mb-3">
                 <div class="form-group">
-                    <label for="{{ form.address_line_1.id_for_label }}">Address Line 1</label>
+                    {{ form.address_line_1.label_tag }}
                     {{ form.address_line_1 }}
                     {% if form.address_line_1.errors %}
                     <div class="invalid-feedback">
@@ -130,7 +130,7 @@
             </div>
             <div class="col-md-6 mb-3">
                 <div class="form-group">
-                    <label for="{{ form.city.id_for_label }}">City</label>
+                    {{ form.city.label_tag }}
                     {{ form.city }}
                     {% if form.city.errors %}
                     <div class="invalid-feedback">
@@ -141,7 +141,7 @@
             </div>
             <div class="col-md-6 mb-3">
                 <div class="form-group">
-                    <label for="{{ form.postal_code.id_for_label }}">Postal Code</label>
+                    {{ form.postal_code.label_tag }}
                     {{ form.postal_code }}
                     {% if form.postal_code.errors %}
                     <div class="invalid-feedback">
@@ -153,7 +153,7 @@
 
             <div class="col-md-6 mb-3">
                 <div class="form-group">
-                    <label for="{{ form.country.id_for_label }}">Country</label>
+                    {{ form.country.label_tag }}
                     {{ form.country }}
                     {% if form.country.errors %}
                     <div class="invalid-feedback">
