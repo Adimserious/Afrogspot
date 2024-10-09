@@ -71,7 +71,7 @@ Product Variants: Some products come with size and price variations, allowing cu
 ## UX-User-Experience
 ## Structural plane
 1. Clear Navigation and Structure
-Header with Navigation: This includes a navigation bar with links to key areas (home, new arrivals, categories, account). This remains visible as users browse, providing easy access to important pages.
+Header with Navigation: This includes a navigation bar with links to key areas (home, search, new arrivals, categories, account and shopping cart). This remains visible as users browse, providing easy access to important pages.
 
 Search Functionality: The search bar is central to the navigation. Making it sure prominent and functional, allowing users to find products quickly. Which includes filters for category, key words and availability.
 
@@ -292,6 +292,7 @@ Django AllAuth is an installable framework that takes care of the user registrat
 ## Existing Features
 
 #### Home Page
+- The home page display an African Grocery shop where peopleare seen shopping to the right and some of the Afrogspot products in a clip with the shop now button to the left.
 ![Home Page Screenshot](/images/homepage-img.png)
 
 #### User Registration, Login, and Logout
@@ -314,8 +315,11 @@ Django AllAuth is an installable framework that takes care of the user registrat
 #### Product Detail
 - Clicking on view detail takes user to individual product details.
 - Some product have variants or sizes with corresponding prices that user can choose from.
-- products that are in stock, are shown a green colour with product count.
-- Products that are out of stock are shown in red colour with the Out os stock text seen.
+- products that are in stock, are shown in green colour with product count.
+- Products that are out of stock are shown in red colour with the Out of stock text seen.
+- Products that are out of stock can not be added to cart, a descriptive message is displayed when  
+  a user tries.
+  to add it to cart
 - when orders are placed, available products counts are updated accordingly.
 - Descriptive pop up messages are shown when user wants to add a product variant that is out of 
   stock to cart.
@@ -324,6 +328,8 @@ Django AllAuth is an installable framework that takes care of the user registrat
 - Product quantity can be selected or inputed with a minimum of one.
 
   ![Product Detail Screenshot](/images/product-detail-img.png)
+
+  ![Out of stock product image](/images/out-of-stock-img.png)
 
 ### New Arrivals
 - New added and updated  product upto 30 days will appear in the new arrivals page.
