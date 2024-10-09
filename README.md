@@ -396,9 +396,8 @@ This is the Front-end Product management for Store owners with full CRUD functio
 
 ## Features remaining to implement
 Due to time constraints, the following features are remaining to implement or fix
-- Wish list creation and functionality
-- Real time Notifications
-- Light house performance and best practices
+- Wish list creation and functionality.
+- Real time Notifications.
 
 ## Ecommerce Business Model
 Ecommerce Business Model
