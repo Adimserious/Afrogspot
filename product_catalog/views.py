@@ -60,9 +60,13 @@ def product_list(request):
         category_name = ''  # Clear the category query
 
     # Check if no products are found after all filters
+    no_products_found = False
     if products.count() == 0:
-        messages.info(request, "No products found matching your criteria. Please try again with different filters or a search term.")
-
+        no_products_found = True
+        messages.info(
+            request, 
+            "No products found matching your criteria. Please try again with different filters or a search term."
+        )
 
     # Only display the warning if the user explicitly submitted
     # the form without entering a query or selecting a category
@@ -84,6 +88,7 @@ def product_list(request):
         'gluten_free': gluten_free,
         'selected_country': country,
         'purchased_products': purchased_products,
+        'no_products_found': no_products_found,
     }
 
     return render(request, 'product_catalog/product_list.html', context)

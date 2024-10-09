@@ -3,6 +3,11 @@
 {% load product_extras %}
 
 {% block content %}
+{% if no_products_found %}
+  <div class="alert alert-info">
+    No products found. <a href="{% url 'product_list' %}">See all products</a>.
+  </div>
+{% endif %}
 
 <div class="container my-4">
     <h1 class="text-center mb-4">Our Products</h1>

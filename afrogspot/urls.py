@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from afrogspot.views import four_o_four_view
+from afrogspot.views import four_o_four_view, handler505
 
 
 urlpatterns = [
@@ -29,7 +29,10 @@ urlpatterns = [
     path('checkout/', include('checkout.urls')),
     path('profiles/', include('profiles.urls')),
     path('contact/', include('contact.urls')),
+    path('trigger-505/', handler505, name='trigger_505'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = four_o_four_view
+
+
 

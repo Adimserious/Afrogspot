@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h1 class="text-danger">HTTP Version Not Supported (505)</h1>
+    <p>Sorry, the server does not support the HTTP protocol version that was used in your request.</p>
+    <a href="{% url 'home' %}" class="btn btn-primary">Return to Home</a>
+</div>
+{% endblock %}

@@ -209,7 +209,13 @@ Profiles Module Python Validation Results
 
 ## 404 page
 - A custom 404 page to handle errors such as pages that does not exit and redirect user to the homepage.
+
 ![404 Page](/images/error-page.png)
+
+### 505 page
+- A 505 page, also known as a "HTTP Version Not Supported" error page, is a server error response code indicating that the server does not support the HTTP protocol version used in the request. This error typically occurs when a client sends a request using an unsupported version of the HTTP protocol. I added a custom 505 page in Afrogspot.
+
+![505 page](/images/505-page.png)
 
 ## Automated Testing
 I am not able to complete automated testing in the Afrogspot E-commerce site.
@@ -241,9 +247,8 @@ Automated tests help us to:
 
 ## Bugs
 ### Solved Bugs
+- The sign up and sign in links wouldn't show up on the verify email template of the Django allauth after customising it, i solved it by coding the links manually.
 
 ### Known Bugs
 I am not aware of any known bugs so far.
 
-### Unknown Bugs
-I am not aware of any unknown bugs so far.

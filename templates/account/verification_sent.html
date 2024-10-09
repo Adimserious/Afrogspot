@@ -1,4 +1,4 @@
-{% extends "account/base_entrance.html" %}
+{% extends "base.html" %}
 {% load i18n %}
 
 {% block head_title %}
@@ -6,9 +6,19 @@
 {% endblock head_title %}
 
 {% block content %}
-    <h1>{% trans "Verify Your Email Address" %}</h1>
-    
-    <p>
-        {% blocktrans %}We have sent an email to you for verification. Follow the link provided to finalize the signup process. If you do not see the verification email in your main inbox, check your spam folder. Please contact us if you do not receive the verification email within a few minutes.{% endblocktrans %}
-    </p>
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh; padding: 0;">
+    <div class="text-center">
+        <h1 class="mb-3">{% trans "Verify Your Email Address" %}</h1>
+        
+        <p class="mb-3">
+            {% blocktrans %}We have sent an email to you for verification. Follow the link provided to finalize the signup process. If you do not see the verification email in your main inbox, check your spam folder. Please contact us if you do not receive the verification email within a few minutes.{% endblocktrans %}
+        </p>
+
+        <!-- Sign Up and Sign In Links -->
+        <div>
+            <a href="{% url 'account_signup' %}" class="btn btn-success me-2">{% trans "Sign Up" %}</a>
+            <a href="{% url 'account_login' %}" class="btn btn-secondary">{% trans "Sign In" %}</a>
+        </div>
+    </div>
+</div>
 {% endblock content %}
