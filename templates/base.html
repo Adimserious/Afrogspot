@@ -104,6 +104,7 @@
                 <input type="hidden" name="next" value="{{ request.path }}">
             </form>
             
+
             </li>
 
             </li>
@@ -198,15 +199,18 @@
       </span>
     </a>
 
-   
+
+    <!-- Second Row: Navigation Menu -->
     <!-- Second Row: Navigation Menu -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light py-1">
       <div class="container-fluid justify-content-evenly">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+        <!-- Toggler for offcanvas -->
+        <button class="btn btn-outline-dark d-lg-none" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#categoriesOffcanvas" aria-controls="categoriesOffcanvas">
+          Categories
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Normal Navbar Menu -->
+        <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
           <ul class="navbar-nav w-100 justify-content-evenly">
             <li class="nav-item">
               <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
@@ -216,13 +220,13 @@
               <a class="nav-link {% if request.resolver_match.url_name == 'new_arrivals' %}active{% endif %}"
                 href="{% url 'new_arrivals' %}">New Arrivals</a>
             </li>
-            <!-- Categories Dropdown -->
-            <li class="nav-item dropdown">
+            <!-- Categories Dropdown (Desktop View Only) -->
+            <li class="nav-item dropdown d-none d-lg-block">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Categories
               </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="{% url 'product_list' %}">All Products</a></li>
                 <li>
                   <hr class="dropdown-divider">
@@ -242,8 +246,31 @@
       </div>
     </nav>
 
-
-
+    <!-- Offcanvas Menu for Mobile -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="categoriesOffcanvas"
+      aria-labelledby="categoriesOffcanvasLabel">
+      <div class="offcanvas-header">
+        <h5 id="categoriesOffcanvasLabel">Categories</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a href="{% url 'product_list' %}">All Products</a>
+          </li>
+          <li>
+            <hr>
+          </li>
+          {% for category in categories %}
+          <li class="list-group-item">
+            <a href="{% url 'product_list' %}?category={{ category.name|urlencode }}&q={{ query|urlencode }}">
+              {{ category.name }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
 
 
     <!-- Delivery Banner -->
