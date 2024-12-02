@@ -70,10 +70,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY',
 
 DEBUG = 'DEVELOPMENT' in os.environ
 
-ALLOWED_HOSTS = ['8000-adimserious-afrogspot-w484q2uf062.ws.codeinstitute-ide.net', 'afrogspot-e3f40930991f.herokuapp.com']
+
+ALLOWED_HOSTS = ['8000-adimserious-afrogspot-2xe5zj7t4ro.ws.codeinstitute-ide.net', 'afrogspot-e3f40930991f.herokuapp.com']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-adimserious-afrogspot-w484q2uf062.ws.codeinstitute-ide.net',
+    'https://8000-adimserious-afrogspot-2xe5zj7t4ro.ws.codeinstitute-ide.net',
     'https://*.herokuapp.com'
 ]
 
@@ -156,7 +157,6 @@ SITE_ID = 1
 
 if 'DEVELOPMENT' in os.environ:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    # DEFAULT_FROM_EMAIL = 'afrogspot@gmail.com'
     DEFAULT_FROM_EMAIL = 'something@gmail.com'
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -227,7 +227,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
@@ -252,6 +251,7 @@ if DEBUG:  # In development
         'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
     )
 
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -263,11 +263,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 FREE_DELIVERY_THRESHOLD = 50.00  # Free delivery for orders over 50 euros
 STANDARD_DELIVERY = 7.00         # Standard delivery charge of 7 euros
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
 
 LANGUAGES = [
     ('en', _('English')),
     ('de', _('German')),
+    ('es', _('Spanish')),
+    ('fr', _('French')),
 ]
 
 LOCALE_PATHS = [

@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 
 <!doctype html>
 <html lang="en">
@@ -91,6 +92,22 @@
           <!-- Navigation Menu -->
           <ul class="navbar-nav">
             <li class="nav-item">
+              <form method="post" action="{% url 'set_language' %}">
+                {% csrf_token %}
+                <select name="language" id="language" class="form-select form-select-sm" onchange="this.form.submit()">
+                    {% for lang_code, lang_name in LANGUAGES %}
+                    <option value="{{ lang_code }}" {% if lang_code == request.LANGUAGE_CODE %}selected{% endif %}>
+                        {{ lang_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" name="next" value="{{ request.path }}">
+            </form>
+            
+            </li>
+
+            </li>
+            <li class="nav-item">
               <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
                 href="{% url 'home' %}">Home</a>
             </li>
@@ -103,7 +120,6 @@
             <!-- Categories Dropdown -->
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-           
                 aria-expanded="false">
                 Categories
               </a>
@@ -181,6 +197,54 @@
         {{ product_count }}
       </span>
     </a>
+
+   
+    <!-- Second Row: Navigation Menu -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-1">
+      <div class="container-fluid justify-content-evenly">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav w-100 justify-content-evenly">
+            <li class="nav-item">
+              <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.resolver_match.url_name == 'new_arrivals' %}active{% endif %}"
+                href="{% url 'new_arrivals' %}">New Arrivals</a>
+            </li>
+            <!-- Categories Dropdown -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Categories
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{% url 'product_list' %}">All Products</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                {% for category in categories %}
+                <li>
+                  <a class="dropdown-item {% if request.GET.category == category.name %}active{% endif %}"
+                    href="{% url 'product_list' %}?category={{ category.name|urlencode }}&q={{ query|urlencode }}">
+                    {{ category.name }}
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+
+
 
     <!-- Delivery Banner -->
     <div id="delivery-banner" class="row text-center">

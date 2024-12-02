@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from django.db.models import Q, Avg
 from .models import Product, Category, ProductVariant, Country, ProductRating
 from django.forms import modelformset_factory

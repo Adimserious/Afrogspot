@@ -159,6 +159,7 @@ def send_order_confirmation_email(order):
     subject = f'Order Confirmation - Order #{order.id}'
     from_email = settings.DEFAULT_FROM_EMAIL
     to_email = [order.email]
+    admin_email = ['orders@afrogspot.de']
 
     # context for email
     context = {
@@ -179,6 +180,18 @@ def send_order_confirmation_email(order):
         from_email,
         to_email,
         html_message=html_message,
+        fail_silently=False,
+    )
+
+    # Also send email to admin
+    admin_subject = f'New Order Notification - Order #{order.id}'
+    admin_message = f'New order has been placed by {order.email}. Order details: {order.id}'
+
+    send_mail(
+        admin_subject,
+        admin_message,
+        from_email,
+        admin_email,  
         fail_silently=False,
     )
 
