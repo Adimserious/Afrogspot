@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from product_catalog.models import Category
 from django.shortcuts import redirect
+from django.conf import settings
 
 
 def home(request):
