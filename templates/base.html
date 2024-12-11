@@ -118,35 +118,12 @@
                 href="{% url 'new_arrivals' %}">New Arrivals</a>
             </li>
 
-            <!-- Categories Dropdown -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Categories
-              </a>
-
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <!-- Static 'All Products' link -->
+                <!-- About us -->
                 <li>
-                  <a class="dropdown-item" href="{% url 'product_list' %}">
-                    All Products
-                  </a>
+                  <a class="nav-link {% if request.resolver_match.url_name == 'about_us' %}active{% endif %}" href="{% url 'about_us' %}">
+                    About Us
+                </a>
                 </li>
-
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-
-                <!-- Dynamically generated category links -->
-                {% for category in categories %}
-                <li>
-                  <a class="dropdown-item {% if request.GET.category == category.name %}active{% endif %}"
-                    href="{% url 'product_list' %}?category={{ category.name|urlencode }}&q={{ query|urlencode }}">
-                    {{ category.name }}
-                  </a>
-                </li>
-                {% endfor %}
-              </ul>
             </li>
 
             <!-- Account Dropdown -->
@@ -222,16 +199,16 @@
             </li>
 
             <!-- Hair and Beauty Link -->
+            
             <li class="nav-item">
               <a class="nav-link {% if request.resolver_match.url_name == 'hair_and_beauty' %}active{% endif %}"
-                href="{% url 'hair_and_beauty' %}">
-                Hair and Beauty
-              </a>
+               href="{% url 'product_list' %}?category=Hair and Beauty">Hair and Beauty</a>
+
             </li>
 
             <li class="nav-item">
               <a class="nav-link {% if request.resolver_match.url_name == 'fragrances' %}active{% endif %}"
-                href="{% url 'fragrances' %}">
+                href="{% url 'product_list' %}?category=Fragrance">
                 Fragrances
               </a>
             </li>

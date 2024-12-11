@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us - Afrogspot{% endblock %}
+
+{% block content %}
+
+
+<div class="container mt-5">
+    <!-- About Us Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-uppercase">About Us</h1>
+        <p class="lead text-muted">Get to know more about who we are and what we stand for.</p>
+    </div>
+
+    <!-- About Us Section -->
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <h2 class="fw-bold">Our Mission</h2>
+            <p>
+                At <strong>Afrogspot</strong>, we aim to provide authentic, high-quality African groceries, hair care,
+                beauty products, and more. Our mission is to bring the flavors, colors, and culture of home closer to
+                you.
+            </p>
+            <p>
+                With a commitment to affordability and authenticity, we ensure every product you buy from us is directly
+                sourced
+                and meets your expectations.
+            </p>
+        </div>
+        <div class="col-md-6">
+            <img src="/media/family-photo.jpg" alt="Our Mission" class="img-fluid rounded shadow-lg">
+        </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6 order-md-2">
+            <h2 class="fw-bold">Meet Our Team</h2>
+            <p>
+                Our passionate team is made up of individuals who share a love for culture and community. With
+                dedication
+                and expertise, we strive to ensure every customer has a great shopping experience.
+            </p>
+            <p>
+                Whether you're buying groceries, hair products, or fragrances, we’re here to serve you.
+            </p>
+        </div>
+        <div class="col-md-6 order-md-1">
+            <img src="/media/team-photo.jpg" alt="Our Team" class="img-fluid rounded shadow-lg">
+        </div>
+    </div>
+
+    <!-- Customer Reviews Carousel -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold mb-4">What Our Customers Say</h2>
+        <div id="customerReviewsCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <blockquote class="blockquote">
+                        <p class="mb-4">"Afrogspot has the best African products I’ve ever found. It feels like home
+                            every time I shop!"</p>
+                        <footer class="blockquote-footer">Joy Onyedikachi</footer>
+                    </blockquote>
+                </div>
+                <div class="carousel-item">
+                    <blockquote class="blockquote">
+                        <p class="mb-4">"Amazing quality and quick delivery. I love their customer service too!"</p>
+                        <footer class="blockquote-footer">Miracle Chihurum</footer>
+                    </blockquote>
+                </div>
+                <div class="carousel-item">
+                    <blockquote class="blockquote">
+                        <p class="mb-4">"I’ve recommended Afrogspot to all my friends. It’s my go-to for groceries and
+                            beauty products."</p>
+                        <footer class="blockquote-footer">Sandra Ada</footer>
+                    </blockquote>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#customerReviewsCarousel"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#customerReviewsCarousel"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center py-5 bg-light rounded shadow-lg">
+        <h3 class="fw-bold text-uppercase">Join Our Community Today!</h3>
+        <p>Explore our products and experience the taste of home.</p>
+        <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg">Shop Now</a>
+    </div>
+</div>
+{% endblock %}

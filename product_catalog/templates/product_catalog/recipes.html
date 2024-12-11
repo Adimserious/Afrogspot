@@ -1,11 +1,76 @@
 {% extends 'base.html' %}
-{% block title %}Recipess{% endblock %}
+
+{% block title %}Recipes - Afrogspot{% endblock %}
 
 {% block content %}
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 50px; text-align: center;">
-    <h1>Recipes</h1>
-    <p>Welcome to the Afrogspot Recipes! Taste of Home.</p>
+<div class="container mt-5">
+
+    <!-- Page Title -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-uppercase">Recipes</h1>
+        <p class="lead text-muted">Taste of Home - Bringing Africa to Your Kitchen</p>
+    </div>
+
+    <!-- Introduction Section -->
+    <div class="row mb-5">
+        <div class="col-lg-8 mx-auto">
+            <p>
+                If you have ever craved authentic local cuisine while living abroad, you are not alone!
+                Hi, My name is Lilian. In 2018, when I moved to Germany, I packed a year's worth of local food
+                ingredients. But once I ran out, I started missing the true taste of home. Although African shops are
+                everywhere, I noticed the flavor of my meals was not quite the same.
+            </p>
+            <p>
+                Determined to enjoy the authentic taste I grew up with, I began sourcing foodstuffs directly from home.
+                Now, I am sharing my recipes and ingredients with others who love good, flavorful meals without
+                overspending.
+            </p>
+            <p>
+                At Afrogspot, we are here to help you bring those real local flavors to your table, no matter where you
+                are. Do not miss out—your taste buds will thank you!
+            </p>
+        </div>
+    </div>
+
+    <!-- Featured Recipe Videos Section -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold mb-4">Cooking Africa's Favorite Recipes</h2>
+        <p class="lead text-muted">Watch how easy it is to make authentic African dishes from the comfort of your home.</p>
+
+        <!-- Video Grid -->
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <!-- Video 1 -->
+            <div class="col">
+                <div class="card">
+                    <iframe class="card-img-top" width="100%" height="315" src="https://www.youtube.com/embed/your_video_id_1" 
+                    title="African Recipe Video 1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="card-body">
+                        <h5 class="card-title">Spicy Jollof Rice</h5>
+                        <p class="card-text">Learn how to make the famous Jollof Rice with a spicy twist! Perfect for any occasion.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Video 2 -->
+            <div class="col">
+                <div class="card">
+                    <iframe class="card-img-top" width="100%" height="315" src="https://www.youtube.com/embed/your_video_id_2" 
+                    title="African Recipe Video 2" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="card-body">
+                        <h5 class="card-title">Efo Riro (Spinach Stew)</h5>
+                        <p class="card-text">Discover the traditional Nigerian Spinach Stew recipe. A must-try dish with rich flavors!</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Add more videos as needed -->
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="text-center py-5 bg-light rounded shadow-lg">
+        <h3 class="fw-bold text-uppercase">Join the Afrogspot Community!</h3>
+        <p>Explore more recipes and ingredients to bring the taste of Africa into your kitchen.</p>
+        <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg">Shop Now</a>
+    </div>
+
 </div>
-
-
 {% endblock %}
