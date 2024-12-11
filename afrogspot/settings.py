@@ -70,7 +70,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY',
 
 
 DEBUG = 'DEVELOPMENT' in os.environ
-DEBUG = True
+
 
 ALLOWED_HOSTS = ['8000-adimserious-afrogspot-liaxoyv6swi.ws-eu117.gitpod.io', 'afrogspot-e3f40930991f.herokuapp.com']
 

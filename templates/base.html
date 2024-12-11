@@ -265,14 +265,14 @@
 
           <!-- Hair and Beauty -->
           <li class="list-group-item">
-            <a href="{% url 'hair_and_beauty' %}" class="text-decoration-none text-uppercase text-dark">
-              Hair and Beauty
-            </a>
+            <a href="{% url 'product_list' %}?category=Hair and Beauty">Hair and Beauty</a>
+
           </li>
 
           <li class="list-group-item">
-            <a href="{% url 'fragrances' %}" class="text-decoration-none text-uppercase text-dark">
-              Fragrances
+            <a class="nav-link {% if request.resolver_match.url_name == 'fragrances' %}active{% endif %}"
+                href="{% url 'product_list' %}?category=Fragrance">
+                Fragrances
             </a>
           </li>
 

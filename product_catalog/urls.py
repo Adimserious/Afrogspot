@@ -15,7 +15,6 @@ urlpatterns = [
     path('new-arrivals/', views.new_arrivals, name='new_arrivals'),
     
     path('recipes/', views.recipes, name='recipes'),
-    path('hair-and-beauty/', views.hair_and_beauty, name='hair_and_beauty'),
-    path('fragrances/', views.fragrances, name='fragrances'),
+
 
 ]
