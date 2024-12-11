@@ -70,11 +70,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY',
 
 
 DEBUG = 'DEVELOPMENT' in os.environ
+DEBUG = True
 
-ALLOWED_HOSTS = ['8000-adimserious-afrogspot-2xe5zj7t4ro.ws.codeinstitute-ide.net', 'afrogspot-e3f40930991f.herokuapp.com']
+ALLOWED_HOSTS = ['8000-adimserious-afrogspot-liaxoyv6swi.ws-eu117.gitpod.io', 'afrogspot-e3f40930991f.herokuapp.com']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-adimserious-afrogspot-2xe5zj7t4ro.ws.codeinstitute-ide.net',
+    'https://8000-adimserious-afrogspot-liaxoyv6swi.ws-eu117.gitpod.io',
     'https://*.herokuapp.com'
 ]
 

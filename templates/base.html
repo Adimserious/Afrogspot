@@ -52,11 +52,11 @@
   <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+  </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" defer
-    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" defer crossorigin="anonymous">
+  </script>
 
   <!-- Stripe -->
   <script src="https://js.stripe.com/v3/" defer></script>
@@ -95,15 +95,15 @@
               <form method="post" action="{% url 'set_language' %}">
                 {% csrf_token %}
                 <select name="language" id="language" class="form-select form-select-sm" onchange="this.form.submit()">
-                    {% for lang_code, lang_name in LANGUAGES %}
-                    <option value="{{ lang_code }}" {% if lang_code == request.LANGUAGE_CODE %}selected{% endif %}>
-                        {{ lang_name }}
-                    </option>
-                    {% endfor %}
+                  {% for lang_code, lang_name in LANGUAGES %}
+                  <option value="{{ lang_code }}" {% if lang_code == request.LANGUAGE_CODE %}selected{% endif %}>
+                    {{ lang_name }}
+                  </option>
+                  {% endfor %}
                 </select>
                 <input type="hidden" name="next" value="{{ request.path }}">
-            </form>
-            
+              </form>
+
 
             </li>
 
@@ -201,25 +201,41 @@
 
 
     <!-- Second Row: Navigation Menu -->
-    <!-- Second Row: Navigation Menu -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light py-1">
       <div class="container-fluid justify-content-evenly">
+
         <!-- Toggler for offcanvas -->
         <button class="btn btn-outline-dark d-lg-none" type="button" data-bs-toggle="offcanvas"
           data-bs-target="#categoriesOffcanvas" aria-controls="categoriesOffcanvas">
           Categories
         </button>
-        <!-- Normal Navbar Menu -->
+
+        <!-- Desktop View Categories -->
         <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
           <ul class="navbar-nav w-100 justify-content-evenly">
+
+            <!-- Recipes Link -->
             <li class="nav-item">
-              <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
-                href="{% url 'home' %}">Home</a>
+              <a class="nav-link {% if request.resolver_match.url_name == 'recipes' %}active{% endif %}" href="{% url 'recipes' %}">
+                Recipes
+              </a>
             </li>
+
+            <!-- Hair and Beauty Link -->
             <li class="nav-item">
-              <a class="nav-link {% if request.resolver_match.url_name == 'new_arrivals' %}active{% endif %}"
-                href="{% url 'new_arrivals' %}">New Arrivals</a>
+              <a class="nav-link {% if request.resolver_match.url_name == 'hair_and_beauty' %}active{% endif %}"
+                href="{% url 'hair_and_beauty' %}">
+                Hair and Beauty
+              </a>
             </li>
+
+            <li class="nav-item">
+              <a class="nav-link {% if request.resolver_match.url_name == 'fragrances' %}active{% endif %}"
+                href="{% url 'fragrances' %}">
+                Fragrances
+              </a>
+            </li>
+
             <!-- Categories Dropdown (Desktop View Only) -->
             <li class="nav-item dropdown d-none d-lg-block">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -246,24 +262,51 @@
       </div>
     </nav>
 
+
     <!-- Offcanvas Menu for Mobile -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="categoriesOffcanvas"
       aria-labelledby="categoriesOffcanvasLabel">
       <div class="offcanvas-header">
-        <h5 id="categoriesOffcanvasLabel">Categories</h5>
+        <h5 id="categoriesOffcanvasLabel" class="text-uppercase">Categories</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
         <ul class="list-group">
+          <!-- All Products -->
           <li class="list-group-item">
-            <a href="{% url 'product_list' %}">All Products</a>
+            <a href="{% url 'product_list' %}" class="text-decoration-none text-uppercase text-dark">
+              All Products
+            </a>
           </li>
-          <li>
-            <hr>
+
+          <!-- Recipes -->
+          <li class="list-group-item">
+            <a href="{% url 'recipes' %}" class="text-decoration-none text-uppercase text-dark">
+              Recipes
+            </a>
           </li>
+
+          <!-- Hair and Beauty -->
+          <li class="list-group-item">
+            <a href="{% url 'hair_and_beauty' %}" class="text-decoration-none text-uppercase text-dark">
+              Hair and Beauty
+            </a>
+          </li>
+
+          <li class="list-group-item">
+            <a href="{% url 'fragrances' %}" class="text-decoration-none text-uppercase text-dark">
+              Fragrances
+            </a>
+          </li>
+
+          <!-- Divider -->
+          <hr class="dropdown-divider">
+
+          <!-- Dynamic Categories -->
           {% for category in categories %}
           <li class="list-group-item">
-            <a href="{% url 'product_list' %}?category={{ category.name|urlencode }}&q={{ query|urlencode }}">
+            <a href="{% url 'product_list' %}?category={{ category.name|urlencode }}&q={{ query|urlencode }}"
+              class="text-decoration-none text-uppercase text-dark">
               {{ category.name }}
             </a>
           </li>
@@ -271,6 +314,7 @@
         </ul>
       </div>
     </div>
+
 
 
     <!-- Delivery Banner -->
@@ -328,14 +372,14 @@
       // Reset category when a search is performed
       searchInput.addEventListener('input', function () {
         if (searchInput.value.trim() !== '') {
-          categorySelect.value = '';  // Clear the category filter when typing in search
+          categorySelect.value = ''; // Clear the category filter when typing in search
         }
       });
 
       // Reset search query when a category is selected
       categorySelect.addEventListener('change', function () {
         if (categorySelect.value !== '') {
-          searchInput.value = '';  // Clear the search input when selecting a category
+          searchInput.value = ''; // Clear the search input when selecting a category
         }
       });
     });
@@ -357,7 +401,9 @@
       // Smooth scroll to the top when the button is clicked
       $('#back-to-top').click(function (e) {
         e.preventDefault();
-        $('html, body').animate({ scrollTop: 0 }, '300');
+        $('html, body').animate({
+          scrollTop: 0
+        }, '300');
       });
     });
   </script>
@@ -467,14 +513,27 @@
   </footer>
 
   <script src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
-  <script>(function ($) {
+  <script>
+    (function ($) {
       window.fnames = new Array();
-      window.ftypes = new Array(); fnames[0] = 'EMAIL'; ftypes[0] = 'email'; fnames[1] = 'FNAME';
-      ftypes[1] = 'text'; fnames[2] = 'LNAME'; ftypes[2] = 'text'; fnames[3] = 'ADDRESS';
-      ftypes[3] = 'address'; fnames[4] = 'PHONE'; ftypes[4] = 'phone'; fnames[5] = 'BIRTHDAY';
-      ftypes[5] = 'birthday'; fnames[6] = 'COMPANY'; ftypes[6] = 'text';
+      window.ftypes = new Array();
+      fnames[0] = 'EMAIL';
+      ftypes[0] = 'email';
+      fnames[1] = 'FNAME';
+      ftypes[1] = 'text';
+      fnames[2] = 'LNAME';
+      ftypes[2] = 'text';
+      fnames[3] = 'ADDRESS';
+      ftypes[3] = 'address';
+      fnames[4] = 'PHONE';
+      ftypes[4] = 'phone';
+      fnames[5] = 'BIRTHDAY';
+      ftypes[5] = 'birthday';
+      fnames[6] = 'COMPANY';
+      ftypes[6] = 'text';
     }(jQuery));
-    var $mcj = jQuery.noConflict(true);</script>
+    var $mcj = jQuery.noConflict(true);
+  </script>
 
 </body>
 

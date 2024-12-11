@@ -285,3 +285,16 @@ def new_arrivals(request):
     }
     
     return render(request, 'product_catalog/new_arrivals.html', context)
+
+
+def recipes(request):
+    """ A view to display the Recipes category page """
+    return render(request, 'product_catalog/recipes.html')
+
+def hair_and_beauty(request):
+    """ A view to display the Hair and Beauty category page """
+    return render(request, 'product_catalog/hair_and_beauty.html')
+
+def fragrances(request):
+    """ A view to display the Fragrances category page """
+    return render(request, 'product_catalog/fragrances.html')
