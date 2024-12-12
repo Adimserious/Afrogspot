@@ -68,8 +68,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY',
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-
-DEBUG = 'DEVELOPMENT' in os.environ
+DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
+if not DEBUG and os.getenv('DEBUG', '').lower() in ('true', '1', 'yes'):
+    raise ValueError("DEBUG is True in production! Check your environment variables.")
 
 
 ALLOWED_HOSTS = ['8000-adimserious-afrogspot-liaxoyv6swi.ws-eu117.gitpod.io', 'afrogspot-e3f40930991f.herokuapp.com']
