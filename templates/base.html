@@ -256,23 +256,15 @@
             </a>
           </li>
 
+          <li class="list-group-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'new_arrivals' %}active{% endif %}"
+              href="{% url 'new_arrivals' %}">NEW ARRIVALS</a>
+          </li>
+
           <!-- Recipes -->
           <li class="list-group-item">
             <a href="{% url 'recipes' %}" class="text-decoration-none text-uppercase text-dark">
-              Recipes
-            </a>
-          </li>
-
-          <!-- Hair and Beauty -->
-          <li class="list-group-item">
-            <a href="{% url 'product_list' %}?category=Hair and Beauty">Hair and Beauty</a>
-
-          </li>
-
-          <li class="list-group-item">
-            <a class="nav-link {% if request.resolver_match.url_name == 'fragrances' %}active{% endif %}"
-                href="{% url 'product_list' %}?category=Fragrance">
-                Fragrances
+              RECIPES
             </a>
           </li>
 

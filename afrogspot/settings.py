@@ -67,7 +67,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY',
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-
 DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 if not DEBUG and os.getenv('DEBUG', '').lower() in ('true', '1', 'yes'):
     raise ValueError("DEBUG is True in production! Check your environment variables.")
