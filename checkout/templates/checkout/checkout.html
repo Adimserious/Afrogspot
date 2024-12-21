@@ -192,7 +192,15 @@
                 </div>
                 <!-- Used to display form errors -->
                 <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+
+                <!-- PayPal payment section -->
+                <div id="paypal-button-container" class="mb-3"></div>
             </fieldset>
+
+            <!-- Add a loading spinner somewhere in your form -->
+            <div id="spinner" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i> Processing...
+            </div>
 
             <div class="d-flex justify-content-between mb-3">
                 <a href="{% url 'cart_detail' %}" class="btn btn-outline-success">
@@ -218,25 +226,18 @@
 {{ block.super }}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Get the Stripe public key and client secret from the template
+        // Stripe Initialization
         const stripePublicKey = "{{ stripe_public_key }}";
         const clientSecret = "{{ client_secret }}";
-
-        // Initialize Stripe
         const stripe = Stripe(stripePublicKey);
         const elements = stripe.elements();
 
         // Creates an instance of the card Element
         const card = elements.create('card', {
             style: {
-                base: {
-                    color: '#32325d',
-                    fontSize: '16px',
-                },
-                invalid: {
-                    color: '#fa755a',
-                }
-            }
+                base: { color: '#32325d', fontSize: '16px' },
+                invalid: { color: '#fa755a' },
+            },
         });
         card.mount('#card-element');
 
@@ -246,65 +247,87 @@
             if (event.error) {
                 errorElement.textContent = event.error.message;
             } else {
-                errorElement.textContent = '';  // Clear errors when the user corrects them
+                errorElement.textContent = ''; // Clear errors when the user corrects them
             }
         });
 
-        // Handle form submission
+        // Handle Stripe form submission
         const form = document.getElementById('payment-form');
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
+        const spinner = document.getElementById('spinner');
+        const placeOrderButton = form.querySelector('button[type="submit"]');
+        const errorElement = document.getElementById('card-errors');
 
-            // Get the country code from the form
-            const countryCode = document.getElementById('id_country').value;
+        if (form) {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent default form submission
 
-            // Disable the form to prevent multiple submissions
-            form.querySelector('button[type="submit"]').disabled = true;
+                // Disable button and show spinner
+                placeOrderButton.disabled = true;
+                placeOrderButton.innerHTML = 'Processing...';
+                spinner.style.display = 'block';
 
-            // Confirm the payment with Stripe
-            stripe.confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card: card,
-                    billing_details: {
-                        name: form.full_name.value,
-                        email: form.email.value,
-                        address: {
-                            line1: form.address_line_1.value,
-                            line2: form.address_line_2.value,
-                            city: form.city.value,
-                            postal_code: form.postal_code.value,
-                            country: countryCode,
-                        }
-                    }
-                }
-            }).then(function (result) {
-                if (result.error) {
-                    // Show the error to the user
-                    const errorElement = document.getElementById('card-errors');
-                    errorElement.textContent = result.error.message;
-
-                    // Re-enable the form so the user can try again
-                    form.querySelector('button[type="submit"]').disabled = false;
-                } else {
-                    // The payment was successful!
-                    if (result.paymentIntent.status === 'succeeded') {
-                        // Submit the form only when payment is successful
+                // Confirm the payment with Stripe
+                stripe.confirmCardPayment(clientSecret, {
+                    payment_method: {
+                        card: card,
+                        billing_details: {
+                            name: form.full_name.value,
+                            email: form.email.value,
+                            address: {
+                                line1: form.address_line_1.value,
+                                line2: form.address_line_2.value,
+                                city: form.city.value,
+                                postal_code: form.postal_code.value,
+                                country: document.getElementById('id_country').value,
+                            },
+                        },
+                    },
+                }).then(function (result) {
+                    if (result.error) {
+                        // Show errors and reset UI
+                        errorElement.textContent = result.error.message;
+                        placeOrderButton.disabled = false;
+                        placeOrderButton.innerHTML = 'Place Order';
+                        spinner.style.display = 'none';
+                    } else if (result.paymentIntent.status === 'succeeded') {
+                        // Successful payment
                         form.submit();
                     }
-                }
+                });
             });
-        });
-    });
-</script>
+        }
 
-<script>
+        // PayPal Integration
+        paypal.Buttons({
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: { value: "{{ grand_total|floatformat:2 }}" },
+                    }],
+                });
+            },
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    alert('Payment was successful: ' + details.payer.name.given_name);
+                    form.submit(); // Submit form on PayPal success
+                });
+            },
+            onCancel: function () {
+                alert('Payment was cancelled');
+            },
+            onError: function (err) {
+                console.error('PayPal Error:', err);
+            },
+        }).render('#paypal-button-container');
+    });
+
     function dismissMessage(element) {
         const alert = element.closest('.alert');
         alert.style.opacity = '0'; // Fade out effect
-        setTimeout(() => {
-            alert.remove(); // Remove the alert from the DOM
-        }, 300); // Delay for the fade-out effect
+        setTimeout(() => alert.remove(), 300); // Remove after fade-out
     }
 </script>
 
+<!-- PayPal JavaScript SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=Ae0LxBGmu6g_ZFg4fGtZBwcFaFydFgaHy7DtzwDNaTRqTW4Nz_6ka1kdfviti8B_LduEG_oboWxIR4-C&currency=EUR"></script>
 {% endblock %}
