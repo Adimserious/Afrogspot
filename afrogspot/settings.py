@@ -45,6 +45,12 @@ LOGGING = {
     },
 }
 
+
+logger = logging.getLogger(__name__)
+
+logger.debug(f"EMAIL_HOST_USER: {os.environ.get('EMAIL_HOST_USER')}")
+logger.debug(f"EMAIL_HOST_PASS: {'***' if os.environ.get('EMAIL_HOST_PASS') else 'Not Set'}")
+
 MESSAGE_TAGS = {
     messages.DEBUG: 'secondary',
     messages.INFO: 'info',
@@ -70,17 +76,15 @@ SECRET_KEY = os.environ.get('SECRET_KEY',
 DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 if not DEBUG and os.getenv('DEBUG', '').lower() in ('true', '1', 'yes'):
     raise ValueError("DEBUG is True in production! Check your environment variables.")
+DEBUG = True
 
-
-ALLOWED_HOSTS = ['8000-adimserious-afrogspot-liaxoyv6swi.ws-eu117.gitpod.io', 'afrogspot-e3f40930991f.herokuapp.com']
+ALLOWED_HOSTS = ['8000-adimserious-afrogspot-uto37qm6z4u.ws-eu117.gitpod.io', 'afrogspot-e3f40930991f.herokuapp.com']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-adimserious-afrogspot-liaxoyv6swi.ws-eu117.gitpod.io',
+    'https://8000-adimserious-afrogspot-uto37qm6z4u.ws-eu117.gitpod.io',
     'https://*.herokuapp.com'
 ]
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -280,9 +284,19 @@ LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
 ]
 
+USE_L10N = False  # Disable localization for numbers
+USE_THOUSAND_SEPARATOR = False  # Prevent commas in large numbers
+
+# Stripe settings
 STRIPE_CURRENCY = 'eur'
 STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY', '')
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', '')
+
+# PayPal settings
+PAYPAL_CLIENT_ID = os.environ.get('PAYPAL_CLIENT_ID', '')
+PAYPAL_CLIENT_SECRET = os.environ.get('PAYPAL_CLIENT_SECRET', '')
+PAYPAL_MODE = os.environ.get('PAYPAL_MODE', 'sandbox')  # Default to sandbox
+
 
 # setting from boutique ado walkthrogh project of the code institute.
 if 'USE_AWS' in os.environ:

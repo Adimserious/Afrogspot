@@ -6,8 +6,6 @@ from django.conf import settings
 from datetime import timedelta
 
 
-# Create your models here.
-
 class Category(models.Model):
     class Meta:
         verbose_name_plural = 'Categories'
@@ -72,6 +70,15 @@ class Product(models.Model):
     )
     is_new_arrival = models.BooleanField(default=False)
 
+    def clean(self):
+        if self.price < 0:
+            raise ValidationError({'price': 'Price cannot be negative.'})
+        if self.discount_price is not None and self.discount_price < 0:
+            raise ValidationError({'discount_price': 'Discount price cannot be negative.'})
+        if self.discount_price is not None and self.discount_price > self.price:
+            raise ValidationError({'discount_price': 'Discount price cannot exceed the base price.'})
+
+
     def save(self, *args, **kwargs):
         # Ensures created_at is set when creating a new product
         if not self.pk:
@@ -121,8 +128,8 @@ class Product(models.Model):
         # Check if the product has variants
         if self.variants.exists():
             # displaying the first variant price
-            return self.variants.first().price
-        return self.price  # Default product price
+            return f"{self.variants.first().price:.2f}"  # Ensure two decimal places
+        return f"{self.price:.2f}"  # Default product price
 
     @classmethod
     def get_new_arrivals(cls):

@@ -68,7 +68,7 @@
     <p>Your cart is empty. Please add items to your cart before proceeding to checkout.</p>
     {% endif %}
 
-    <p>Plese fill out the form to complete your order</p>
+    <p>Please fill out the form to complete your order</p>
     <form id="payment-form" method="post" action="{% url 'checkout' %}">
         {% csrf_token %}
         <div class="row">

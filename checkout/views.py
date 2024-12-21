@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .forms import CheckoutForm
 from profiles.forms import ProfileForm
@@ -11,6 +12,8 @@ from profiles.models import Profile
 from .models import Order, OrderItem, Product, ProductVariant
 from decimal import Decimal
 from django.utils import timezone
+from paypalrestsdk import Payment
+import checkout.paypal_config
 import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -49,7 +52,46 @@ def checkout(request):
         payment_intent_id = intent.id
     except stripe.error.StripeError as e:
         messages.error(request, f'Error with Stripe: {str(e)}')
-        return redirect('cart_detail') 
+        return redirect('cart_detail')
+
+    # PayPal Payment Creation
+    paypal_payment = Payment({
+        "intent": "sale",
+        "payer": {"payment_method": "paypal"},
+        "redirect_urls": {
+        "return_url": request.build_absolute_uri(reverse('execute_payment')),
+        "cancel_url": request.build_absolute_uri(reverse('cancel_payment')),
+        },
+        "transactions": [{
+            "item_list": {
+                "items": [
+                    {
+                        "name": "Order Payment",
+                        "sku": "ORDER001",
+                        "price": f"{grand_total:.2f}",
+                        "currency": "EUR",
+                        "quantity": 1,
+                    }
+                ]
+            },
+            "amount": {
+                "total": f"{grand_total:.2f}",
+                "currency": "EUR",
+            },
+            "description": "Payment for your order.",
+        }],
+    })
+
+    try:
+        if paypal_payment.create():
+            paypal_approval_url = next(link.href for link in paypal_payment.links if link.rel == "approval_url")
+        else:
+            messages.error(request, "Error creating PayPal payment.")
+            paypal_approval_url = None
+    except Exception as e:
+        messages.error(request, f"PayPal error: {str(e)}")
+        paypal_approval_url = None
+
 
     if request.method == 'POST':
         form = CheckoutForm(request.POST)
@@ -150,16 +192,47 @@ def checkout(request):
         'order_total': order_total,
         'delivery_cost': delivery_cost,
         'grand_total': grand_total,
+        'paypal_client_id': settings.PAYPAL_CLIENT_ID,  
+        'currency_code': 'EUR',
+        
     }
 
     return render(request, 'checkout/checkout.html', context)
+
+# paypal
+def execute_payment(request):
+    payment_id = request.GET.get('paymentId')
+    payer_id = request.GET.get('PayerID')
+
+    if not payment_id or not payer_id:
+        messages.error(request, "Missing payment details.")
+        return redirect('cart_detail')
+
+    try:
+        payment = Payment.find(payment_id)
+        if payment.execute({"payer_id": payer_id}):
+            # Payment successful
+            messages.success(request, "Payment completed successfully!")
+            # Here, you can create the order or update the order status
+            return redirect('order_confirmation', order_id=payment.transactions[0].related_resources[0].sale.id)
+        else:
+            messages.error(request, "Payment failed. Please try again.")
+            return redirect('cart_detail')
+    except Exception as e:
+        messages.error(request, f"An error occurred: {str(e)}")
+        return redirect('cart_detail')
+
+# paypal
+def cancel_payment(request):
+    messages.info(request, "You have canceled the payment.")
+    return redirect('cart_detail')
 
 
 def send_order_confirmation_email(order):
     subject = f'Order Confirmation - Order #{order.id}'
     from_email = settings.DEFAULT_FROM_EMAIL
     to_email = [order.email]
-    admin_email = ['orders@afrogspot.de']
+    admin_email = ['lilianadimchinobi@gmail.com']
 
     # context for email
     context = {
@@ -173,25 +246,26 @@ def send_order_confirmation_email(order):
     html_message = render_to_string('checkout/order_email_confirmation.html', context)
     plain_message = strip_tags(html_message)
 
-    # Send the email
+# Send the email
+
+def test_email():
     send_mail(
-        subject,
-        plain_message,
-        from_email,
-        to_email,
-        html_message=html_message,
+        'Test Email Subject',
+        'This is a test email body.',
+        'afrogspot@gmail.com',
+        ['lilianadimchinobi@gmail.com'],
         fail_silently=False,
     )
 
-    # Also send email to admin
-    admin_subject = f'New Order Notification - Order #{order.id}'
-    admin_message = f'New order has been placed by {order.email}. Order details: {order.id}'
 
+    # Also send email to admin
+    admin_subject = 'Test Email Subject - Admin Notification'
+    admin_message = 'This is a test email sent for debugging purposes.'
     send_mail(
         admin_subject,
         admin_message,
-        from_email,
-        admin_email,  
+        settings.DEFAULT_FROM_EMAIL,
+        ['lilianadimchinobi@gmail.com'],
         fail_silently=False,
     )
 
