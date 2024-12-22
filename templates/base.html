@@ -118,12 +118,13 @@
                 href="{% url 'new_arrivals' %}">New Arrivals</a>
             </li>
 
-                <!-- About us -->
-                <li>
-                  <a class="nav-link {% if request.resolver_match.url_name == 'about_us' %}active{% endif %}" href="{% url 'about_us' %}">
-                    About Us
-                </a>
-                </li>
+            <!-- About us -->
+            <li>
+              <a class="nav-link {% if request.resolver_match.url_name == 'about_us' %}active{% endif %}"
+                href="{% url 'about_us' %}">
+                About Us
+              </a>
+            </li>
             </li>
 
             <!-- Account Dropdown -->
@@ -187,23 +188,27 @@
           Categories
         </button>
 
+        <!-- WhatsApp Link (Outside Categories, Beside the Toggler in Mobile) -->
+        <a class="btn btn-outline-dark d-lg-none" href="https://wa.me/4915212658400" target="_blank">
+          <i class="bi bi-whatsapp" style="font-size: 1.5rem;"></i> <!-- WhatsApp Icon -->
+        </a>
+
         <!-- Desktop View Categories -->
         <div class="collapse navbar-collapse d-none d-lg-flex" id="navbarNav">
           <ul class="navbar-nav w-100 justify-content-evenly">
 
             <!-- Recipes Link -->
             <li class="nav-item">
-              <a class="nav-link {% if request.resolver_match.url_name == 'recipes' %}active{% endif %}" href="{% url 'recipes' %}">
+              <a class="nav-link {% if request.resolver_match.url_name == 'recipes' %}active{% endif %}"
+                href="{% url 'recipes' %}">
                 Recipes
               </a>
             </li>
 
             <!-- Hair and Beauty Link -->
-            
             <li class="nav-item">
               <a class="nav-link {% if request.resolver_match.url_name == 'hair_and_beauty' %}active{% endif %}"
-               href="{% url 'product_list' %}?category=Hair and Beauty">Hair and Beauty</a>
-
+                href="{% url 'product_list' %}?category=Hair and Beauty">Hair and Beauty</a>
             </li>
 
             <li class="nav-item">
@@ -234,11 +239,18 @@
                 {% endfor %}
               </ul>
             </li>
+
+            <!-- WhatsApp Link (Desktop View) -->
+            <li class="nav-item">
+              <a class="nav-link" href="https://wa.me/1234567890" target="_blank">
+                <i class="bi bi-whatsapp" style="font-size: 1.5rem;"></i>
+              </a>
+            </li>
+
           </ul>
         </div>
       </div>
     </nav>
-
 
     <!-- Offcanvas Menu for Mobile -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="categoriesOffcanvas"
@@ -258,7 +270,9 @@
 
           <li class="list-group-item">
             <a class="nav-link {% if request.resolver_match.url_name == 'new_arrivals' %}active{% endif %}"
-              href="{% url 'new_arrivals' %}">NEW ARRIVALS</a>
+              href="{% url 'new_arrivals' %}">
+              NEW ARRIVALS
+            </a>
           </li>
 
           <!-- Recipes -->
@@ -283,6 +297,7 @@
         </ul>
       </div>
     </div>
+
 
 
 
