@@ -288,5 +288,14 @@ def new_arrivals(request):
 
 
 def recipes(request):
-    """ A view to display the Recipes category page """
-    return render(request, 'product_catalog/recipes.html')
+    """A view to display the Recipes category page"""
+    ingredients = {
+        'crayfish': Product.objects.filter(name__icontains='crayfish').first(),
+        'ogbono': Product.objects.filter(name__icontains='ogbono').first(),
+        'stuck_fish': Product.objects.filter(name__icontains='stuck fish').first(),
+        'mangala_fish': Product.objects.filter(name__icontains='mangala fish').first(),
+        'red_peppers': Product.objects.filter(name__icontains='red peppers').first(),
+        'knorr_cube': Product.objects.filter(name__icontains='knorr cube').first(),
+    }
+
+    return render(request, 'product_catalog/recipes.html', {'ingredients': ingredients})

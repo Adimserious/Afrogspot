@@ -35,29 +35,143 @@
     <!-- Featured Recipe Videos Section -->
     <div class="text-center mb-5">
         <h2 class="fw-bold mb-4">Cooking Africa's Favorite Recipes</h2>
-        <p class="lead text-muted">Watch how easy it is to make authentic African dishes from the comfort of your home.</p>
+        <p class="lead text-muted">Watch how easy it is to make authentic African dishes from the comfort of your home.
+        </p>
 
         <!-- Video Grid -->
         <div class="row row-cols-1 row-cols-md-2 g-4">
             <!-- Video 1 -->
             <div class="col">
                 <div class="card">
-                    <iframe class="card-img-top" width="100%" height="315" src="https://www.youtube.com/embed/ZCXwZTTVboE" 
-                    title="African Recipe Video 1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe class="card-img-top" width="100%" height="315"
+                        src="https://www.youtube.com/embed/ZCXwZTTVboE" title="African Recipe Video 1" frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                    </iframe>
                     <div class="card-body">
-                        <h5 class="card-title">Delicious Owerri Soup(Ofe Owerri)</h5>
-                        <p class="card-text">Delicious Ofe Owerri, A Taste of Home! 🍲✨This rich and flavorful soup is a classic, made with okro, ugba, uziza, fresh fish, dry fish, and more! Perfect with pounded yam or fufu, it is the ultimate comfort food. Watch how it comes together and try it yourself.</p>
+                        <h5 class="card-title">Delicious Ofe Owerri (Ofe Owerri Soup)</h5>
+                        <p class="card-text">
+                            This rich and flavorful soup is a classic, made with okro, ugba, uziza, fresh fish, dry
+                            fish, and more! Perfect with pounded yam or fufu, it’s the ultimate comfort food. Watch how
+                            it comes together and try it yourself!
+                        </p>
+                        <!-- Ingredients List -->
+                        <h6>Ingredients:</h6>
+                        <ul>
+                            {% if ingredients.okro %}
+                            <li><a href="{% url 'product_detail' ingredients.okro.id %}">Okro (sliced)</a></li>
+                            {% else %}
+                            <li>Okro (sliced)</li>
+                            {% endif %}
+
+                            {% if ingredients.ogbono %}
+                            <li><a href="{% url 'product_detail' ingredients.ogbono.id %}">Ogbono</a></li>
+                            {% else %}
+                            <li>Ogbono</li>
+                            {% endif %}
+
+                            {% if ingredients.ugba %}
+                            <li><a href="{% url 'product_detail' ingredients.ugba.id %}">Ugba (oil bean)</a></li>
+                            {% else %}
+                            <li>Ugba (oil bean)</li>
+                            {% endif %}
+
+                            {% if ingredients.uziza %}
+                            <li><a href="{% url 'product_detail' ingredients.uziza.id %}">Uziza leaves (finely
+                                    sliced)</a></li>
+                            {% else %}
+                            <li>Uziza leaves (finely sliced)</li>
+                            {% endif %}
+
+                            {% if ingredients.fresh_fish %}
+                            <li><a href="{% url 'product_detail' ingredients.fresh_fish.id %}">Fresh fish</a> (e.g.,
+                                catfish or tilapia)</li>
+                            {% else %}
+                            <li>Fresh fish (e.g., catfish or tilapia)</li>
+                            {% endif %}
+
+                            {% if ingredients.mangala_fish.id %}
+                            <li><a href="{% url 'product_detail' ingredients.mangala_fish.id %}">Dry fish</a></li>
+                            {% else %}
+                            <li>Dry fish</li>
+                            {% endif %}
+
+                            {% if ingredients.stuck_fish %}
+                            <li><a href="{% url 'product_detail' ingredients.stuck_fish.id %}">Stockfish</a> (pre-soaked)
+                            </li>
+                            {% else %}
+                            <li>Stockfish (pre-soaked)</li>
+                            {% endif %}
+
+                            {% if ingredients.assorted_meats %}
+                            <li><a href="{% url 'product_detail' ingredients.assorted_meats.id %}">Assorted meats</a>
+                                (e.g., beef, goat meat)</li>
+                            {% else %}
+                            <li>Assorted meats (e.g., beef, goat meat)</li>
+                            {% endif %}
+
+                            {% if ingredients.crayfish %}
+                            <li><a href="{% url 'product_detail' ingredients.crayfish.id %}">Crayfish (ground)</a></li>
+                            {% else %}
+                            <li>Crayfish (ground)</li>
+                            {% endif %}
+
+                            {% if ingredients.palm_oil %}
+                            <li><a href="{% url 'product_detail' ingredients.palm_oil.id %}">Palm oil</a></li>
+                            {% else %}
+                            <li>Palm oil</li>
+                            {% endif %}
+
+                            {% if ingredients.red_peppers %}
+                            <li><a href="{% url 'product_detail' ingredients.red_peppers.id %}">Peppers</a>
+                                (blended or ground)</li>
+                            {% else %}
+                            <li>Fresh pepper (blended or ground)</li>
+                            {% endif %}
+
+                            {% if ingredients.knorr_cube %}
+                            <li><a href="{% url 'product_detail' ingredients.knorr_cube.id %}">Seasoning cubes</a>
+                            </li>
+                            {% else %}
+                            <li>Seasoning cubes</li>
+                            {% endif %}
+
+                            {% if ingredients.salt %}
+                            <li><a href="{% url 'product_detail' ingredients.salt.id %}">Salt</a> to taste</li>
+                            {% else %}
+                            <li>Salt to taste</li>
+                            {% endif %}
+                        </ul>
+
+                        <!-- Preparation Steps -->
+                        <h6>Preparation Steps:</h6>
+                        <ol>
+                            <li>Prepare the proteins: Wash and season your meats, stockfish, and dry fish. Boil until
+                                tender.</li>
+                            <li>Cook the base: Add palm oil, ground crayfish, and pepper to the pot. Stir well to
+                                combine.</li>
+                            <li>Add fresh fish: Carefully add your fresh fish to the pot and let it cook gently to
+                                absorb the flavors.</li>
+                            <li>Incorporate okro and ugba: Add the sliced okro and ugba. Stir lightly and allow to
+                                simmer.</li>
+                            <li>Finish with uziza: Add the uziza leaves and adjust seasoning with salt and cubes. Let it
+                                simmer for 3-5 minutes.</li>
+                        </ol>
+                        <p>Tag a friend who loves African soups and share this delight! 💛</p>
                     </div>
                 </div>
             </div>
+
             <!-- Video 2 -->
             <div class="col">
                 <div class="card">
-                    <iframe class="card-img-top" width="100%" height="315" src="https://www.youtube.com/embed/your_video_id_2" 
-                    title="African Recipe Video 2" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe class="card-img-top" width="100%" height="315"
+                        src="https://www.youtube.com/embed/your_video_id_2" title="African Recipe Video 2"
+                        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
                     <div class="card-body">
                         <h5 class="card-title">Efo Riro (Spinach Stew)</h5>
-                        <p class="card-text">Discover the traditional Nigerian Spinach Stew recipe. A must-try dish with rich flavors!</p>
+                        <p class="card-text">Discover the traditional Nigerian Spinach Stew recipe. A must-try dish with
+                            rich flavors!</p>
                     </div>
                 </div>
             </div>

@@ -13,6 +13,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
+        'id',
         'sku',
         'name',
         'category',
