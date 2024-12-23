@@ -139,19 +139,32 @@ class Product(models.Model):
 
 # custom model
 class ProductVariant(models.Model):
-    product = models.ForeignKey(Product, related_name='variants',
-                                on_delete=models.CASCADE)
-    size = models.DecimalField(max_digits=5, decimal_places=2)  # Size in kg
-    price = models.DecimalField(max_digits=10, decimal_places=2)  # Size Price
-    stock = models.IntegerField()  # The stock level for this specific size
+    UNIT_CHOICES = [
+        ('kg', 'Kilograms'),
+        ('g', 'Grams'),
+    ]
+
+    product = models.ForeignKey(
+        Product,
+        related_name='variants',
+        on_delete=models.CASCADE
+    )
+    size = models.DecimalField(
+        max_digits=6, decimal_places=2, help_text="Size of the product (use kg or g)."
+    )
+    unit = models.CharField(
+        max_length=2, choices=UNIT_CHOICES, default='kg'
+    )
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    stock = models.IntegerField()
 
     def __str__(self):
-        return f"{self.size} kg - {self.product.name}"
+        size_display = f"{self.size} {self.unit}"
+        return f"{size_display} - {self.product.name}"
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        # Updates the product's total stock after saving the variant
-        self.product.save()  # This will update the total stock property
+        self.product.save()  # Update the total stock property
 
 
 class ProductRating(models.Model):
@@ -165,3 +178,17 @@ class ProductRating(models.Model):
 
     def __str__(self):
         return f'{self.rating} stars by {self.user} on {self.product}'
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name='images'  # Allows reverse access to product.images
+    )
+    image = models.ImageField(upload_to='products/extra_images/')
+    alt_text = models.CharField(max_length=255, blank=True, null=True)  # for accessibility
+
+    def __str__(self):
+        return f"Image for {self.product.name}"
+

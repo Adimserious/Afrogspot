@@ -26,7 +26,7 @@ def product_list(request):
     query = request.GET.get('q', '').strip()
     category_name = request.GET.get('category')
 
-    products = Product.objects.filter(is_active=True)
+    products = Product.objects.filter(is_active=True).prefetch_related('images')  # Prefetch related images
 
     # Filter parameters from request
     vegan = request.GET.get('vegan', '')
@@ -96,17 +96,19 @@ def product_list(request):
 
 
 def product_detail(request, product_id):
-    """ A view to show individual products"""
+    """ A view to show individual products with multiple images """
 
     product = get_object_or_404(Product, id=product_id)
     variants = product.variants.all()  # Get all available size variants if they exist
     reviews = ProductRating.objects.filter(product=product).order_by('-created_at')
-  
+    additional_images = product.images.all()  # Get all additional images for the product
+
     context = {
         'product': product,
         'description': _(product.description),
         'variants': variants,
         'reviews': reviews, 
+        'additional_images': additional_images,  # additional images
     }
 
     return render(request, 'product_catalog/product_detail.html', context)
