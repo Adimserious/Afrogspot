@@ -22,7 +22,8 @@
                     <!-- indicators for additional images -->
                     {% for image in product.images.all %}
                     <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="{{ forloop.counter }}"
-                        class="{% if not product.image and forloop.first %}active{% endif %}" aria-label="Slide {{ forloop.counter }}"></button>
+                        class="{% if not product.image and forloop.first %}active{% endif %}"
+                        aria-label="Slide {{ forloop.counter }}"></button>
                     {% endfor %}
                 </div>
 
@@ -37,7 +38,9 @@
                     <!-- Additional Images -->
                     {% for image in product.images.all %}
                     <div class="carousel-item {% if not product.image and forloop.first %}active{% endif %}">
-                        <img src="{{ image.image.url }}" alt="{{ image.alt_text|default:product.name }} - Image {{ forloop.counter }}" class="d-block w-100">
+                        <img src="{{ image.image.url }}"
+                            alt="{{ image.alt_text|default:product.name }} - Image {{ forloop.counter }}"
+                            class="d-block w-100">
                     </div>
                     {% endfor %}
                 </div>
@@ -74,10 +77,29 @@
                     <label for="variant">Select Size:</label>
                     <select name="variant" id="variant" class="form-control">
                         {% for variant in variants %}
-                        <option value="{{ variant.id }}">{{ variant.size }} kg - €{{ variant.price|floatformat:2 }}
+                        <option value="{{ variant.id }}" {% if variant.stock <= 0 %}disabled{% endif %}>
+                            {{ variant.size }}
+                            {% if variant.size >= 1 %}kg{% else %}g{% endif %}
+                            - €{{ variant.price|floatformat:2 }}
+                            {% if variant.stock <= 0 %}(Out of Stock){% endif %}
                         </option>
                         {% endfor %}
                     </select>
+
+                    <!-- Display notices for out-of-stock variants -->
+                    <ul class="list-unstyled mt-2">
+                        {% for variant in variants %}
+                        {% if variant.stock <= 0 %}
+                        <li class="text-danger">
+                            {{ variant.size }}
+                            {% if variant.size >= 1 %}kg{% else %}g{% endif %}
+                            - Out of Stock
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+
+
                 </div>
                 {% else %}
                 <h5>Price: €{{ product.price|floatformat:2 }}</h5>
