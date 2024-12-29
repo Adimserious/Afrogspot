@@ -239,7 +239,7 @@ def send_order_confirmation_email(order):
         'order': order,
         'site_name': 'Afrogspot',
         'current_year': timezone.now().year,  # Dynamically get the current year
-        'support_email': 'support@afrogspot.com',
+        'support_email': 'help.afrogspot@gmail.com',
     }
 
     # Render HTML content using a template and pass context
