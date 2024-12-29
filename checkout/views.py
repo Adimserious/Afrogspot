@@ -16,6 +16,8 @@ from paypalrestsdk import Payment
 import checkout.paypal_config
 import stripe
 
+
+
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def checkout(request):
@@ -234,7 +236,7 @@ def send_order_confirmation_email(order):
     to_email = [order.email]
     admin_email = ['lilianadimchinobi@gmail.com']
 
-    # context for email
+    # Context for email
     context = {
         'order': order,
         'site_name': 'Afrogspot',
@@ -246,8 +248,29 @@ def send_order_confirmation_email(order):
     html_message = render_to_string('checkout/order_email_confirmation.html', context)
     plain_message = strip_tags(html_message)
 
-# Send the email
+    # Send the email to the customer
+    send_mail(
+        subject,
+        plain_message,
+        from_email,
+        to_email,
+        html_message=html_message,
+        fail_silently=False,
+    )
 
+    # Also send email to admin
+    admin_subject = f'New Order Notification - Order #{order.id}'
+    admin_message = f'An order has been placed with the following details:\n\nOrder ID: {order.id}\nCustomer Email: {order.email}'
+    send_mail(
+        admin_subject,
+        admin_message,
+        from_email,
+        admin_email,
+        fail_silently=False,
+    )
+
+
+# Function to test email sending
 def test_email():
     send_mail(
         'Test Email Subject',
@@ -256,7 +279,6 @@ def test_email():
         ['lilianadimchinobi@gmail.com'],
         fail_silently=False,
     )
-
 
     # Also send email to admin
     admin_subject = 'Test Email Subject - Admin Notification'
@@ -268,7 +290,7 @@ def test_email():
         ['lilianadimchinobi@gmail.com'],
         fail_silently=False,
     )
-
+    
 
 def calculate_order_total(request):
     cart = request.session.get('cart', {})
