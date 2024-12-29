@@ -9,7 +9,8 @@ logger = logging.getLogger('product_catalog')
 
 @receiver(post_save, sender=Product)
 def update_new_arrivals(sender, instance, created, **kwargs):
-    if created:
+    # Prevent re-triggering the signal handler
+    if kwargs.get('created', False):
         logger.info(f'New product added: {instance.name}')
     else:
         logger.info(f'Product updated: {instance.name}')
@@ -23,4 +24,5 @@ def update_new_arrivals(sender, instance, created, **kwargs):
     # Save if the status has changed
     if instance.is_new_arrival != new_arrival_status:
         instance.is_new_arrival = new_arrival_status
-        instance.save(update_fields=['is_new_arrival'])  # Only save if there is a change
+        instance.save(update_fields=['is_new_arrival'], force_insert=False)  # Avoid re-triggering signal
+
