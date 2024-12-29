@@ -230,44 +230,54 @@ def cancel_payment(request):
     return redirect('cart_detail')
 
 
+
 def send_order_confirmation_email(order):
+    # Check if the environment is production or development
+    if settings.DEBUG:
+        print(f"Customer Email: {order.email}")
+        print(f"Order Confirmation for Order #{order.id}")
+        return  # Do not send the email in development
+
     subject = f'Order Confirmation - Order #{order.id}'
     from_email = settings.DEFAULT_FROM_EMAIL
     to_email = [order.email]
     admin_email = ['lilianadimchinobi@gmail.com']
 
-    # Context for email
+    # Context for email templates
     context = {
         'order': order,
         'site_name': 'Afrogspot',
-        'current_year': timezone.now().year,  # Dynamically get the current year
+        'current_year': timezone.now().year,
         'support_email': 'help.afrogspot@gmail.com',
     }
 
-    # Render HTML content using a template and pass context
-    html_message = render_to_string('checkout/order_email_confirmation.html', context)
-    plain_message = strip_tags(html_message)
+    try:
+        # Render and send customer email
+        html_message = render_to_string('checkout/order_email_confirmation.html', context)
+        plain_message = strip_tags(html_message)
+        send_mail(
+            subject,
+            plain_message,
+            from_email,
+            to_email,
+            html_message=html_message,
+            fail_silently=False,
+        )
 
-    # Send the email to the customer
-    send_mail(
-        subject,
-        plain_message,
-        from_email,
-        to_email,
-        html_message=html_message,
-        fail_silently=False,
-    )
+        # Notify admin
+        admin_subject = f'New Order Notification - Order #{order.id}'
+        admin_message = f'Order #{order.id} has been placed by {order.email}.'
+        send_mail(
+            admin_subject,
+            admin_message,
+            from_email,
+            admin_email,
+            fail_silently=False,
+        )
 
-    # Also send email to admin
-    admin_subject = f'New Order Notification - Order #{order.id}'
-    admin_message = f'An order has been placed with the following details:\n\nOrder ID: {order.id}\nCustomer Email: {order.email}'
-    send_mail(
-        admin_subject,
-        admin_message,
-        from_email,
-        admin_email,
-        fail_silently=False,
-    )
+    except Exception as e:
+        # Log error for debugging
+        print(f"Failed to send email: {e}")
 
 
 # Function to test email sending
@@ -277,20 +287,10 @@ def test_email():
         'This is a test email body.',
         'afrogspot@gmail.com',
         ['lilianadimchinobi@gmail.com'],
-        fail_silently=False,
+        fail_silently=True,  # Don't raise an error if sending fails
     )
 
-    # Also send email to admin
-    admin_subject = 'Test Email Subject - Admin Notification'
-    admin_message = 'This is a test email sent for debugging purposes.'
-    send_mail(
-        admin_subject,
-        admin_message,
-        settings.DEFAULT_FROM_EMAIL,
-        ['lilianadimchinobi@gmail.com'],
-        fail_silently=False,
-    )
-    
+
 
 def calculate_order_total(request):
     cart = request.session.get('cart', {})
