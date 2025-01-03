@@ -165,6 +165,10 @@ def checkout(request):
                 profile.country = form.cleaned_data['country']
                 profile.save()
 
+                # Call handle_payment_success
+                handle_payment_success(order, 'stripe', payment_intent_id)
+                return redirect('order_confirmation', order_id=order.id)
+
             # Order confirmation email
             send_order_confirmation_email(order)
 
@@ -201,6 +205,32 @@ def checkout(request):
 
     return render(request, 'checkout/checkout.html', context)
 
+
+def handle_payment_success(order, payment_method, payment_id=None):
+    """
+    Handles the logic after a successful payment.
+    - Marks the order as paid.
+    - Stores payment details.
+    - Sends a confirmation email.
+    """
+    order.payment_method = payment_method
+    if payment_method == 'stripe':
+        order.stripe_payment_intent = payment_id
+    elif payment_method == 'paypal':
+        order.paypal_payment_id = payment_id
+    order.payment_status = 'completed'
+    order.save()
+
+    # Send order confirmation email
+    send_order_confirmation_email(order)
+
+    # Notify user of successful order placement
+    messages.success(
+        order.user,
+        f'Payment successful! Your order #{order.order_number} has been placed.'
+    )
+
+
 # paypal
 def execute_payment(request):
     payment_id = request.GET.get('paymentId')
@@ -213,21 +243,32 @@ def execute_payment(request):
     try:
         payment = Payment.find(payment_id)
         if payment.execute({"payer_id": payer_id}):
-            # Payment successful
-            messages.success(request, "Payment completed successfully!")
-            # Here, you can create the order or update the order status
-            return redirect('order_confirmation', order_id=payment.transactions[0].related_resources[0].sale.id)
+            # Find the associated order
+            order = get_object_or_404(Order, paypal_payment_id=payment_id)
+            handle_payment_success(order, 'paypal', payment_id)
+            return redirect('order_confirmation', order_id=order.id)
         else:
             messages.error(request, "Payment failed. Please try again.")
-            return redirect('cart_detail')
     except Exception as e:
         messages.error(request, f"An error occurred: {str(e)}")
-        return redirect('cart_detail')
+
+    return redirect('cart_detail')
+
 
 # paypal
 def cancel_payment(request):
     messages.info(request, "You have canceled the payment.")
     return redirect('cart_detail')
+
+
+def process_payment_method(order, payment_method, payment_id):
+    if payment_method == 'stripe':
+        order.stripe_payment_intent = payment_id
+    elif payment_method == 'paypal':
+        order.paypal_payment_id = payment_id
+    order.payment_method = payment_method
+    order.payment_status = 'completed'
+    order.save()
 
 
 

@@ -43,10 +43,30 @@ class Order(models.Model):
     order_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     delivery_cost = models.DecimalField(max_digits=6, decimal_places=2, default=7.00)
     grand_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    paypal_payment_id = models.CharField(
+    max_length=200,
+    null=True,
+    blank=True,
+    unique=True
+    )  # Stores PayPal transaction ID
+
+    payment_method = models.CharField(
+    max_length=10,
+    choices=[
+        ('stripe', 'Stripe'),
+        ('paypal', 'PayPal')
+    ],
+    null=False,
+    blank=False,
+    default='stripe'
+    )
+
+
     stripe_payment_intent = models.CharField(
         max_length=200,
         null=True,
-        blank=True
+        blank=True,
+        unique=True
     )  # Stores Stripe payment intent ID
     order_number = models.CharField(
         max_length=8,
@@ -75,6 +95,14 @@ class Order(models.Model):
         ],
         default='processing'
     )
+    notes = models.TextField(blank=True, null=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['order_number']),
+            models.Index(fields=['payment_status']),
+            models.Index(fields=['order_status']),
+        ]
 
     def update_total(self):
         """

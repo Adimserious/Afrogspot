@@ -19,6 +19,8 @@ class OrderAdmin(admin.ModelAdmin):
         'order_number',
         'user',
         'profile',
+        'payment_method', 
+        'paypal_payment_id',  
         'order_total',
         'delivery_cost',
         'grand_total',
@@ -27,14 +29,21 @@ class OrderAdmin(admin.ModelAdmin):
     )
 
     # Adds filters in the admin interface
-    list_filter = ('order_status', 'date_ordered')
+    list_filter = ('order_status', 'date_ordered', 'payment_method')  # New filter
 
     # Search by these fields
-    search_fields = ('order_number', 'user__username', 'user__email')
+    search_fields = (
+        'order_number',
+        'user__username',
+        'user__email',
+        'paypal_payment_id',
+    )
 
     # Read-only fields
     readonly_fields = (
         'order_number',
+        'payment_method',  # New read-only field
+        'paypal_payment_id',  # New read-only field
         'date_ordered',
         'delivery_cost',
         'order_total',

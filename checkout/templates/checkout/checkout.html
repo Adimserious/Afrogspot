@@ -186,15 +186,31 @@
 
             <!-- Payment Section code block from the Code Institute Boutique Ado walkthrough -->
             <fieldset class="mb-4">
-                <legend class="small text-black px-2">Payment</legend>
-                <div class="mb-3" id="card-element">
-                    <!-- A Stripe card element will go here -->
+                <legend class="small text-black px-2">Select Payment Method</legend>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payment_method" id="stripe-option" value="stripe"
+                        required>
+                    <label class="form-check-label" for="stripe-option">
+                        Pay with Stripe
+                    </label>
                 </div>
-                <!-- Used to display form errors -->
-                <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payment_method" id="paypal-option"
+                        value="paypal">
+                    <label class="form-check-label" for="paypal-option">
+                        Pay with PayPal
+                    </label>
+                </div>
+                <hr>
 
-                <!-- PayPal payment section -->
-                <div id="paypal-button-container" class="mb-3"></div>
+                <!-- Stripe and PayPal Payment Sections -->
+                <div id="stripe-payment-section" style="display: none;">
+                    <div class="mb-3" id="card-element">
+                        <!-- A Stripe card element will go here -->
+                    </div>
+                    <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+                </div>
+                <div id="paypal-button-container" style="display: none;"></div>
             </fieldset>
 
             <!-- Add a loading spinner somewhere in your form -->
@@ -235,8 +251,13 @@
         // Creates an instance of the card Element
         const card = elements.create('card', {
             style: {
-                base: { color: '#32325d', fontSize: '16px' },
-                invalid: { color: '#fa755a' },
+                base: {
+                    color: '#32325d',
+                    fontSize: '16px'
+                },
+                invalid: {
+                    color: '#fa755a'
+                },
             },
         });
         card.mount('#card-element');
@@ -302,7 +323,9 @@
             createOrder: function (data, actions) {
                 return actions.order.create({
                     purchase_units: [{
-                        amount: { value: "{{ grand_total|floatformat:2 }}" },
+                        amount: {
+                            value: "{{ grand_total|floatformat:2 }}"
+                        },
                     }],
                 });
             },
@@ -328,6 +351,33 @@
     }
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const stripeSection = document.getElementById('stripe-payment-section');
+        const paypalSection = document.getElementById('paypal-button-container');
+        const stripeRadio = document.getElementById('stripe-option');
+        const paypalRadio = document.getElementById('paypal-option');
+
+        function togglePaymentSections() {
+            if (stripeRadio.checked) {
+                stripeSection.style.display = 'block';
+                paypalSection.style.display = 'none';
+            } else if (paypalRadio.checked) {
+                stripeSection.style.display = 'none';
+                paypalSection.style.display = 'block';
+            }
+        }
+
+        stripeRadio.addEventListener('change', togglePaymentSections);
+        paypalRadio.addEventListener('change', togglePaymentSections);
+
+        // Initialize Stripe and PayPal sections
+        togglePaymentSections();
+    });
+</script>
+
 <!-- PayPal JavaScript SDK -->
-<script src="https://www.paypal.com/sdk/js?client-id=Ae0LxBGmu6g_ZFg4fGtZBwcFaFydFgaHy7DtzwDNaTRqTW4Nz_6ka1kdfviti8B_LduEG_oboWxIR4-C&currency=EUR"></script>
+<script
+    src="https://www.paypal.com/sdk/js?client-id=Ae0LxBGmu6g_ZFg4fGtZBwcFaFydFgaHy7DtzwDNaTRqTW4Nz_6ka1kdfviti8B_LduEG_oboWxIR4-C&currency=EUR">
+</script>
 {% endblock %}

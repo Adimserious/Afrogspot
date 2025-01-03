@@ -5,6 +5,12 @@ from .models import Order
 
 
 class CheckoutForm(forms.ModelForm):
+    PAYMENT_METHOD_CHOICES = [
+        ('stripe', 'Stripe'),
+        ('paypal', 'PayPal'),
+    ]
+    payment_method = forms.ChoiceField(choices=PAYMENT_METHOD_CHOICES, widget=forms.RadioSelect)
+
     save_info = forms.BooleanField(
         required=False,
         label="Save this delivery information to my profile"
