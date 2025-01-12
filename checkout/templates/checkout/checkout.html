@@ -186,7 +186,7 @@
 
             <!-- Payment Section code block from the Code Institute Boutique Ado walkthrough -->
             <fieldset class="mb-4">
-                <legend class="small text-black px-2">Select Payment Method</legend>
+                <legend class="small text-black px-2">SELECT A PAYMENT METHOD</legend>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="payment_method" id="stripe-option" value="stripe"
                         required>
@@ -307,7 +307,7 @@
         // PayPal Initialization
         if (typeof paypal !== 'undefined') {
             paypal.Buttons({
-                createOrder: function () {
+                createOrder: function (data, actions) {
                     return actions.order.create({
                         purchase_units: [{
                             amount: {
@@ -358,9 +358,5 @@
     });
 </script>
 
-
-<!-- PayPal JavaScript SDK -->
-<script
-    src="https://www.paypal.com/sdk/js?client-id=Ae0LxBGmu6g_ZFg4fGtZBwcFaFydFgaHy7DtzwDNaTRqTW4Nz_6ka1kdfviti8B_LduEG_oboWxIR4-C&currency=EUR">
-</script>
 {% endblock %}
+

@@ -104,9 +104,43 @@ def checkout(request):
             order.order_total = order_total
             order.delivery_cost = delivery_cost
             order.grand_total = grand_total
-            order.stripe_payment_intent = payment_intent_id  # Store the payment intent ID
-            order.save()
 
+            # Identify the selected payment method
+            payment_method = request.POST.get('payment_method')  # Example: form field or dropdown
+            if payment_method == 'stripe':
+                # Store Stripe-specific details and mark the order as pending
+                order.stripe_payment_intent = payment_intent_id
+                order.payment_method = 'stripe'
+                order.payment_status = 'pending'
+                order.save()
+                process_cart_items(cart, order)
+
+                # Proceed with Stripe payment processing
+                handle_payment_success(request, order, 'stripe', payment_intent_id)
+                # Clear the cart only after everything is confirmed
+                request.session['cart'] = {}
+                request.session.modified = True
+                return redirect('order_confirmation', order_id=order.id)
+
+            elif payment_method == 'paypal':
+                # Save order as pending for now (to be finalized in `execute_payment`)
+                order.payment_method = 'paypal'
+                order.payment_status = 'pending'
+                order.paypal_payment_id = paypal_payment.id  # Save PayPal payment ID
+                order.save()
+                process_cart_items(cart, order)
+
+                # Redirect user to PayPal for approval
+                if paypal_approval_url:
+                    return redirect(paypal_approval_url)
+                else:
+                    messages.error(request, "An error occurred while creating the PayPal payment.")
+                    return redirect('cart_detail')
+
+            else:
+                messages.error(request, "Invalid payment method selected.")
+                return redirect('cart_detail')
+        
             # Create order items and reduce stock
             for key, item_data in cart.items():
                 if isinstance(item_data, dict):
@@ -138,6 +172,7 @@ def checkout(request):
                                 f'Sorry, only {product.stock} of {product.name} is available.'
                             )
                             return redirect('cart_detail')
+                
 
                     # Create the order item after checking stock
                     OrderItem.objects.create(
@@ -148,9 +183,7 @@ def checkout(request):
                         price=Decimal(item_data['price'])
                     )
 
-            # Clear the cart
-            request.session['cart'] = {}
-
+            
             # Saves user info if `save_info` is checked
             save_info = form.cleaned_data.get('save_info')
             if save_info and request.user.is_authenticated:
@@ -166,7 +199,7 @@ def checkout(request):
                 profile.save()
 
                 # Call handle_payment_success
-                handle_payment_success(order, 'stripe', payment_intent_id)
+                handle_payment_success(request, order, 'stripe', payment_intent_id)
                 return redirect('order_confirmation', order_id=order.id)
 
             # Order confirmation email
@@ -206,7 +239,8 @@ def checkout(request):
     return render(request, 'checkout/checkout.html', context)
 
 
-def handle_payment_success(order, payment_method, payment_id=None):
+
+def handle_payment_success(request, order, payment_method, payment_id=None):
     """
     Handles the logic after a successful payment.
     - Marks the order as paid.
@@ -226,8 +260,8 @@ def handle_payment_success(order, payment_method, payment_id=None):
 
     # Notify user of successful order placement
     messages.success(
-        order.user,
-        f'Payment successful! Your order #{order.order_number} has been placed.'
+        request,
+        f'Payment successful! Your order #{order.order_number} has been placed.'
     )
 
 
@@ -242,10 +276,17 @@ def execute_payment(request):
 
     try:
         payment = Payment.find(payment_id)
+        existing_order = Order.objects.filter(paypal_payment_id=payment_id, payment_status='completed').first()
+        if existing_order:
+            messages.info(request, "This payment has already been processed.")
+            return redirect('order_confirmation', order_id=existing_order.id)
+
         if payment.execute({"payer_id": payer_id}):
-            # Find the associated order
             order = get_object_or_404(Order, paypal_payment_id=payment_id)
-            handle_payment_success(order, 'paypal', payment_id)
+            handle_payment_success(request, order, 'paypal', payment_id)
+            # Clear the cart only after everything is confirmed
+            request.session['cart'] = {}
+            request.session.modified = True
             return redirect('order_confirmation', order_id=order.id)
         else:
             messages.error(request, "Payment failed. Please try again.")
@@ -254,22 +295,45 @@ def execute_payment(request):
 
     return redirect('cart_detail')
 
-
 # paypal
 def cancel_payment(request):
     messages.info(request, "You have canceled the payment.")
     return redirect('cart_detail')
 
 
-def process_payment_method(order, payment_method, payment_id):
+def process_payment(order, payment_method, payment_id=None):
+    """
+    Process the payment for an order.
+    Marks the order as paid, saves payment details, and sends an email.
+    """
+    order.payment_method = payment_method
+    order.payment_status = 'completed'
     if payment_method == 'stripe':
         order.stripe_payment_intent = payment_id
     elif payment_method == 'paypal':
         order.paypal_payment_id = payment_id
-    order.payment_method = payment_method
-    order.payment_status = 'completed'
     order.save()
 
+    send_order_confirmation_email(order)
+    return True
+
+def process_cart_items(cart, order):
+    for key, item_data in cart.items():
+        product = get_object_or_404(Product, id=item_data['product_id'])
+        variant = None
+        if item_data.get('variant_id'):
+            variant = get_object_or_404(ProductVariant, id=item_data['variant_id'])
+            if variant.stock < item_data['quantity']:
+                raise ValueError(f"Insufficient stock for variant {variant.id}")
+            variant.stock -= item_data['quantity']
+            variant.save()
+        else:
+            if product.stock < item_data['quantity']:
+                raise ValueError(f"Insufficient stock for product {product.id}")
+            product.stock -= item_data['quantity']
+            product.save()
+        OrderItem.objects.create(order=order, product=product, variant=variant, quantity=item_data['quantity'], price=item_data['price'])
+    order.save()
 
 
 def send_order_confirmation_email(order):

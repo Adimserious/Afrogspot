@@ -59,6 +59,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" defer crossorigin="anonymous">
   </script>
 
+  <!-- PayPal JavaScript SDK -->
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=Ae0LxBGmu6g_ZFg4fGtZBwcFaFydFgaHy7DtzwDNaTRqTW4Nz_6ka1kdfviti8B_LduEG_oboWxIR4-C&currency=EUR&debug=true">
+  </script>
+
   <!-- Stripe -->
   <script src="https://js.stripe.com/v3/" defer></script>
   {% endblock %}
@@ -88,7 +93,7 @@
     }(window, document, 'script',
       'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1670489540565308');
-    
+
     fbq('track', 'PageView');
   </script>
   <noscript><img height="1" width="1" style="display:none"
