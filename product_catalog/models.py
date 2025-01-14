@@ -139,28 +139,36 @@ class Product(models.Model):
 
 # custom model
 class ProductVariant(models.Model):
-    UNIT_CHOICES = [
-        ('kg', 'Kilograms'),
-        ('g', 'Grams'),
-    ]
-
     product = models.ForeignKey(
         Product,
         related_name='variants',
         on_delete=models.CASCADE
     )
     size = models.DecimalField(
-        max_digits=6, decimal_places=2, help_text="Size of the product (use kg or g)."
-    )
-    unit = models.CharField(
-        max_length=2, choices=UNIT_CHOICES, default='kg'
+        max_digits=6, decimal_places=2,
+        help_text="Size of the product in kilograms. For grams, use decimal representation (e.g., 0.5 for 500g)."
     )
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField()
 
     def __str__(self):
-        size_display = f"{self.size} {self.unit}"
+        size_display = self.get_display_size()
         return f"{size_display} - {self.product.name}"
+
+    def get_display_size(self):
+        """
+        Returns the size as a human-readable string with units.
+        """
+        if self.size < 1:  # If size is less than 1 kg, treat it as grams.
+            size_in_grams = self.size * 1000
+            return f"{int(size_in_grams)} g"
+        return f"{self.size} kg"
+
+    def get_size_in_kg(self):
+        """
+        Ensures size is always returned in kilograms.
+        """
+        return self.size
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

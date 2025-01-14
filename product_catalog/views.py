@@ -21,6 +21,15 @@ ProductVariantFormSet = modelformset_factory(
     can_delete=True
 )
 
+# Get a specific variant (assuming there's a variant with id 1)
+variant = ProductVariant.objects.get(id=1)
+
+# Get the display size in a human-readable format (e.g., "500 g" or "2 kg")
+print(variant.get_display_size())
+
+# Get the size in kilograms
+print(variant.get_size_in_kg())
+
 
 def product_list(request):
     query = request.GET.get('q', '').strip()

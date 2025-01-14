@@ -78,8 +78,8 @@
                     <select name="variant" id="variant" class="form-control">
                         {% for variant in variants %}
                         <option value="{{ variant.id }}" {% if variant.stock <= 0 %}disabled{% endif %}>
-                            {{ variant.size }}
-                            {% if variant.size >= 1 %}kg{% else %}g{% endif %}
+                            
+                            <p>{{ variant.get_display_size }}</p>
                             - €{{ variant.price|floatformat:2 }}
                             {% if variant.stock <= 0 %}(Out of Stock){% endif %}
                         </option>
