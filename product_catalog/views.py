@@ -35,24 +35,23 @@ def product_list(request):
     query = request.GET.get('q', '').strip()
     category_name = request.GET.get('category')
 
-    products = Product.objects.filter(is_active=True).prefetch_related('images')  # Prefetch related images
+    # Prioritized categories
+    prioritized_categories = [
+        'Nuts and Seeds',
+        'Veggies',
+        'Peppers',
+        'Seasonings',
+        'Others',
+        'Lean Meat or Seafood',
+    ]
+    
+    # Base product query
+    products = Product.objects.filter(is_active=True).prefetch_related('images')
 
-    # List of categories you want to prioritize, e.g., 'groceries', 'veggies', etc.
-    prioritized_categories = ['Nuts-&-Seeds', 'veggies', 'fishes', 'peppers', 'seasonings']
-
-    # Query for products, prioritizing specific categories
-    prioritized_products = Product.objects.filter(
-        Q(category__name__in=prioritized_categories)
-    ).order_by('category__name')  # You can customize the ordering here
-
-    # Get the rest of the products
-    other_products = Product.objects.exclude(
-        category__name__in=prioritized_categories
-    )
-
-    # Combine the two querysets (prioritized first)
-    products = prioritized_products | other_products
-
+    # Apply priority ordering to products
+    products = products.annotate(
+        is_prioritized=Q(category__name__in=prioritized_categories)
+    ).order_by('-is_prioritized', 'category__name')
 
     # Filter parameters from request
     vegan = request.GET.get('vegan', '')
@@ -62,15 +61,10 @@ def product_list(request):
     # Applying filters
     if vegan:
         products = products.filter(is_vegan=True)
-
     if gluten_free:
         products = products.filter(is_gluten_free=True)
-
     if country:
         products = products.filter(country__name=country)
-
-    # List of countries for the filter options
-    countries = Country.objects.all()
 
     # If a category is selected, clear the search query
     if category_name:
@@ -83,7 +77,6 @@ def product_list(request):
             Q(name__icontains=query) |
             Q(description__icontains=query)
         )
-
         category_name = ''  # Clear the category query
 
     # Check if no products are found after all filters
@@ -110,7 +103,7 @@ def product_list(request):
         'query': query,
         'category_name': category_name,
         'categories': Category.objects.all(),  # For the category dropdown
-        'countries': countries,
+        'countries': Country.objects.all(),  # List of countries for the filter options
         'vegan': vegan,
         'gluten_free': gluten_free,
         'selected_country': country,
