@@ -37,6 +37,23 @@ def product_list(request):
 
     products = Product.objects.filter(is_active=True).prefetch_related('images')  # Prefetch related images
 
+    # List of categories you want to prioritize, e.g., 'groceries', 'veggies', etc.
+    prioritized_categories = ['Nuts-&-Seeds', 'veggies', 'fishes', 'peppers', 'seasonings']
+
+    # Query for products, prioritizing specific categories
+    prioritized_products = Product.objects.filter(
+        Q(category__name__in=prioritized_categories)
+    ).order_by('category__name')  # You can customize the ordering here
+
+    # Get the rest of the products
+    other_products = Product.objects.exclude(
+        category__name__in=prioritized_categories
+    )
+
+    # Combine the two querysets (prioritized first)
+    products = prioritized_products | other_products
+
+
     # Filter parameters from request
     vegan = request.GET.get('vegan', '')
     gluten_free = request.GET.get('gluten_free', '')
