@@ -107,6 +107,7 @@ INSTALLED_APPS = [
     'checkout.apps.CheckoutConfig',
     # 'checkout',
     # 'storages',
+    contact.apps.ContactConfig',
     # 'contact',
 
 ]
