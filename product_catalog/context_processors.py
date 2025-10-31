@@ -1,13 +1,20 @@
-from .models import Category
 from django.conf import settings
 
 def categories_processor(request):
     """
     Adds categories and language-related context to all templates.
+    This version is SAFE to use when the database is still empty
+    (e.g. right after deploying to Heroku and before running migrations).
     """
-    categories = Category.objects.all()
+    try:
+        from .models import Category
+        categories = Category.objects.all()
+    except Exception:
+        # Table doesn't exist yet (fresh DB) or DB isn't ready
+        categories = []
+
     return {
-        'categories': categories,  # Existing categories context
-        'LANGUAGES': settings.LANGUAGES,  # Available languages
-        'current_language': request.LANGUAGE_CODE,  # Current selected language
+        'categories': categories,
+        'LANGUAGES': getattr(settings, 'LANGUAGES', []),
+        'current_language': getattr(request, 'LANGUAGE_CODE', 'en'),
     }
