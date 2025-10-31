@@ -103,6 +103,7 @@ INSTALLED_APPS = [
     'profiles.apps.ProfilesConfig',
     # 'profiles',
     # 'cart',
+    'checkout.apps.CheckoutConfig',
     # 'checkout',
     # 'storages',
     # 'contact',
