@@ -98,13 +98,13 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
     'home',
-    # temp off
+    # temp off for heroku deployment 
     # 'product_catalog.apps.ProductCatalogConfig',
-    'profiles',
-    'cart',
-    'checkout',
-    'storages',
-    'contact',
+    # 'profiles',
+    # 'cart',
+    # 'checkout',
+    # 'storages',
+    # 'contact',
 
 ]
 
