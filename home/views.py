@@ -1,16 +1,28 @@
 from django.shortcuts import render
-from product_catalog.models import Category
-from django.shortcuts import redirect
 from django.conf import settings
+
+# TEMP: make this safe when product_catalog is not installed (like on fresh Heroku)
+try:
+    from product_catalog.models import Category
+except Exception:
+    Category = None
 
 
 def home(request):
-    """ A view to render the home page """
-    categories = Category.objects.all()
+    """A view to render the home page (safe even if DB is empty)."""
+
+    categories = []
+
+    if Category is not None:
+        try:
+            categories = Category.objects.all()
+        except Exception:
+            # table doesn't exist yet
+            categories = []
 
     context = {
         'categories': categories,
-        'LANGUAGES': settings.LANGUAGES,
+        'LANGUAGES': getattr(settings, 'LANGUAGES', []),
     }
 
     return render(request, 'home/home.html', context)
