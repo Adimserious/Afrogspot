@@ -100,6 +100,7 @@ INSTALLED_APPS = [
     'home',
     # temp off for heroku deployment 
     'product_catalog.apps.ProductCatalogConfig',
+    'profiles.apps.ProfilesConfig',
     # 'profiles',
     # 'cart',
     # 'checkout',
