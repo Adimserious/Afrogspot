@@ -98,7 +98,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
     'home',
-    'product_catalog.apps.ProductCatalogConfig',
+    # temp off
+    # 'product_catalog.apps.ProductCatalogConfig',
     'profiles',
     'cart',
     'checkout',
