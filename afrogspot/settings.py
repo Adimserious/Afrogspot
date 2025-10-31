@@ -102,6 +102,7 @@ INSTALLED_APPS = [
     'product_catalog.apps.ProductCatalogConfig',
     'profiles.apps.ProfilesConfig',
     # 'profiles',
+    'cart.apps.CartConfig',
     # 'cart',
     'checkout.apps.CheckoutConfig',
     # 'checkout',
