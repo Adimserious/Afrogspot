@@ -99,7 +99,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'home',
     # temp off for heroku deployment 
-    # 'product_catalog.apps.ProductCatalogConfig',
+    'product_catalog.apps.ProductCatalogConfig',
     # 'profiles',
     # 'cart',
     # 'checkout',
