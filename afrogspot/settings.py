@@ -142,9 +142,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # temp. off for heroku first migration
-                # 'cart.context_processors.cart_content',
-                # 'product_catalog.context_processors.categories_processor',
+                'cart.context_processors.cart_content',
+                'product_catalog.context_processors.categories_processor',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
 
